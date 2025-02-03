@@ -1,6 +1,6 @@
 # webapp10
 ## Web name
--TicketZone Fest
+- TicketZone Fest
 ## Team members
 |       Name           |              Email               |   Github User | 
 |----------------------|----------------------------------|---------------|
@@ -10,16 +10,16 @@
 |Andrea Garrobo Guzmán |	a.garrobo.2022@alumnos.urjc.es  |	Garrobo08     |
 |Natalia Méndez Barrios|	n.mendez.2022@alumnos.urjc.es	  | nataliaM4     |
 ## Used tools
--Trello: 
+- Trello: https://trello.com/invite/b/67a0a2b06ec66c976eff46db/ATTI16834166fedd9d33d0250a16bf8225fb595C9992/ticketzone-fest
 ## Entities
--User (relación entrada)
--Concert (relación artista,entrada)
--Artist (relación concierto)
--Ticket (relación usuario,concierto)
+- User (relación entrada)
+- Concert (relación artista,entrada)
+- Artist (relación concierto)
+- Ticket (relación usuario,concierto)
 ## User permissions
--Anonymous user: See concerts
--Registered user: See concerts, Buy tickets , See tickets 
--Admin: Add artists, Add concerts, Modify artists, Modify concerts
+- Anonymous user: See concerts
+- Registered user: See concerts, Buy tickets , See tickets 
+- Admin: Add artists, Add concerts, Modify artists, Modify concerts
 ## Images
 - User: Profile picture
 - Artist: Profile picture

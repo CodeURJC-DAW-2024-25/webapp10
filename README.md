@@ -12,10 +12,11 @@
 ## Used tools
 - Trello: https://trello.com/invite/b/67a0a2b06ec66c976eff46db/ATTI16834166fedd9d33d0250a16bf8225fb595C9992/ticketzone-fest
 ## Entities
-- User (relación entrada)
-- Concert (relación artista,entrada)
-- Artist (relación concierto)
-- Ticket (relación usuario,concierto)
+- User 
+- Concert 
+- Artist 
+- Ticket 
+- ![Database Diagram](https://github.com/user-attachments/assets/c8531ed8-ceec-4814-afc1-2b46540b25e8)
 ## User permissions
 - Anonymous user: See concerts
 - Registered user: See concerts, Buy tickets , See tickets 

@@ -18,19 +18,19 @@
 - Ticket
   ![Database Diagram](https://github.com/user-attachments/assets/c8531ed8-ceec-4814-afc1-2b46540b25e8)
 ## User permissions
-- Anonymous user: See concerts
-- Registered user: See concerts, Buy tickets , See tickets 
+- Anonymous user: View concerts
+- Registered user: View concerts, Buy tickets , View tickets 
 - Admin: Add artists, Add concerts, Modify artists, Modify concerts
 ## Images
 - User: Profile picture
 - Artist: Profile picture
 - Concert: Advertising poster
 ## Graphs 
-- Bar graph: Tickets sold per concert
-- Pie chart: Tickets solds per concert order by ages
+- Bar graph: The graph will display the number of tickets sold per concert.
+- Pie chart: There will be one chart for each concert, showing the range of ages of the users who purchased the tickets.
 ## Complementary technology
 - PDFs generator
 - Use of Google Maps 
 ## Algorithm
-- Each artist will have a genre of music so when you buy tickets for a concert, the future concerts that share the same genre, will appeared first
-- Order concert by tickets sold
+- Each artist will be classified by its genre. When a registered user signs in, the concerts displayed first will be organized based on the genres of concerts the user has previously purchased tickets for.
+- The concerts that have sold the most tickets will appear first.

@@ -1,0 +1,27 @@
+body{ /*COLOR DE FONFO DE PAGINA*/
+    background-color: black; 
+    overflow-y: scroll;
+    transition: margin-right 0.5s ease;
+}
+
+header {
+    width: 100%;
+    height: 125px;
+    color: #fff; /* Texto blanco */
+    background: linear-gradient(90deg, #4B0082, #800080); /* Degradado de morado oscuro a rosa oscuro */
+    display: flex;
+    justify-content: center;
+    font-family: 'fantasy';
+    text-transform: uppercase; /* Texto en mayúsculas */
+    position: fixed;   /*Es para que nos siga el bloque header y sus contenidos mientras bajamos en la página web.*/
+    top: 0; /*Para que no tenga hueco entre el tope de la página y el encabezado*/
+    margin-left: -10px;
+}
+
+.container_header {
+    width: 95%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

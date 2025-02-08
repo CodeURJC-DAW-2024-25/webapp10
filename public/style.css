@@ -1,11 +1,11 @@
 body {
     font-family: Arial, sans-serif;
     margin-top: 20%;
-    padding-top: 6%;
+    padding-top: 7%;
 }
 
 .header {
-    background: linear-gradient(135deg, #0074d9, #a640c6);
+    background: linear-gradient(135deg, #120661, #a728b5);
     color: white;
     display: flex;
     justify-content: space-between;
@@ -37,7 +37,6 @@ body {
     padding: 15px;
 }
 
-
 table {
     width: 100%;
 }
@@ -45,7 +44,6 @@ table {
 table td {
     padding: 10px;
 }
-
 
 #container-userPage .row img {
     width: 100%;
@@ -103,6 +101,7 @@ table td {
     font-size: 24px;
     font-weight: bold;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 50px;
 }
 
 #container-concertInfoPage h4 {
@@ -133,3 +132,68 @@ table td {
     margin: 4px;
 }
 
+@media (max-width: 950px) {
+    body {
+        padding-top: 12%;
+    }
+
+    #container-concertInfoPage h1 {
+        font-size: 20px;
+        padding: 8px;
+        margin-top: 50px;
+    }
+
+    #container-concertInfoPage h4 {
+        font-size: 18px;
+        padding: 8px;
+    }
+
+    #container-concertInfoPage h5 {
+        font-size: 16px;
+        padding: 8px;
+    }
+
+    #container-concertInfoPage p {
+        font-size: 16px;
+    }
+
+    #container-concertInfoPage .row img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .navButtons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .navButtons button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 20%; 
+    }
+
+    #container-concertInfoPage h1 {
+        font-size: 18px;
+        padding: 6px;
+        margin-top: 80px;
+    }
+
+    #container-concertInfoPage h4 {
+        font-size: 16px;
+        padding: 6px;
+    }
+
+    #container-concertInfoPage h5 {
+        font-size: 14px;
+        padding: 6px;
+    }
+
+    #container-concertInfoPage p {
+        font-size: 14px;
+    }
+}

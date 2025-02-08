@@ -1,31 +1,19 @@
-
-/* Background color */
-body{ 
-    background-color: black; 
-    overflow-y: scroll;
-    transition: margin-right 0.5s ease;
+body {
+    font-family: Arial, sans-serif;
+    margin-top: 20%;
 }
 
-header {
-    width: 100%;
-    height: 125px;
-    color: #fff; /* White text */
-    background: linear-gradient(90deg, #4B0082, #800080); /* Background gradient*/
-    display: flex;
-    justify-content: center;
-    font-family: 'fantasy';
-    text-transform: uppercase; 
-    position: fixed;   /*Fixed header while we go down in the web*/
-    top: 0; 
-    margin-left: -10px;
-}
-
-.container_header {
-    width: 95%;
-    height: 100%;
+.header {
+    background: linear-gradient(135deg, #0074d9, #a640c6);
+    color: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 15px 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
 * {
@@ -68,5 +56,38 @@ table td {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
-  
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 40%;
+    margin-right: 6%;
+    height: auto;
+}
+
+.logo h1 {
+    font-size: 18px;
+}
+
+.navButtons {
+    display: flex;
+    gap: 10px;
+    margin-right: 30px;
+}
+
+.navButtons button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.navButtons button:hover {
+    opacity: 0.8;
+}

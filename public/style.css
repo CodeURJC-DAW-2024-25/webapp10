@@ -1,6 +1,7 @@
 body {
     font-family: Arial, sans-serif;
     margin-top: 20%;
+    padding-top: 6%;
 }
 
 .header {
@@ -92,3 +93,43 @@ table td {
 .navButtons button:hover {
     opacity: 0.8;
 }
+
+#container-concertInfoPage h1 {
+    color: white;
+    background-color: #230667;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#container-concertInfoPage h4 {
+    color: white;
+    background-color: #000000;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
+}
+
+#container-concertInfoPage p {
+    text-align: justify;
+}
+
+#container-concertInfoPage h5 {
+    color: white;
+    background-color: #400c84;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 4px;
+}
+

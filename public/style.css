@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin-top: 20%;
     padding-top: 7%;
-    background-color: rgb(47, 46, 46)!important;
+    background-color: rgb(36, 36, 36)!important;
 }
 
 .header {
@@ -24,6 +24,7 @@ body {
     padding: 0;
     color: white;
 }
+
 
 #container-userPage {
     display: flex;
@@ -51,6 +52,12 @@ table td {
     width: 100%;
     height: auto;
     border-radius: 15px;
+}
+
+#title{
+    text-align: center;
+    font-size: 120%;
+    font-weight: bold;
 }
 
 .registerForm {
@@ -180,7 +187,7 @@ table td {
     }
 
     #container-concertInfoPage h1 {
-        font-size: 18px;
+        font-size: 16px;
         padding: 6px;
         margin-top: 80px;
     }

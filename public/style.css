@@ -2,7 +2,8 @@ body {
     font-family: Arial, sans-serif;
     margin-top: 20%;
     padding-top: 7%;
-    
+    background-color: rgb(47, 46, 46)!important;
+
 }
 
 .header {
@@ -22,6 +23,7 @@ body {
 * {
     margin: 0;
     padding: 0;
+    color: white;
 }
 
 #container-userPage {
@@ -108,7 +110,7 @@ table td {
 
 #container-concertInfoPage h4 {
     color: white;
-    background-color: #000000;
+    background-color: #541a71;
     border-radius: 5px;
     padding: 10px;
     text-align: center;

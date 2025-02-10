@@ -7,13 +7,13 @@ body{
     height: 100vh;
     width: 100%;
     align-items: center;
-    background-color: rgb(49,49,49);
+    background-color: rgb(49,49,49) !important;
     overflow-x: hidden; /* Prevent horizontal scrolling */
 
 }
 
 .section-concerts{
-    margin-top: -170px;
+    margin-top: 70px;
     width: 100%;
     display: block;
     padding-bottom: -75px;
@@ -21,7 +21,7 @@ body{
 }
 
 .section-artists{
-    margin-top: 150px;
+    margin-top: 70px;
 }
 
 h4,h2,small, a{
@@ -33,18 +33,18 @@ a{
     text-emphasis: none;
 }
 
-.title{
+.title {
+    color: white;
+    background-color: #230667;
+    border-radius: 5px;
+    padding: 10px;
     text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 50px;
     position: relative;
-}
-
-.title::after {
-    content: "";
-    display: block;
-    width: 100%; /* The line will have the same width as the carousel */
-    height: 3px;
-    background-color: #e2dada;
-    margin: 10px auto 0; 
+    text-transform: uppercase;
 }
 
 /*Carousel*/

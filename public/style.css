@@ -2,6 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin-top: 20%;
     padding-top: 7%;
+    
 }
 
 .header {
@@ -27,6 +28,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    
 }
 
 .content-userPage {
@@ -197,3 +199,39 @@ table td {
         font-size: 14px;
     }
 }
+
+footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .footer-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 20px;
+  }
+  .footer-section {
+    max-width: 300px;
+    margin: 10px;
+  }
+  .footer-section h4 {
+    margin-bottom: 10px;
+  }
+  .footer-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  .footer-section ul li {
+    margin: 5px 0;
+  }
+  .footer-section ul li a {
+    color: white;
+    text-decoration: none;
+  }
+  .social-links a img {
+    width: 24px;
+    margin: 0 5px;
+  }

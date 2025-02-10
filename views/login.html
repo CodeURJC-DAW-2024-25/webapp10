@@ -12,7 +12,11 @@
 </head>
 
 <body>
-    <div id="container-userPage">        
+    <div id="container-userPage"> 
+        <!--Header-->
+        <div id="header-container"></div>
+        <script src="/public/components/header.js"></script>
+
         <div class="content-userPage d-flex align-items-center justify-content-center">
             <div class="row g-0 align-items-center h-100 w-75">
 
@@ -29,10 +33,6 @@
                     <h4 class="text-center mb-3">TicketZone Fest login form</h4>
                     <form role="form" class="w-100">
                         <div class="mb-3">
-                            <label for="fullName">Full name:</label>
-                            <input type="text" class="form-control" id="fullName" placeholder="Enter Full name">
-                        </div>
-                        <div class="mb-3">
                             <label for="Username">Username:</label>
                             <input type="text" class="form-control" id="Username" placeholder="Enter Username">
                         </div>
@@ -44,12 +44,6 @@
                             <label for="Password">Password:</label>
                             <input type="text" class="form-control" id="Password" placeholder="Enter Password">
                         </div>
-        
-                        <div class="mb-3">
-                            <label for="DNI">DNI:</label>
-                            <input type="text" class="form-control" id="DNI" placeholder="Enter DNI">
-                        </div>
-            
                         <div class="d-flex align-items-center justify-content-between">
                             <a href="index.html">
                                 <button class="btn btn-primary" type="button">
@@ -64,6 +58,11 @@
                 </div>
             </div>
         </div>
+        
+        <!--Footer-->
+        <div id="footer-content"></div>
+        <script src="/public/components/footer.js"></script>
+
     </div>
 </body>
 

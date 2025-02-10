@@ -3,11 +3,7 @@ body {
     margin-top: 20%;
     padding-top: 7%;
     background-color: rgb(47, 46, 46)!important;
-<<<<<<< HEAD
     overflow-x: hidden; /* Prevent horizontal scrolling */
-=======
-
->>>>>>> e7ce72e761dbdba4ac073efd1a99b75b846c6e6e
 }
 
 .header {

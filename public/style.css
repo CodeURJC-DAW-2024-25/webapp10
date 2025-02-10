@@ -2,16 +2,8 @@ body {
     font-family: Arial, sans-serif;
     margin-top: 20%;
     padding-top: 7%;
-<<<<<<< HEAD
-    background-color: rgb(36, 36, 36)!important;
-=======
     background-color: rgb(47, 46, 46)!important;
-<<<<<<< HEAD
     overflow-x: hidden; /* Prevent horizontal scrolling */
-=======
-
->>>>>>> e7ce72e761dbdba4ac073efd1a99b75b846c6e6e
->>>>>>> 08ef301da4b693314a730fc4d69834531c5a041b
 }
 
 .header {
@@ -397,7 +389,6 @@ table td {
     }
 }
 
-<<<<<<< HEAD
 @media(min-width:768px){ 
     .carousel{
         margin: 0px 60px;
@@ -416,7 +407,6 @@ table td {
     }
 }
 
-=======
 footer {
     background: #222;
     color: white;
@@ -452,4 +442,3 @@ footer {
     width: 24px;
     margin: 0 5px;
   }
->>>>>>> e7ce72e761dbdba4ac073efd1a99b75b846c6e6e

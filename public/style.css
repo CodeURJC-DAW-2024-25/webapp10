@@ -26,6 +26,7 @@ body {
     color: white;
 }
 
+
 #container-userPage {
     display: flex;
     flex-direction: column;
@@ -53,6 +54,12 @@ table td {
     width: 100%;
     height: auto;
     border-radius: 15px;
+}
+
+#title{
+    text-align: center;
+    font-size: 120%;
+    font-weight: bold;
 }
 
 .registerForm {
@@ -362,7 +369,7 @@ table td {
     }
 
     #container-concertInfoPage h1 {
-        font-size: 18px;
+        font-size: 16px;
         padding: 6px;
         margin-top: 80px;
     }
@@ -382,7 +389,6 @@ table td {
     }
 }
 
-<<<<<<< HEAD
 @media(min-width:768px){ 
     .carousel{
         margin: 0px 60px;
@@ -401,7 +407,6 @@ table td {
     }
 }
 
-=======
 footer {
     background: #222;
     color: white;
@@ -437,4 +442,3 @@ footer {
     width: 24px;
     margin: 0 5px;
   }
->>>>>>> e7ce72e761dbdba4ac073efd1a99b75b846c6e6e

@@ -3,7 +3,11 @@ body {
     margin-top: 20%;
     padding-top: 7%;
     background-color: rgb(47, 46, 46)!important;
+<<<<<<< HEAD
     overflow-x: hidden; /* Prevent horizontal scrolling */
+=======
+
+>>>>>>> e7ce72e761dbdba4ac073efd1a99b75b846c6e6e
 }
 
 .header {
@@ -30,6 +34,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    
 }
 
 .content-userPage {
@@ -381,6 +386,7 @@ table td {
     }
 }
 
+<<<<<<< HEAD
 @media(min-width:768px){ 
     .carousel{
         margin: 0px 60px;
@@ -399,3 +405,40 @@ table td {
     }
 }
 
+=======
+footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .footer-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 20px;
+  }
+  .footer-section {
+    max-width: 300px;
+    margin: 10px;
+  }
+  .footer-section h4 {
+    margin-bottom: 10px;
+  }
+  .footer-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  .footer-section ul li {
+    margin: 5px 0;
+  }
+  .footer-section ul li a {
+    color: white;
+    text-decoration: none;
+  }
+  .social-links a img {
+    width: 24px;
+    margin: 0 5px;
+  }
+>>>>>>> e7ce72e761dbdba4ac073efd1a99b75b846c6e6e

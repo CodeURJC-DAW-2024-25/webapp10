@@ -60,5 +60,6 @@
 - Description: page that includes the personal information entered by the user, as well as a history of tickets purchased with the option to download the ticket, if it has not been previously downloaded
 
 ## Navigation Diagram
-![image](https://github.com/user-attachments/assets/6d698e41-12c8-46a5-a24f-70b6b9a0dde9)
+![image](https://github.com/user-attachments/assets/96ed63d8-952c-4b30-b5f8-0baa50313456)
+
 

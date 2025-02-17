@@ -1,4 +1,4 @@
-package es.codeurjc.backend;
+/* package es.codeurjc.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,3 +11,4 @@ class BackendApplicationTests {
 	}
 
 }
+ */

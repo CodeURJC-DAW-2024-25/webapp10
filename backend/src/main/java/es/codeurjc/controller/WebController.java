@@ -1,4 +1,4 @@
-package es.codeurjc.daw.backend.controller;
+package es.codeurjc.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 

@@ -14,10 +14,10 @@ public class WebController {
 
     @GetMapping("/")
 	public String show(Model model) {
-		return "/";
+		return "index";
 	}
 
-	@GetMapping("/concert/{id}")
+	/* @GetMapping("/concert/{id}")
 	public String showConcert(Model model, @PathVariable long id) {
 		Concert concert = ConcertService.getConcertById(id);
 		if (concert.isEmpty()) {
@@ -26,6 +26,6 @@ public class WebController {
 			model.addAttribute("concert", concert);
 			return "concertInfo";
 		}
-	}
+	} */
 
 }

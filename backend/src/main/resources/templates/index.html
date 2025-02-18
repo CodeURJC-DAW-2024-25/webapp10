@@ -22,49 +22,17 @@
         </section>
 
         <section class="concert-grid">
-            <!-- C-1 -->
+            {{#concerts}}
             <article class="concert-card">
                 <a href="concertInfo.html" class="link">
-                    <img src="/images/Concerts/1.webp" alt="Tour Balas Perdidas">
+                    <img src="{{image}}" alt="{{name}}">
                     <div class="concert-info">
-                        <h5>Tour Balas Perdidas</h5>
-                        <p>Artist: Morat</p>
+                        <h5>{{name}}</h5>
+                        <p>Artist: {{artist.name}}</p>
                     </div>
                 </a>
             </article>
-
-            <!-- C-2 -->
-            <article class="concert-card">
-                <a href="concertInfo.html" class="link">
-                    <img src="/images/Concerts/2.png" alt="Tour La Bruja, La Niña y El Dragón">
-                    <div class="concert-info">
-                        <h5>Tour La Bruja, La Niña y El Dragón</h5>
-                        <p>Artist: Lola Índigo</p>
-                    </div>
-                </a>
-            </article>
-
-            <!-- C-3 -->
-            <article class="concert-card">
-                <a href="concertInfo.html" class="link">
-                    <img src="/images/Concerts/3.jpg" alt="Bellodrama Tour">
-                    <div class="concert-info">
-                        <h5>Bellodrama Tour</h5>
-                        <p>Artist: Ana Mena</p>
-                    </div>
-                </a>
-            </article>
-
-            <!-- C-4 -->
-            <article class="concert-card">
-                <a href="concertInfo.html" class="link">
-                    <img src="/images/Concerts/4.jpg" alt="Power Up Tour">
-                    <div class="concert-info">
-                        <h5>Power Up Tour</h5>
-                        <p>Artist: AC/DC</p>
-                    </div>
-                </a>
-            </article>
+            {{/concerts}}
         </section>
 
         <!-- Botón Cargar Más -->

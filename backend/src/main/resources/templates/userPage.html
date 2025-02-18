@@ -30,44 +30,44 @@
                 <!-- Central part with personal information -->
                 <div class="col-md-4 d-flex align-items-center justify-content-center">
                     <div class="p-4 bg-white shadow rounded w-75">
-                        <h2 class="text-muted text-center mb-3">Juan Lobato's Profile</h2>
+                        <h2 class="text-muted text-center mb-3">{{user.fullName}}'s Profile</h2>
                         <table class="table table-bordered">
                             <tbody>
                                 <tr>
                                     <td class="fw-bold">Full Name:</td>
-                                    <td>Juan Lobato Carras</td>
+                                    <td>{{user.fullName}}</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Username:</td>
-                                    <td>Jlobato81</td>
+                                    <td>{{user.username}}</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Phone number:</td>
-                                    <td>+34 678 123 456</td>
+                                    <td>{{user.phone}}</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Email:</td>
-                                    <td>jlobato12@gmail.com</td>
+                                    <td>{{user.email}}</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Age:</td>
-                                    <td>23</td>
+                                    <td>{{user.age}}</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">DNI:</td>
-                                    <td>12356892P</td>
+                                    <td>{{user.dni}}</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Favorite Music Genre:</td>
-                                    <td>Pop</td>
+                                    <td>{{user.favoriteGenre}}</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Tickets Bought:</td>
-                                    <td>3</td>
+                                    <td>{{user.ticketsBought}}</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">User Type:</td>
-                                    <td>Registered User</td>
+                                    <td>{{user.type}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -86,55 +86,35 @@
                         <h2 class="text-muted text-center mb-3">Purchase History</h2>
                         <table class="table table-bordered">
                             <tbody>
+                                {{#user.purchases}}
                                 <tr class="table-primary">
-                                    <td colspan="2" class="fw-bold text-center">Taylor Swift - Madrid (WiZink Center)
-                                    </td>
+                                    <td colspan="2" class="fw-bold text-center">{{concert.name}} - {{concert.location}}</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Concert Date:</td>
-                                    <td>15/07/2024</td>
+                                    <td>{{concert.date}}</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Tickets Bought:</td>
-                                    <td>2 (Stadium stand)</td>
+                                    <td>{{ticketsNumber}} ({{ticketType}})</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Total Price:</td>
-                                    <td>€150</td>
+                                    <td>{{totalPrice}}</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Status:</td>
-                                    <td>Downloaded</td>
+                                    <td>{{status}}</td>
                                 </tr>
-                                <tr class="table-primary">
-                                    <td colspan="2" class="fw-bold text-center">Quevedo - Barcelona (Palau Sant Jordi)
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="fw-bold">Concert Date:</td>
-                                    <td>21/02/2025</td>
-                                </tr>
-                                <tr>
-                                    <td class="fw-bold">Tickets Bought:</td>
-                                    <td>1 (Concert Track)</td>
-                                </tr>
-
-                                <tr>
-                                    <td class="fw-bold">Total Price:</td>
-                                    <td>€95</td>
-                                </tr>
-                                <tr>
-                                    <td class="fw-bold">Status:</td>
-                                    <td>Pending</td>
-                                </tr>
-
+                                {{/user.purchases}}
                             </tbody>
-
                         </table>
+                        {{#user.hasPendingTickets}}
                         <div class="d-flex align-items-center justify-content-center">
                                 <button class="btn btn-success ">
                                     <i class="bi bi-download"></i> Download ticket</button>
                         </div>
+                        {{/user.hasPendingTickets}}
                     </div>
 
                 </div>

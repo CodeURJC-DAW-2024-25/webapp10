@@ -16,7 +16,7 @@
     {{>header}}
     <div id="container-concertInfoPage" class="container mt-5">
 
-        <h1 class="mb-4">THE ERAS TOUR CONCERT</h1>
+        <h1 class="mb-4">{{concert.name}}</h1>
         <div class="row">
             <!-- Left side with artist image -->
             <div class="col-md-4">
@@ -27,40 +27,36 @@
 
             <!-- Right side concert details -->
             <div class="col-md-8">
-                <h4>Taylor Swift</h4>
-                <p>Taylor Swift is an American singer-songwriter known for her storytelling, genre versatility, and
-                    record-breaking success. She started in country music before transitioning to pop. A multiple Grammy
-                    winner, she has released critically acclaimed albums, showcasing her evolution across different
-                    musical styles.
-                    Taylor is also taking control of her career by re-recording her earlier albums under Taylor’s
-                    Version, following a dispute over the ownership of her master recordings.</p>
+                <h4>{{artist.name}}</h4>
+                <p>{{artist.description}}</p>
 
                 <h4>Concert Details</h4>
-                <p>The "The Eras Tour" concert in Madrid by Taylor Swift is an unmissable event that will take fans on a
-                    journey through the incredible evolution of her music.
-                    This highly anticipated concert is part of her global tour, celebrating the diverse sounds and
-                    unforgettable moments from all of Taylor's albums. With breathtaking visuals, an elaborate stage
-                    design, and a carefully crafted setlist, the concert will showcase her transformation from her early
-                    country music days to her iconic pop hits, as well as her more recent work like Midnights.
-                    Whether you’re a longtime fan or just discovering her music, this concert is a celebration of Taylor
-                    Swift’s remarkable legacy and her ability to connect with audiences through her storytelling. Don’t
-                    miss this incredible opportunity to witness one of the most influential artists of our time perform
-                    live in Madrid. Secure your tickets now for a night of unforgettable music and memories!</p>
+                <p>{{concert.details}}</p>
                 <div class="d-flex justify-content-between">
-                    <h5>Date: <span>March 15, 2025</span></h5>
-                    <h5>Time: <span>8:00 PM</span></h5>
-                    <h5>Location: <span>Santiago Bernabeu</span></h5>
+                    <h5>Date: <span>{{concert.date}}</span></h5>
+                    <h5>Time: <span>{{concert.time}}</span></h5>
+                    <h5>Location: <span>{{concert.location}}</span></h5>
                 </div>
                 <h4>Location</h4>
-                <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3036.5191618850367!2d-3.690508524118927!3d40.45303867141083!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4228a29dc4fc41%3A0xe6d45c8b6b3b346d!2sEstadio%20Santiago%20Bernab%C3%A9u!5e0!3m2!1ses!2ses!4v1707599503645!5m2!1ses!2ses" 
-                allowfullscreen="" loading="lazy">
-                </iframe>
+                {{#concert.map}}
+                <iframe src="{{concert.map}}" allowfullscreen="" loading="lazy"></iframe>
+                {{/concert.map}}
 
                 <div class="d-flex align-items-center justify-content-between mt-3">
-                    <a href="purchasePage.html" class="btn btn-primary mt-3 flex-grow-1 me-2">
-                        <i class="bi bi-cart-fill"></i> Purchase Tickets
+                    {{#logged}}
+                        {{#registered}}
+                        <a href="purchasePage.html" class="btn btn-primary mt-3 flex-grow-1 me-2">
+                            <i class="bi bi-cart-fill"></i> Purchase Tickets
+                        </a>
+                        {{/registered}}
+                    {{/logged}}
+
+                    {{^logged}}
+                    <a href="/login" class="btn btn-secondary">
+                        <i class="bi bi-box-arrow-in-right"></i> Log in to Buy
                     </a>
+                    {{/logged}}
+
                     <a href="index.html" class="btn btn-primary mt-3">
                         <i class="bi bi-reply-all-fill"></i> Go back
                     </a>

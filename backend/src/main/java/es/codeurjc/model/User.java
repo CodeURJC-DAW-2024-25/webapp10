@@ -2,8 +2,14 @@ package es.codeurjc.model;
 
 import org.springframework.web.context.annotation.SessionScope;
 
+
 @SessionScope
 public class User {
+
+    public enum userType{
+        Admin,
+        RegisteredUser
+    }
 
     private String fullName;
     private String userName;
@@ -12,8 +18,11 @@ public class User {
     private String email;
     private String password;
     private int age; 
+    private userType typeUser;
 
-    public User (String fullName, String userName, String photo, int phone, String email, String password, int age){
+    public User(){}
+
+    public User (String fullName, String userName, String photo, int phone, String email, String password, int age, userType typeUser){
         this.fullName=fullName;
         this.userName=userName;
         this.photo=photo;
@@ -21,6 +30,7 @@ public class User {
         this.email=email;
         this.password=password;
         this.age=age;
+        this.typeUser=typeUser;
     }
 
     public void setFullName(String fullName){
@@ -44,7 +54,53 @@ public class User {
     }
 
     public void setPassword(String password){
-        this.fullName=fullName;
+        this.password=password;
     }
+
+    public void setAge(int age){
+        this.age=age;
+    }
+
+    public String getFullName(){
+        return this.fullName;
+    }
+
+    public String getUserName(){
+        return this.userName;
+    }
+
+    public String getPassword(){
+        return this.password;
+    }
+
+    public int getPhone(){
+        return this.phone;
+    }
+
+    public String getPhoto(){
+        return this.photo;
+    }
+
+    public String getEmail(){
+        return this.email;
+    }
+
+    public userType getUserType(){
+        return this.typeUser;
+    }
+
+    public int getAge(){
+        return this.age;
+    }
+
+    public boolean checkEqualPassWord(String passWord){
+        
+        if (this.password==passWord){
+            return true;
+        }
+        
+        return false;
+    }
+
 
 }

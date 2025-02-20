@@ -2,16 +2,24 @@ package es.codeurjc.backend.model;
 
 import java.util.ArrayList;
 
-import org.springframework.web.context.annotation.SessionScope;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
-
-@SessionScope
+@Entity(name = "UserTable")
 public class User {
 
     public enum userType{
         Admin,
         RegisteredUser
     }
+
+    @Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
     private String fullName;
     private String userName;

@@ -3,8 +3,18 @@ package es.codeurjc.backend.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
+@Entity
 public class Concert {
+
+    @Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id = null;
+    
     private String concertName; 
     private String artistName;
     private String artistInfo;

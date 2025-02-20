@@ -2,12 +2,22 @@ package es.codeurjc.backend.model;
 
 import java.util.Map;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Ticket {
 
     public enum TicketType{
         Stadium_Stand,
         Concert_Track
     }
+
+    @Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id = null;
 
     private Concert concert;
     private TicketType ticketType;

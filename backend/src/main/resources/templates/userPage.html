@@ -27,6 +27,8 @@
                     <p class="text-center">Here you will find all your information.</p>
                 </div>
 
+
+                {{#user}}
                 <!-- Central part with personal information -->
                 <div class="col-md-4 d-flex align-items-center justify-content-center">
                     <div class="p-4 bg-white shadow rounded w-75">
@@ -55,19 +57,19 @@
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">DNI:</td>
-                                    <td>{{user.dni}}</td>
+                                    <td>{{DNI}}</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Favorite Music Genre:</td>
-                                    <td>{{user.favoriteGenre}}</td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Tickets Bought:</td>
-                                    <td>{{user.ticketsBought}}</td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">User Type:</td>
-                                    <td>{{user.type}}</td>
+                                    <td></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -79,6 +81,8 @@
                     </div>
 
                 </div>
+
+                {{/user}}
 
                 <!-- Right side with purchase history -->
                 <div class="col-md-4 d-flex align-items-center justify-content-center">

@@ -1,4 +1,6 @@
-package es.codeurjc.model;
+package es.codeurjc.backend.model;
+
+import java.util.ArrayList;
 
 import org.springframework.web.context.annotation.SessionScope;
 
@@ -19,10 +21,15 @@ public class User {
     private String password;
     private int age; 
     private userType typeUser;
+    private String DNI;
+    private String favoriteGenre;
+    private int TicketsBought;
+    private ArrayList<Ticket> ticketsHistory;
 
     public User(){}
 
-    public User (String fullName, String userName, String photo, int phone, String email, String password, int age, userType typeUser){
+    public User (String fullName, String userName, String photo, int phone, String email, String password, int age, userType typeUser,  String DNI){
+        super();
         this.fullName=fullName;
         this.userName=userName;
         this.photo=photo;
@@ -31,6 +38,9 @@ public class User {
         this.password=password;
         this.age=age;
         this.typeUser=typeUser;
+        this.TicketsBought=0;
+        this.favoriteGenre=null;
+
     }
 
     public void setFullName(String fullName){

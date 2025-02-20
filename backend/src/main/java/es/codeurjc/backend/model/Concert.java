@@ -1,4 +1,4 @@
-package es.codeurjc.model;
+package es.codeurjc.backend.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

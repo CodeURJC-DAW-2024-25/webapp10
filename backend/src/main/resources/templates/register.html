@@ -15,7 +15,6 @@
     {{>header}}
     <div id="container-userPage">
     
-
         <div class="content-userPage d-flex align-items-center justify-content-center">
             <div class="row g-0 align-items-center h-100 w-75">
 
@@ -30,51 +29,51 @@
                 <!-- Right side with the form -->
                 <div class="col-md-8 d-flex flex-column align-items-center justify-content-center p-4">
                     <h4 class="text-center mb-3">TicketZone Fest registration form</h4>
-                    <form role="form" class="w-100">
+                    <form role="form" class="w-100" action="/user/new" method="post">
                         <div class="mb-3">
                             <label for="fullName">Full name:</label>
-                            <input type="text" class="form-control" id="fullName" placeholder="Enter Full name">
+                            <input type="text" class="form-control" name="fullName" placeholder="Enter Full name" >
                         </div>
                         <div class="mb-3">
                             <label for="Username">Username:</label>
-                            <input type="text" class="form-control" id="Username" placeholder="Enter Username">
+                            <input type="text" class="form-control" name="Username" placeholder="Enter Username" >
                         </div>
                         <div class="mb-3">
                             <label for="Username">Photo:</label>
-                            <input type="text" class="form-control" id="Username" placeholder="Enter Photo">
+                            <input type="text" class="form-control" name="Photo" placeholder="Enter Photo">
                         </div>
                         <div class="mb-3">
                             <label for="Phone">Phone number:</label>
-                            <input type="number" class="form-control" id="Phone" placeholder="Enter Phone number">
+                            <input type="number" class="form-control" name="Phone" placeholder="Enter Phone number">
                         </div>
                         <div class="mb-3">
                             <label for="Email">Email:</label>
-                            <input type="text" class="form-control" id="Email" placeholder="Enter Email">
+                            <input type="text" class="form-control" name="Email" placeholder="Enter Email">
                         </div>
                         <div class="mb-3">
                             <label for="Password">Password:</label>
-                            <input type="text" class="form-control" id="Password" placeholder="Enter Password">
+                            <input type="text" class="form-control" name="Password" placeholder="Enter Password">
                         </div>
                         <div class="mb-3">
                             <label for="RPassword">Repeat your password:</label>
-                            <input type="text" class="form-control" id="RPassword" placeholder="Enter Password">
+                            <input type="text" class="form-control" name="RPassword" placeholder="Enter Password">
                         </div>
                         <div class="mb-3">
-                            <label for="BirthDate">Age:</label>
-                            <input type="date" class="form-control" id="BirthDate" placeholder="Enter birth date">
+                            <label for="Age">Age:</label>
+                            <input type="number" class="form-control" name="Age" placeholder="Enter age">
                         </div>
         
                         <div class="mb-3">
                             <label for="DNI">DNI:</label>
-                            <input type="text" class="form-control" id="DNI" placeholder="Enter DNI">
+                            <input type="text" class="form-control" name="DNI" placeholder="Enter DNI">
                         </div>
         
     
                         <div class="d-flex align-items-center justify-content-between">
-                            <a href="index.html" class="btn btn-primary">
+                            <a href="/" class="btn btn-primary">
                                 <i class="bi bi-reply-all-fill"></i> Go Back
                             </a>
-                            <button class="btn btn-success" type="submit">
+                            <button class="btn btn-success" type="submit" value="Enviar">
                                 <i class="bi bi-check-lg"></i> Register
                             </button>
                         </div>

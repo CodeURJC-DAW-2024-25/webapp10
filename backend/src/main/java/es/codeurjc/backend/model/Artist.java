@@ -1,9 +1,12 @@
 package es.codeurjc.backend.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Artist {
@@ -15,6 +18,9 @@ public class Artist {
     private String artistName;
     private String musicalStyle;
     private String artistInfo;
+
+    @ManyToMany(mappedBy = "artists")
+    private List<Concert> concerts;
 
     //Constructors
     public Artist(){}

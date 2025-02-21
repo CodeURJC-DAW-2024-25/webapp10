@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -20,14 +21,15 @@ public class Concert {
 	private Long id;
     
     private String concertName; 
-    private String artistName;
-    private String artistInfo;
     private String concertDetails;
     private Date concertDate;
     private Time concertTime;
     private String location;
 
-    @OneToMany(mappedBy = "concert")
+    @ManyToMany(mappedBy = "concerts")
+    private List<Artist> artists;
+
+    @OneToMany(mappedBy = "concerts")
     private List<Ticket> tickets;
 
     //Constructors

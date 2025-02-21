@@ -10,7 +10,7 @@ public class Artist {
     
     @Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id = null;
+	private Long id;
     
     private String artistName;
     private String musicalStyle;

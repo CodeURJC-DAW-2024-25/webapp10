@@ -7,13 +7,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "concerts")
 public class Concert {
 
     @Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id = null;
+	private Long id;
     
     private String concertName; 
     private String artistName;

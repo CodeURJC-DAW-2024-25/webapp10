@@ -17,7 +17,7 @@ public class Ticket {
 
     @Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id = null;
+	private Long id;
 
     private Concert concert;
     private TicketType ticketType;

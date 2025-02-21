@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,13 +17,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.codeurjc.backend.model.User;
+import es.codeurjc.backend.service.UserService;
 
 
 @Controller
 public class RegisteredWebController {
 
 
-    ArrayList<User> users=new ArrayList<>();
+    @Autowired
+    private UserService userService;
     
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
@@ -36,7 +39,8 @@ public class RegisteredWebController {
         if ((user.getAge()<0) || (user.getAge()>100)){
             return "redirect:/register"; 
         }
-        users.add(user);
+
+        userService.addUser(user);
         model.addAttribute("user", user);
         return "userPage";
     }

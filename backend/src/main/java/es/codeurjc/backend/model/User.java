@@ -4,18 +4,17 @@ import java.util.ArrayList;
 
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity(name = "UserTable")
 public class User {
 
-    public enum userType{
-        Admin,
-        RegisteredUser
-    }
 
     @Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,15 +27,17 @@ public class User {
     private String email;
     private String password;
     private int age; 
-    private userType typeUser;
+    private String typeUser;
     private String DNI;
     private String favoriteGenre;
     private int TicketsBought;
+
+    @OneToMany(mappedBy = "userOwner", fetch = FetchType.LAZY)
     private ArrayList<Ticket> ticketsHistory;
 
     public User(){}
 
-    public User (String fullName, String userName, String photo, int phone, String email, String password, int age, userType typeUser,  String DNI){
+    public User (String fullName, String userName, String photo, int phone, String email, String password, int age, String typeUser,  String DNI){
         super();
         this.fullName=fullName;
         this.userName=userName;
@@ -103,7 +104,7 @@ public class User {
         return this.email;
     }
 
-    public userType getUserType(){
+    public String getUserType(){
         return this.typeUser;
     }
 

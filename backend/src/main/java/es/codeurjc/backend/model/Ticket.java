@@ -21,8 +21,10 @@ public class Ticket {
     private Long id;
 
     private TicketType ticketType;
-    private Map<TicketType,Integer> prices;
+    private Integer prices;
+    @ManyToOne
     private User userOwner;
+    
     private int numTickets;
 
     @ManyToOne
@@ -30,7 +32,7 @@ public class Ticket {
 
     public Ticket(){}
 
-    public Ticket(Concert concert, TicketType ticketType, Map<TicketType,Integer> prices, User userOwner) {
+    public Ticket(Concert concert, TicketType ticketType, Integer prices, User userOwner) {
         this.concert = concert;
         this.ticketType = ticketType;
         this.prices = prices;
@@ -53,17 +55,17 @@ public class Ticket {
         this.ticketType = ticketType;
     }
 
-    public Map<TicketType, Integer> getPrices() {
+    public Integer getPrices() {
         return prices;
     }
 
-    public void setPrices(Map<TicketType, Integer> prices) {
+    public void setPrices(Integer prices) {
         this.prices = prices;
     }
 
-    public Integer getPriceForType(TicketType type) {
+   /*  public Integer getPriceForType(TicketType type) {
         return prices.get(type);
-    }
+    } */
 
     public User getUserOwner() {
         return userOwner;

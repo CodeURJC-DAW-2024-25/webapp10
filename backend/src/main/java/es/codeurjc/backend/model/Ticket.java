@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Ticket {
@@ -16,23 +17,24 @@ public class Ticket {
     }
 
     @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    private Concert concert;
     private TicketType ticketType;
     private Map<TicketType,Integer> prices;
     private User userOwner;
     private int numTickets;
 
+    @ManyToOne
+    private Concert concert;
+
     public Ticket(){}
 
-    public Ticket(Concert concert, TicketType ticketTyp, Map<TicketType,Integer> prices, User userOwner) {
+    public Ticket(Concert concert, TicketType ticketType, Map<TicketType,Integer> prices, User userOwner) {
         this.concert = concert;
         this.ticketType = ticketType;
-        this.prices=prices;
-        this.userOwner=userOwner;
-        
+        this.prices = prices;
+        this.userOwner = userOwner;
     }
 
     public Concert getConcert() {
@@ -72,11 +74,10 @@ public class Ticket {
     }
 
     public void setNumTickets(int numTickets){
-        this.numTickets=numTickets;
+        this.numTickets = numTickets;
     }
 
     public int getNumTickets(){
         return this.numTickets;
     }
-
 }

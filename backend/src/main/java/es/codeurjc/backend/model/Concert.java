@@ -2,12 +2,13 @@ package es.codeurjc.backend.model;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,13 +23,12 @@ public class Concert {
     private String artistName;
     private String artistInfo;
     private String concertDetails;
-
-    @Column(columnDefinition = "DATE")
     private Date concertDate;
-
-    @Column(columnDefinition = "TIME")
     private Time concertTime;
     private String location;
+
+    @OneToMany(mappedBy = "concert")
+    private List<Ticket> tickets;
 
     //Constructors
     public Concert(){}

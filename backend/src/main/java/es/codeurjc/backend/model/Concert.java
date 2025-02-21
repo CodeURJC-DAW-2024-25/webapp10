@@ -1,8 +1,9 @@
 package es.codeurjc.backend.model;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.sql.Date;
+import java.sql.Time;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,14 +22,20 @@ public class Concert {
     private String artistName;
     private String artistInfo;
     private String concertDetails;
-    private LocalDate concertDate;
-    private LocalTime concertTime;
+
+    @Column(columnDefinition = "DATE")
+    private Date concertDate;
+
+    @Column(columnDefinition = "TIME")
+    private Time concertTime;
     private String location;
 
     //Constructors
     public Concert(){}
     
-    public Concert(String concertName, String artistName, String artistInfo, String concertDetails, LocalDate concertDate, LocalTime concertTime, String location){
+    public Concert(String concertName, String artistName, String artistInfo, String concertDetails, Date concertDate, Time concertTime, String location){
+        
+        super();
         this.concertName = concertName;
         this.artistName = artistName;
         this.artistInfo = artistInfo;
@@ -72,19 +79,19 @@ public class Concert {
         this.concertDetails = concertDetails;
     }
 
-    public LocalDate getConcertDate() {
+    public Date getConcertDate() {
         return concertDate;
     }
 
-    public void setConcertDate(LocalDate concertDate) {
+    public void setConcertDate(Date concertDate) {
         this.concertDate = concertDate;
     }
 
-    public LocalTime getConcertTime() {
+    public Time getConcertTime() {
         return concertTime;
     }
 
-    public void setConcertTime(LocalTime concertTime) {
+    public void setConcertTime(Time concertTime) {
         this.concertTime = concertTime;
     }
 
@@ -95,4 +102,12 @@ public class Concert {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public Long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 }

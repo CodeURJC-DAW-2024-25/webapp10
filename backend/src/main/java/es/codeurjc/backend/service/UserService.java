@@ -29,6 +29,18 @@ public class UserService {
         return users;
     }
 
+	public User userCorrect(String email, String password){
+
+		for (User userInUsers: users){
+			if (userInUsers.getEmail().equals(email)){
+				 if (userInUsers.getPassword().equals(password)){
+					return userInUsers;
+				 }
+			}
+		}
+		return null;
+	}
+
 	public Optional<User> findById(long id) {
 		return repository.findById(id);
 	}
@@ -36,6 +48,10 @@ public class UserService {
 	public Optional<User> findByUserName(String userName) {
         return repository.findByUserName(userName);
     }
+
+	public boolean userExists(String userName){
+		return repository.findByUserName(userName).isPresent();
+	}
 
 	
 	public boolean exist(long id) {

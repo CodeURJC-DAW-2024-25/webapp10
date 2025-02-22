@@ -1,6 +1,7 @@
 package es.codeurjc.backend.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -18,26 +19,28 @@ public class User {
 
     @Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Long id=null;
 
     private String fullName;
     private String userName;
     private String photo;
-    private int phone;
+    private Integer phone;
     private String email;
     private String password;
-    private int age; 
-    private String typeUser;
-    private String DNI;
-    private String favoriteGenre;
-    private int TicketsBought;
+    private Integer age; 
+    private Integer TicketsBought;
 
-    @OneToMany(mappedBy = "userOwner", fetch = FetchType.LAZY)
-    private ArrayList<Ticket> ticketsHistory;
+    /* @OneToMany(mappedBy = "userOwner", fetch = FetchType.LAZY)
+    private ArrayList<Ticket> ticketsHistory; */
+
+    @ElementCollection(fetch = FetchType.EAGER)
+	private List<String> roles;
+
 
     public User(){}
 
-    public User (String fullName, String userName, String photo, int phone, String email, String password, int age, String typeUser,  String DNI){
+    public User (String fullName, String userName, String photo, Integer phone, String email, String password, Integer age, String... roles){
+        
         super();
         this.fullName=fullName;
         this.userName=userName;
@@ -46,9 +49,9 @@ public class User {
         this.email=email;
         this.password=password;
         this.age=age;
-        this.typeUser=typeUser;
         this.TicketsBought=0;
-        this.favoriteGenre=null;
+        this.roles = List.of(roles);
+        
 
     }
 
@@ -56,7 +59,10 @@ public class User {
         this.fullName=fullName;
     }
 
-    public void setUsername(String userName){
+    public Long getId(){
+        return this.id;
+    }
+    public void setUserName(String userName){
         this.userName=userName;
     }
 
@@ -64,7 +70,13 @@ public class User {
         this.photo=photo;
     }
 
-    public void setPhone(int phone){
+    
+
+    public void setTicketsBought(Integer tickets){
+        this.TicketsBought=tickets;
+    }
+
+    public void setPhone(Integer phone){
         this.phone=phone;
     }
 
@@ -76,8 +88,12 @@ public class User {
         this.password=password;
     }
 
-    public void setAge(int age){
-        this.age=age;
+    public void setAge(Integer age){
+        if (age==null || age <0){
+            this.age=0;
+        }else{
+            this.age=age;
+        }
     }
 
     public String getFullName(){
@@ -92,7 +108,7 @@ public class User {
         return this.password;
     }
 
-    public int getPhone(){
+    public Integer getPhone(){
         return this.phone;
     }
 
@@ -104,11 +120,7 @@ public class User {
         return this.email;
     }
 
-    public String getUserType(){
-        return this.typeUser;
-    }
-
-    public int getAge(){
+    public Integer getAge(){
         return this.age;
     }
 
@@ -121,5 +133,16 @@ public class User {
         return false;
     }
 
+    public Integer getTicketsBought(){
+        return this.TicketsBought;
+    }
+
+    public List<String> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
 
 }

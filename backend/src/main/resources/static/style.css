@@ -363,3 +363,7 @@ iframe{
     height:350px;
     
 }
+
+.error{
+    color:red;
+}

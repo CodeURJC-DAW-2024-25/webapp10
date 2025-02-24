@@ -25,7 +25,8 @@
             {{#concerts}}
             <article class="concert-card">
                 <a href="concertInfo.html?id={{id}}" class="link">
-                    <img src="{{image}}" alt="{{name}}">
+                    <!--<img src="{{image}}" alt="{{name}}">-->
+                    
                     <div class="concert-info">
                         <h5>{{name}}</h5>
                         <p>Artist: {{artist.name}}</p>
@@ -35,14 +36,39 @@
             {{/concerts}}
         </section>
 
-        <!-- Botón Cargar Más -->
+        <!-- Buttom Load More -->
         <div class="load-more-container">
-            <button class="load-more-btn">Load More</button>
+            <button class="load-more-btn" onclick="loadMore()">Load More</button>
         </div>
+
+
+        <div id="loading-spinner" style="display: none;">Cargando...</div>
+        
     </main>
 
     <!--Footer-->
     {{>footer}}
+
+    <script>
+        let currentPage = 0;
+
+        function loadMore() {
+            currentPage++;
+            document.getElementById('loading-spinner').style.display = 'block';
+
+            fetch(`/loadMoreConcerts?page=${currentPage}`)
+                .then(response => response.text())
+                .then(data => {
+                    // Inserta los nuevos conciertos en la página
+                    document.getElementById('concertGrid').innerHTML += data;
+                    document.getElementById('loading-spinner').style.display = 'none';
+                })
+                .catch(error => {
+                    console.error("Error al cargar más conciertos", error);
+                    document.getElementById('loading-spinner').style.display = 'none';
+                });
+        }
+    </script>
 
 </body>
 

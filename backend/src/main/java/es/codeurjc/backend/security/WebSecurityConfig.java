@@ -1,4 +1,4 @@
-package es.codeurjc.daw.library.security;
+package es.codeurjc.backend.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-	@Autowired
+	/* @Autowired
 	RepositoryUserDetailsService userDetailsService;
 
 	@Bean
@@ -30,8 +30,8 @@ public class WebSecurityConfig {
 		authProvider.setPasswordEncoder(passwordEncoder());
 
 		return authProvider;
-    }
-
+    } */
+/* 
     @Bean
     public InMemoryUserDetailsManager userDetailsService(){
         UserDetails user = User.builder()
@@ -45,12 +45,27 @@ public class WebSecurityConfig {
                 .roles("ADMIN")
                 .build();
         return new InMemoryUserDetailsManager(user, admin);
+    } */
+
+	@Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeRequests(authorizeRequests ->
+                authorizeRequests.anyRequest().permitAll()
+            )
+            .csrf(csrf -> csrf.disable());
+        return http.build();
+    }
 
-		http.authenticationProvider(authenticationProvider());
+   /*  @Bean
+     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+		//http.authenticationProvider(authenticationProvider());
 
 		http.authorizeHttpRequests(authorize -> authorize
 						// PUBLIC PAGES
@@ -74,5 +89,5 @@ public class WebSecurityConfig {
 						.permitAll());
 
 		return http.build();
-	}
+	} */
 }

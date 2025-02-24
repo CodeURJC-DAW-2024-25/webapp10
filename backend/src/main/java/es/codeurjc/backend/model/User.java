@@ -32,6 +32,7 @@ public class User {
 
     @Lob
     private Blob profilePhoto;
+    private boolean image;
 
     @OneToMany(mappedBy = "userOwner", fetch = FetchType.LAZY)
     private List<Ticket> tickets; 
@@ -60,6 +61,14 @@ public class User {
     public void setId(Long id) {
         this.id = id;
     }
+    
+    public boolean getImage(){
+		return this.image;
+	}
+
+	public void setImage(boolean image){
+		this.image = image;
+	}
     
     public String getFullName(){
         return this.fullName;

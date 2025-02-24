@@ -2,8 +2,10 @@ package es.codeurjc.backend.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Optional;
 import java.util.Collections;
 
@@ -37,14 +41,14 @@ public class RegisteredWebController {
     }
  
     @PostMapping("/user/new")
-    public String registerMethod(Model model, @ModelAttribute User user) {
+    public String registerMethod(Model model, @ModelAttribute User user, MultipartFile profilePhoto) throws IOException {
 
         
 
-        /* if (userService.userExists(user.getUserName())){
+        if (userService.userExists(user.getUserName())){
             model.addAttribute("error", "Name already exists");
             return "register";
-        } */
+        }
 
          if (user.getFullName() == null || user.getFullName().isEmpty()) {
             model.addAttribute("error", "Fill the gap name");
@@ -74,10 +78,10 @@ public class RegisteredWebController {
             return "register";
         }
 
-        if (user.getPhoto() == null || user.getPhoto().isEmpty() || !user.getPhoto().contains("https://")) {
-            model.addAttribute("error", "Photo is mandatory");
-            return "register";
-        }
+        if (!profilePhoto.isEmpty()) {
+			user.setProfilePhoto(BlobProxy.generateProxy(profilePhoto.getInputStream(), profilePhoto.getSize()));
+			user.setImage(true);
+		}
         Integer age = user.getAge(); 
         if (age==null || age< 0 || age > 110) {
             model.addAttribute("error", "Enter an age between 0-100");
@@ -86,11 +90,9 @@ public class RegisteredWebController {
         
         user.setRoles(Collections.singletonList("Registered user"));
         userService.addUser(user);
-        //model.addAttribute("user",user);
         userService.save(user);
         return "redirect:/user/"+user.getId();
 
-        //return "userPage";
     }
 
     @GetMapping("/user/{id}")

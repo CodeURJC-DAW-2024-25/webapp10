@@ -41,33 +41,36 @@ public class WebController {
 		return "index";
 	}
 
-	@GetMapping("/loadMoreConcerts")
-	public ResponseEntity<String> loadMoreConcerts(@RequestParam int page) {
-		// Carga más conciertos al hacer clic en "Load More"
-		var concerts = concertService.getConcerts(page, 10);
-		StringBuilder htmlResponse = new StringBuilder();
-
-		// Generar el HTML para los conciertos y devolverlo
-		concerts.forEach(concert -> {
-			htmlResponse.append("<article class=\"concert-card\">")
-					.append("<a href=\"concertInfo.html?id=")
-					.append(concert.getId())
-					.append("\" class=\"link\">")
-					.append("<img src=\"")
-					.append(concert.getConcertDetails()) // Reemplazar con la URL o path de imagen
-					.append("\" alt=\"")
-					.append(concert.getConcertName())
-					.append("\">")
-					.append("<div class=\"concert-info\">")
-					.append("<h5>")
-					.append(concert.getConcertName())
-					.append("</h5>")
-					.append("<p>Artist: ")
-					.append(concert.getArtistName())
-					.append("</p></div></a></article>");
-		});
-		return ResponseEntity.ok(htmlResponse.toString());
-	}
+	/*
+	 * @GetMapping("/loadMoreConcerts")
+	 * public ResponseEntity<String> loadMoreConcerts(@RequestParam int page) {
+	 * // Carga más conciertos al hacer clic en "Load More"
+	 * var concerts = concertService.getConcerts(page, 10);
+	 * StringBuilder htmlResponse = new StringBuilder();
+	 * 
+	 * // Generar el HTML para los conciertos y devolverlo
+	 * concerts.forEach(concert -> {
+	 * htmlResponse.append("<article class=\"concert-card\">")
+	 * .append("<a href=\"concertInfo.html?id=")
+	 * .append(concert.getId())
+	 * .append("\" class=\"link\">")
+	 * .append("<img src=\"")
+	 * .append(concert.getConcertDetails()) // Reemplazar con la URL o path de
+	 * imagen
+	 * .append("\" alt=\"")
+	 * .append(concert.getConcertName())
+	 * .append("\">")
+	 * .append("<div class=\"concert-info\">")
+	 * .append("<h5>")
+	 * .append(concert.getConcertName())
+	 * .append("</h5>")
+	 * .append("<p>Artist: ")
+	 * .append(concert.getArtistName())
+	 * .append("</p></div></a></article>");
+	 * });
+	 * return ResponseEntity.ok(htmlResponse.toString());
+	 * }
+	 */
 
 	/*
 	 * @GetMapping("/concert/{id}")

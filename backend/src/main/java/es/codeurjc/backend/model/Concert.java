@@ -25,11 +25,13 @@ public class Concert {
     private Date concertDate;
     private Time concertTime;
     private String location;
+    private String artistName;
+    private String artistInfo;
 
     @ManyToMany(mappedBy = "concerts")
     private List<Artist> artists;
 
-    @OneToMany(mappedBy = "concerts")
+    @OneToMany(mappedBy = "concert")
     private List<Ticket> tickets;
 
     //Constructors
@@ -58,7 +60,7 @@ public class Concert {
     }
 
     public String getArtistName() {
-        return artistName;
+        return this.artistName;
     }
 
     public void setArtistName(String artistName) {
@@ -66,7 +68,7 @@ public class Concert {
     }
 
     public String getArtistInfo() {
-        return artistInfo;
+        return this.artistInfo;
     }
 
     public void setArtistInfo(String artistInfo) {

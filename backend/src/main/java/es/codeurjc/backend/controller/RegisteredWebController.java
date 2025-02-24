@@ -86,11 +86,11 @@ public class RegisteredWebController {
         
         user.setRoles(Collections.singletonList("Registered user"));
         userService.addUser(user);
-        model.addAttribute("user",user);
-        //userService.save(user);
-        //return "redirect:/user/"+user.getId(); add when repository initialize
+        //model.addAttribute("user",user);
+        userService.save(user);
+        return "redirect:/user/"+user.getId();
 
-        return "userPage";
+        //return "userPage";
     }
 
     @GetMapping("/user/{id}")

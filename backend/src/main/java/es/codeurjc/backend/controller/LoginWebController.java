@@ -25,8 +25,9 @@ public class LoginWebController {
     public String login (Model model,@RequestParam String email, @RequestParam String password){
         User user= userService.userCorrect(email,password);
         if (user!=null){
-            model.addAttribute("user",user);
-            return "userPage";
+           /* model.addAttribute("user",user);
+            return "userPage";*/ 
+            return "redirect:/user/"+user.getId();
         }
         return "loginerror";
     }

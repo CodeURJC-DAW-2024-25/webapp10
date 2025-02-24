@@ -30,8 +30,8 @@ public class User {
     private Integer age; 
     private Integer TicketsBought;
 
-    /* @OneToMany(mappedBy = "userOwner", fetch = FetchType.LAZY)
-    private ArrayList<Ticket> ticketsHistory; */
+    @OneToMany(mappedBy = "userOwner", fetch = FetchType.LAZY)
+    private List<Ticket> ticketsHistory; 
 
     @ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles;
@@ -143,6 +143,14 @@ public class User {
 
 	public void setRoles(List<String> roles) {
 		this.roles = roles;
+	}
+
+    public List<Ticket> getTickets() {
+		return ticketsHistory;
+	}
+
+	public void setTickets(List<Ticket> tickets) {
+		this.ticketsHistory = tickets;
 	}
 
 }

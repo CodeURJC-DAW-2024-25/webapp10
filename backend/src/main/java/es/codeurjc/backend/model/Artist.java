@@ -19,7 +19,7 @@ public class Artist {
     private String musicalStyle;
     private String artistInfo;
 
-    @ManyToMany(mappedBy = "artists")
+    @ManyToMany
     private List<Concert> concerts;
 
     //Constructors

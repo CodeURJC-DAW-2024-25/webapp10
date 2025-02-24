@@ -12,8 +12,8 @@
 </head>
 
 <body>
-         <!--Header-->
-         {{>header}}
+    <!--Header-->
+    {{>header}}
     <div id="container-userPage">
 
         <div class="content-userPage">
@@ -21,14 +21,13 @@
                 {{#user}}
                 <!-- Left side with the photo -->
                 <div class="col-md-4 d-flex flex-column align-items-center justify-content-center p-4">
-                    <img src="{{photo}}"
-                        class="img-fluid rounded shadow" alt="Festival">
+                    <img src="{{photo}}" class="img-fluid rounded shadow" alt="Festival">
                     <h2 class="mt-3 text-center">Welcome to your TicketZone Fest</h2>
                     <p class="text-center">Here you will find all your information.</p>
                 </div>
 
 
-                
+
                 <!-- Central part with personal information -->
                 <div class="col-md-4 d-flex align-items-center justify-content-center">
                     <div class="p-4 bg-white shadow rounded w-75">
@@ -64,8 +63,15 @@
                                     <td></td>
                                 </tr>
                                 <tr>
+                                    {{#roles}}
                                     <td class="fw-bold">User Type:</td>
-                                    <td>{{roles}}</td>
+                                    <td>{{.}}</td>
+                                    {{/roles}}
+
+                                    {{^roles}}
+                                    <td class="fw-bold">User Type:</td>
+                                    <td>No user type</td>
+                                    {{/roles}}
                                 </tr>
                             </tbody>
                         </table>
@@ -78,13 +84,14 @@
 
                 </div>
 
-                {{/user}}
 
-                <!-- Right side with purchase history 
+
+                <!-- Right side with purchase history -->
                 <div class="col-md-4 d-flex align-items-center justify-content-center">
                     <div class="p-4 bg-white shadow rounded w-75">
                         <h2 class="text-muted text-center mb-3">Purchase History</h2>
-                        <table class="table table-bordered">
+                        {{#ticketsHistory}}
+                        <!-- <table class="table table-bordered">
                             <tbody>
                                 {{#user.purchases}}
                                 <tr class="table-primary">
@@ -96,7 +103,7 @@
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Tickets Bought:</td>
-                                    <td>{{ticketsNumber}} ({{ticketType}})</td>
+                                    <td>{{numTickets}} ({{ticketType}})</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Total Price:</td>
@@ -114,19 +121,28 @@
                                 <button class="btn btn-success ">
                                     <i class="bi bi-download"></i> Download ticket</button>
                         </div>
-                        {{/user.hasPendingTickets}}
+                        {{/user.hasPendingTickets}} -->
+                        {{/ticketsHistory}}
+
+                        {{^ticketsHistory}}
+                        <p class="text-muted text-center mb-3">No tickets yet</p>
+                        {{/ticketsHistory}}
                     </div>
 
-                </div>-->
+
+
+                </div>
 
             </div>
+            {{/user}}
         </div>
+
 
     </div>
 
-    
-         <!--Footer-->
-         {{>footer}}
+
+    <!--Footer-->
+    {{>footer}}
 </body>
 
 </html>

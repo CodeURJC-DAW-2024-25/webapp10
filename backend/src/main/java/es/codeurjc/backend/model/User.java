@@ -1,5 +1,6 @@
 package es.codeurjc.backend.model;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 
 @Entity(name = "UserTable")
@@ -23,69 +25,84 @@ public class User {
 
     private String fullName;
     private String userName;
-    private String photo;
     private Integer phone;
     private String email;
-    private String password;
-    private Integer age; 
-    private Integer TicketsBought;
+    private String encodedPassword;
+    private Integer age;
+
+    @Lob
+    private Blob profilePhoto;
 
     @OneToMany(mappedBy = "userOwner", fetch = FetchType.LAZY)
-    private List<Ticket> ticketsHistory; 
+    private List<Ticket> tickets; 
 
     @ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles;
 
-
     public User(){}
 
-    public User (String fullName, String userName, String photo, Integer phone, String email, String password, Integer age, String... roles){
+    public User (String fullName, String userName, Integer phone, String email, String encodedPassword, Integer age, String... roles){
         
         super();
         this.fullName=fullName;
         this.userName=userName;
-        this.photo=photo;
         this.phone=phone;
         this.email=email;
-        this.password=password;
+        this.encodedPassword=encodedPassword;
         this.age=age;
-        this.TicketsBought=0;
         this.roles = List.of(roles);
-        
+    }
 
+    public Long getId(){
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    public String getFullName(){
+        return this.fullName;
     }
 
     public void setFullName(String fullName){
         this.fullName=fullName;
     }
 
-    public Long getId(){
-        return this.id;
+    public String getUserName(){
+        return this.userName;
     }
+
     public void setUserName(String userName){
         this.userName=userName;
     }
 
-    public void setPhoto(String photo){
-        this.photo=photo;
-    }
-
-    
-
-    public void setTicketsBought(Integer tickets){
-        this.TicketsBought=tickets;
+    public Integer getPhone(){
+        return this.phone;
     }
 
     public void setPhone(Integer phone){
         this.phone=phone;
     }
 
+    public String getEmail(){
+        return this.email;
+    }
+    
     public void setEmail(String email){
         this.email=email;
     }
 
-    public void setPassword(String password){
-        this.password=password;
+    public String getEncodedPassword(){
+        return this.encodedPassword;
+    }
+
+    public void setEncodedPassword(String password){
+        this.encodedPassword=password;
+    }
+
+    public Integer getAge(){
+        return this.age;
     }
 
     public void setAge(Integer age){
@@ -96,45 +113,20 @@ public class User {
         }
     }
 
-    public String getFullName(){
-        return this.fullName;
+    public Blob getProfilePhoto() {
+        return profilePhoto;
     }
 
-    public String getUserName(){
-        return this.userName;
+    public void setProfilePhoto(Blob profilePhoto) {
+        this.profilePhoto = profilePhoto;
     }
 
-    public String getPassword(){
-        return this.password;
+    public List<Ticket> getTickets() {
+        return tickets;
     }
 
-    public Integer getPhone(){
-        return this.phone;
-    }
-
-    public String getPhoto(){
-        return this.photo;
-    }
-
-    public String getEmail(){
-        return this.email;
-    }
-
-    public Integer getAge(){
-        return this.age;
-    }
-
-    public boolean checkEqualPassWord(String passWord){
-        
-        if (this.password==passWord){
-            return true;
-        }
-        
-        return false;
-    }
-
-    public Integer getTicketsBought(){
-        return this.TicketsBought;
+    public void setTickets(List<Ticket> ticketsHistory) {
+        this.tickets = ticketsHistory;
     }
 
     public List<String> getRoles() {
@@ -144,13 +136,4 @@ public class User {
 	public void setRoles(List<String> roles) {
 		this.roles = roles;
 	}
-
-    public List<Ticket> getTickets() {
-		return ticketsHistory;
-	}
-
-	public void setTickets(List<Ticket> tickets) {
-		this.ticketsHistory = tickets;
-	}
-
 }

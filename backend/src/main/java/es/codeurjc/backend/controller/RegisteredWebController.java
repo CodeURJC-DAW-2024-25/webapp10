@@ -69,7 +69,7 @@ public class RegisteredWebController {
             return "register";
         }
 
-        if (user.getPassword() == null || user.getPassword().isEmpty() ) {
+        if (user.getEncodedPassword() == null || user.getEncodedPassword().isEmpty() ) {
             model.addAttribute("error", "Fill the gap password");
             return "register";
         }

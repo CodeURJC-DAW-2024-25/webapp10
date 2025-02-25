@@ -95,7 +95,7 @@ public class RegisteredWebController {
         } 
         
         userRepository.save(new User(user.getFullName(),user.getUserName(),user.getPhone(),user.getEmail(), passwordEncoder.encode(user.getEncodedPassword()),user.getAge(),"USER"));
-        return "redirect:/user/"+user.getId();
+        return "redirect:/";
 
     }
 

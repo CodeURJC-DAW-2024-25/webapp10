@@ -30,7 +30,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.security.Principal;
 
-
 @Controller
 public class WebController {
 
@@ -50,21 +49,20 @@ public class WebController {
 	public void addAttributes(Model model, HttpServletRequest request) {
 
 		Principal principal = request.getUserPrincipal();
-		Optional<User> user= userService.findByUserName(principal.getName()); 
-
 
 		if (principal != null) {
-
-			model.addAttribute("logged", true);
-			model.addAttribute("userName", principal.getName());
-			model.addAttribute("id",user.get().getId());
-			model.addAttribute("admin", request.isUserInRole("ADMIN"));
+			Optional<User> user = userService.findByUserName(principal.getName());
+			if (user.isPresent()) {
+				model.addAttribute("logged", true);
+				model.addAttribute("userName", principal.getName());
+				model.addAttribute("id", user.get().getId());
+				model.addAttribute("admin", request.isUserInRole("ADMIN"));
+			}
 
 		} else {
 			model.addAttribute("logged", false);
 		}
 	}
- 
 
 	@GetMapping("/")
 	public String show(Model model) {
@@ -75,17 +73,17 @@ public class WebController {
 	}
 
 	@GetMapping("/user/{id}")
-    public String showUser(Model model,@PathVariable Long id, HttpServletRequest request) {
+	public String showUser(Model model, @PathVariable Long id, HttpServletRequest request) {
 
-        addAttributes(model, request);
-		Optional <User> user= userService.findById(id);
-        if (user.isPresent()){
-            model.addAttribute("user",user.get());
-            return "userPage";
-        }else{
-            return "index";
-        }
-		
+		addAttributes(model, request);
+		Optional<User> user = userService.findById(id);
+		if (user.isPresent()) {
+			model.addAttribute("user", user.get());
+			return "userPage";
+		} else {
+			return "index";
+		}
+
 	}
 
 	/*
@@ -119,7 +117,6 @@ public class WebController {
 	 * }
 	 */
 
-	
 	@GetMapping("/concert/{id}")
 	public String showConcert(Model model, @PathVariable long id) {
 		Optional<Concert> concert = concertService.findById(id);
@@ -130,7 +127,6 @@ public class WebController {
 			return "/";
 		}
 	}
-	
 
 	@GetMapping("/newconcert")
 	public String newConcert(Model model) {
@@ -143,60 +139,59 @@ public class WebController {
 
 	@PostMapping("/newconcert")
 	public String newConcertProcess(
-            @RequestParam String concertName,
-            @RequestParam("artistIds") List<Long> artistIds,
-            @RequestParam String concertDetails,
-            @RequestParam String concertDate,
-            @RequestParam String concertTime,
-            @RequestParam String location,
+			@RequestParam String concertName,
+			@RequestParam("artistIds") List<Long> artistIds,
+			@RequestParam String concertDetails,
+			@RequestParam String concertDate,
+			@RequestParam String concertTime,
+			@RequestParam String location,
 			@RequestParam Integer stadiumPrice,
 			@RequestParam Integer trackPrice,
-            //@RequestParam MultipartFile imageField,
-            Model model) throws IOException {
+			// @RequestParam MultipartFile imageField,
+			Model model) throws IOException {
 
-        Concert concert = new Concert();
-        concert.setConcertName(concertName);
-        concert.setConcertDetails(concertDetails);
+		Concert concert = new Concert();
+		concert.setConcertName(concertName);
+		concert.setConcertDetails(concertDetails);
 		concert.setConcertDate(concertDate);
 		concert.setConcertTime(concertTime);
-        concert.setLocation(location);
+		concert.setLocation(location);
 		concert.setStadiumPrice(stadiumPrice);
 		concert.setTrackPrice(trackPrice);
-		//concert.setImage(imageField.getBytes();
+		// concert.setImage(imageField.getBytes();
 
 		List<Artist> selectedArtists = artistIds.stream()
-        .map(id -> artistService.findById(id)
-            .orElseThrow(() -> new RuntimeException("No existe artista con ID " + id))
-        )
-        .collect(Collectors.toList());
-    	concert.setArtists(selectedArtists);
+				.map(id -> artistService.findById(id)
+						.orElseThrow(() -> new RuntimeException("No existe artista con ID " + id)))
+				.collect(Collectors.toList());
+		concert.setArtists(selectedArtists);
 
-        concertService.save(concert);
+		concertService.save(concert);
 
-        model.addAttribute("concertId", concert.getId());
+		model.addAttribute("concertId", concert.getId());
 
-        return "redirect:/concert/" + concert.getId();
+		return "redirect:/concert/" + concert.getId();
 	}
 
 	@GetMapping("/newartist")
-    public String newArtist(Model model) {
-        return "newArtist";
-    }
+	public String newArtist(Model model) {
+		return "newArtist";
+	}
 
 	@PostMapping("/newartist")
-    public String newArtistProcess(
-            @RequestParam String artistName,
+	public String newArtistProcess(
+			@RequestParam String artistName,
 			@RequestParam String musicalStyle,
-            @RequestParam String artistInfo,
-            Model model) {
+			@RequestParam String artistInfo,
+			Model model) {
 
-        Artist artist = new Artist();
-        artist.setArtistName(artistName);
+		Artist artist = new Artist();
+		artist.setArtistName(artistName);
 		artist.setMusicalStyle(musicalStyle);
-        artist.setArtistInfo(artistInfo);
+		artist.setArtistInfo(artistInfo);
 
-        artistService.save(artist);
+		artistService.save(artist);
 
-        return "redirect:/";
+		return "redirect:/";
 	}
 }

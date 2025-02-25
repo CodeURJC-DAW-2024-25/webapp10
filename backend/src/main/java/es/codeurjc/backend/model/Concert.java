@@ -1,8 +1,6 @@
 package es.codeurjc.backend.model;
 
 import java.sql.Blob;
-import java.sql.Date;
-import java.sql.Time;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -57,7 +55,6 @@ public class Concert {
         this.stadiumPrice = stadiumPrice;
         this.trackPrice = trackPrice;
         this.map = map;
-        this.concertImage = false;
     }
 
     //Getters and setters

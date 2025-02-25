@@ -14,13 +14,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-	/* @Autowired
+	@Autowired
 	RepositoryUserDetailsService userDetailsService;
-
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
 
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
@@ -30,22 +25,7 @@ public class WebSecurityConfig {
 		authProvider.setPasswordEncoder(passwordEncoder());
 
 		return authProvider;
-    } */
-/* 
-    @Bean
-    public InMemoryUserDetailsManager userDetailsService(){
-        UserDetails user = User.builder()
-                .username("user")
-                .password(passwordEncoder().encode("user"))
-                .roles("USER")
-                .build();
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password(passwordEncoder().encode("admin"))
-                .roles("ADMIN")
-                .build();
-        return new InMemoryUserDetailsManager(user, admin);
-    } */
+    } 
 
 	@Bean
     public PasswordEncoder passwordEncoder() {
@@ -53,41 +33,35 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeRequests(authorizeRequests ->
-                authorizeRequests.anyRequest().permitAll()
-            )
-            .csrf(csrf -> csrf.disable());
-        return http.build();
-    }
-
-   /*  @Bean
      public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-		//http.authenticationProvider(authenticationProvider());
+		http.authenticationProvider(authenticationProvider());
 
 		http.authorizeHttpRequests(authorize -> authorize
 						// PUBLIC PAGES
 						.requestMatchers("/").permitAll()
+                        .requestMatchers("/css/**").permitAll()
 						.requestMatchers("/images/**").permitAll() 
 						.requestMatchers("/register/**").permitAll()
                         .requestMatchers("/concertInfo/**").permitAll()
 						// PRIVATE PAGES
 						.requestMatchers("/purchasePage").hasAnyRole("USER")
-						.requestMatchers("/userPage").hasAnyRole("USER")
+						.requestMatchers("/user/**").hasAnyRole("USER")
+                        .requestMatchers("/userPage").hasAnyRole("USER")
                         .requestMatchers("/newArtist/*").hasAnyRole("ADMIN")
-						.requestMatchers("/newCocert/*").hasAnyRole("ADMIN"))
+						.requestMatchers("/newConcert/*").hasAnyRole("ADMIN"))
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login")
 						.failureUrl("/loginerror")
-						.defaultSuccessUrl("/")
+						.defaultSuccessUrl("/",true)
 						.permitAll())
 				.logout(logout -> logout
 						.logoutUrl("/logout")
 						.logoutSuccessUrl("/")
 						.permitAll());
+     
 
-		return http.build();
-	} */
+                        
+                        return http.build();
+	}  
 }

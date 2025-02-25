@@ -18,29 +18,6 @@ public class UserService {
     @Autowired
 	private UserRepository repository;
 
-
-    private List<User> users = new ArrayList<>();
-
-    public void addUser(User user) {
-        users.add(user);
-    }
-
-    public List<User> getAllUsers() {
-        return users;
-    }
-
-	public User userCorrect(String email, String password){
-
-		for (User userInUsers: users){
-			if (userInUsers.getEmail().equals(email)){
-				 if (userInUsers.getEncodedPassword().equals(password)){
-					return userInUsers;
-				 }
-			}
-		}
-		return null;
-	}
-
 	public Optional<User> findById(long id) {
 		return repository.findById(id);
 	}

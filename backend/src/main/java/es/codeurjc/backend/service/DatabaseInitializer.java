@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Collections;
 import java.util.List;
 
 import static org.hibernate.engine.jdbc.BlobProxy.generateProxy;
@@ -75,8 +76,8 @@ public class DatabaseInitializer {
 		concertRepository.save(concert4);
 		concertRepository.save(concert5);
 	
-		// userRepository.save(new User(null, "John Doe", "user", 123456789, "user@example.com", passwordEncoder.encode("pass"), 20));
-		// userRepository.save(new User(null, "Admin User", "admin", 987654321, "admin@example.com", passwordEncoder.encode("admin"), 21));
+		userRepository.save(new User("John Doe", "user", 123456789, "user@example.com", passwordEncoder.encode("pass"), 20,"USER"));
+		userRepository.save(new User("Admin User", "admin", 987654321, "admin@example.com", passwordEncoder.encode("admin"), 21,"ADMIN"));
 	}
 
 	public void setConcertImage(Concert concert, String classpathResource) throws IOException {

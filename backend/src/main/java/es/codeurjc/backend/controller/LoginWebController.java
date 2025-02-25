@@ -13,22 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class LoginWebController {
 
-    @Autowired
-    private UserService userService;
 
     @RequestMapping("/login")
 	public String showlogin() {
 		return "login";
 	}
-
-    @PostMapping("/login")
-    public String login (Model model,@RequestParam String email, @RequestParam String password){
-        User user= userService.userCorrect(email,password);
-        if (user!=null){
-            return "redirect:/user/"+user.getId();
-        }
-        return "loginerror";
-    }
 
 	@RequestMapping("/loginerror")
 	public String showloginerror() {

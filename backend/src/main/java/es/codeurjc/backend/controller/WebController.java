@@ -13,12 +13,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.data.domain.Page;
 
 import es.codeurjc.backend.model.Concert;
+import es.codeurjc.backend.model.User;
 import es.codeurjc.backend.service.ConcertService;
 import es.codeurjc.backend.service.ArtistService;
 import es.codeurjc.backend.service.TicketService;
+import es.codeurjc.backend.service.UserService;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class WebController {
@@ -32,15 +35,21 @@ public class WebController {
 	@Autowired
 	private TicketService ticketService;
 
+	@Autowired
+	private UserService userService;
+
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
 
 		Principal principal = request.getUserPrincipal();
+		Optional<User> user= userService.findByUserName(principal.getName()); 
+
 
 		if (principal != null) {
 
 			model.addAttribute("logged", true);
 			model.addAttribute("userName", principal.getName());
+			model.addAttribute("id",user.get().getId());
 			model.addAttribute("admin", request.isUserInRole("ADMIN"));
 
 		} else {
@@ -52,12 +61,23 @@ public class WebController {
 	@GetMapping("/")
 	public String show(Model model) {
 
-		// Inicializa los conciertos si no hay ninguno (opcional)
-		// concertService.initializeConcerts();
-
 		model.addAttribute("concerts", concertService.getConcerts(0, 10));
 
 		return "index";
+	}
+
+	@GetMapping("/user/{id}")
+    public String showUser(Model model,@PathVariable Long id, HttpServletRequest request) {
+
+        addAttributes(model, request);
+		Optional <User> user= userService.findById(id);
+        if (user.isPresent()){
+            model.addAttribute("user",user.get());
+            return "userPage";
+        }else{
+            return "index";
+        }
+		
 	}
 
 	/*

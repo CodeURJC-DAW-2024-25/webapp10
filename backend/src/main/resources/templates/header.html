@@ -10,21 +10,18 @@
     <div class="navButtons">
         {{#logged}}
             {{#admin}}
-                <button  onclick="window.location.href='newConcert.html'" type="button" class="btn btn-primary">New Concert</button>
-                <button onclick="window.location.href='newArtist.html'" type="button" class="btn btn-primary">New Artist</button>
-            {{/admin}}        
-            <button onclick="window.location.href='userPage.html'" type="button" class="btn btn-primary">User page</button>
-            <ul class="navbar-nav d-flex align-items-center">
-                <li class="nav-item">
-                    <span class="navbar-text fs-3 text-white mx-3">{{userName}}</span>
-                </li>
-                <li class="nav-item">
-                    <form action="/logout" method="post" class="d-inline">
-                        <button class="btn btn-primary btn-nowrap" type="submit">Log Out</button>
-                        <input type="hidden" name="_csrf" value="{{token}}" />
-                    </form>
-                </li>
-            </ul>
+                <button  onclick="window.location.href='newConcert.html'" type="button" class="btn btn-dark">New Concert</button>
+                <button onclick="window.location.href='newArtist.html'" type="button" class="btn btn-dark">New Artist</button>
+            {{/admin}} 
+            <div class="navButtons">
+                <button onclick="window.location.href='/user/{{id}}'" type="button" class="btn btn-dark">User page</button>
+                
+                <form action="/logout" method="post" class="d-inline">
+                    <button class="btn btn-dark btn-nowrap" type="submit">Log Out</button>
+                    <input type="hidden" name="_csrf" value="{{token}}" />
+                </form>
+                <button  type="button" class="btn btn-success">{{userName}}</button>
+            </div>       
         {{/logged}}
     </div>
 

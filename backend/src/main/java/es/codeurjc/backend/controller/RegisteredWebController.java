@@ -24,12 +24,16 @@ import java.util.Optional;
 import java.util.Collections;
 
 import es.codeurjc.backend.model.User;
+import es.codeurjc.backend.repository.UserRepository;
 import es.codeurjc.backend.service.UserService;
 
 
 @Controller
 public class RegisteredWebController {
 
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private UserService userService;
@@ -46,6 +50,7 @@ public class RegisteredWebController {
  
     @PostMapping("/user/new")
     public String registerMethod(Model model, @ModelAttribute User user, MultipartFile profilePhoto) throws IOException {
+
         
         if (userService.userExists(user.getUserName())){
             model.addAttribute("error", "Name already exists");
@@ -79,37 +84,22 @@ public class RegisteredWebController {
             return "register";
         }
 
-        user.setEncodedPassword(passwordEncoder.encode(user.getEncodedPassword()));
-
-        if (!profilePhoto.isEmpty()) {
+        /* if (!profilePhoto.isEmpty()) {
 			user.setProfilePhoto(BlobProxy.generateProxy(profilePhoto.getInputStream(), profilePhoto.getSize()));
 			user.setImage(true);
-		}
+		} */
         Integer age = user.getAge(); 
         if (age==null || age< 0 || age > 110) {
             model.addAttribute("error", "Enter an age between 0-100");
             return "register";
-        }
+        } 
         
-        user.setRoles(Collections.singletonList("Registered user"));
-        userService.addUser(user);
-        userService.save(user);
+        userRepository.save(new User(user.getFullName(),user.getUserName(),user.getPhone(),user.getEmail(), passwordEncoder.encode(user.getEncodedPassword()),user.getAge(),"USER"));
         return "redirect:/user/"+user.getId();
 
     }
 
-    @GetMapping("/user/{id}")
-    public String showUser(Model model,@PathVariable Long id) {
-
-		Optional <User> user= userService.findById(id);
-        if (user.isPresent()){
-            model.addAttribute("user",user.get());
-            return "userPage";
-        }else{
-            return "index";
-        }
-		
-	}
+    
     
 
 

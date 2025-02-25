@@ -43,25 +43,25 @@ public class WebSecurityConfig {
                         .requestMatchers("/css/**").permitAll()
 						.requestMatchers("/images/**").permitAll() 
 						.requestMatchers("/register/**").permitAll()
+						.requestMatchers("/login/**").permitAll()
                         .requestMatchers("/concertInfo/**").permitAll()
+						.requestMatchers("/user/new/**").permitAll()
 						// PRIVATE PAGES
-						.requestMatchers("/purchasePage").hasAnyRole("USER")
-						.requestMatchers("/user/**").hasAnyRole("USER")
-                        .requestMatchers("/userPage").hasAnyRole("USER")
+						.requestMatchers("/purchasePage").hasAnyRole("USER","ADMIN")
+						.requestMatchers("/user/**").hasAnyRole("USER","ADMIN")
+                        .requestMatchers("/userPage").hasAnyRole("USER","ADMIN")
                         .requestMatchers("/newArtist/*").hasAnyRole("ADMIN")
 						.requestMatchers("/newConcert/*").hasAnyRole("ADMIN"))
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login")
 						.failureUrl("/loginerror")
-						.defaultSuccessUrl("/",true)
+						.defaultSuccessUrl("/")
 						.permitAll())
 				.logout(logout -> logout
 						.logoutUrl("/logout")
 						.logoutSuccessUrl("/")
 						.permitAll());
      
-
-                        
                         return http.build();
 	}  
 }

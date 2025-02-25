@@ -28,36 +28,44 @@
                 <!-- Right side with the form -->
                 <div class="col-md-8 d-flex flex-column align-items-center justify-content-center p-4">
                     <h4 class="text-center mb-3">TicketZone Fest New Concert form</h4>
-                    <form role="form" class="w-100">
+                    <form role="form" class="w-100" method="post" action="/newconcert">
                         <div class="mb-3">
                             <label for="concertName">Concert name:</label>
-                            <input type="text" class="form-control" id="fullName" placeholder="Enter Full name">
+                            <input name="concertName" type="text" class="form-control" id="concertName" placeholder="Enter Full name">
                         </div>
                         <div class="mb-3">
-                            <label for="artistName">Artist name:</label>
-                            <input type="text" class="form-control" id="artistName" placeholder="Enter artist name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="artistInfo">Artist Information:</label>
-                            <input type="text" class="form-control" id="artistInfo" placeholder="Enter information about the artist">
+                            <label for="artistIds">Artists:</label>
+                            <select id="artistIds" name="artistIds" class="form-control" multiple>
+                                <option value="" disabled selected>Select an artist</option>
+                                {{#artists}}
+                                    <option value="{{id}}">{{artistName}}</option>
+                                {{/artists}}
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="concertDetails">Concert Details:</label>
-                            <input type="text" class="form-control" id="concertDetails" placeholder="Enter concert details">
+                            <input name="concertDetails" type="text" class="form-control" id="concertDetails" placeholder="Enter concert details">
                         </div>
                         <div class="mb-3">
                             <label for="concertDate">Concert date:</label>
-                            <input type="date" class="form-control" id="concertDate" placeholder="Enter concert date">
+                            <input name="concertDate" type="date" class="form-control" id="concertDate" placeholder="Enter concert date">
                         </div>
                         <div class="mb-3"> 
                             <label for="concertTime">Concert time:</label>
-                            <input type="time" class="form-control" id="concertTime" placeholder="Enter concert time">
+                            <input name="concertTime" type="time" class="form-control" id="concertTime" placeholder="Enter concert time">
                         </div>
                         <div class="mb-3">
                             <label for="location">Location:</label>
-                            <input type="text" class="form-control" id="location" placeholder="Enter the location">
+                            <input name="location" type="text" class="form-control" id="location" placeholder="Enter the location">
                         </div>
-    
+                        <div class="mb-3">
+                            <label for="stadiumPrice">Stadium Price:</label>
+                            <input name="stadiumPrice" type="number" class="form-control" id="stadiumPrice" placeholder="Enter the stadium price">
+                        </div>
+                        <div class="mb-3">
+                            <label for="trackPrice">Track price:</label>
+                            <input name="trackPrice" type="number" class="form-control" id="trackPrice" placeholder="Enter the track price">
+                        </div>
                         <div class="d-flex align-items-center justify-content-between">
                             <a href="index.html">
                                 <button class="btn btn-primary" type="button">

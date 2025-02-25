@@ -1,13 +1,11 @@
 package es.codeurjc.backend.model;
 
-import java.sql.Blob;
 import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 
 @Entity
@@ -20,9 +18,6 @@ public class Artist {
     private String artistName;
     private String musicalStyle;
     private String artistInfo;
-
-    @Lob
-    private Blob artistPhoto;
 
     @ManyToMany
     private List<Concert> concerts;
@@ -60,14 +55,6 @@ public class Artist {
 
     public String getArtistInfo(){
         return artistInfo;
-    }
-    
-    public Blob getArtistPhoto() {
-        return artistPhoto;
-    }
-
-    public void setArtistPhoto(Blob artistPhoto) {
-        this.artistPhoto = artistPhoto;
     }
 
     public Long getId() {

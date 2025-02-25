@@ -24,8 +24,8 @@ public class Concert {
     
     private String concertName; 
     private String concertDetails;
-    private Date concertDate;
-    private Time concertTime;
+    private String concertDate;
+    private String concertTime;
     private String location;
     private Integer stadiumPrice;
     private Integer trackPrice;
@@ -45,7 +45,7 @@ public class Concert {
     //Constructors
     public Concert(){}
     
-    public Concert(String concertName, String concertDetails, Date concertDate, Time concertTime, String location, Integer stadiumPrice, Integer trackPrice, List<Artist> artists, String map) {
+    public Concert(String concertName, String concertDetails, String concertDate, String concertTime, String location, Integer stadiumPrice, Integer trackPrice, List<Artist> artists, String map) {
         
         super();
         this.concertName = concertName;
@@ -78,19 +78,19 @@ public class Concert {
         this.concertDetails = concertDetails;
     }
 
-    public Date getConcertDate() {
+    public String getConcertDate() {
         return concertDate;
     }
 
-    public void setConcertDate(Date concertDate) {
+    public void setConcertDate(String concertDate) {
         this.concertDate = concertDate;
     }
 
-    public Time getConcertTime() {
+    public String getConcertTime() {
         return concertTime;
     }
 
-    public void setConcertTime(Time concertTime) {
+    public void setConcertTime(String concertTime) {
         this.concertTime = concertTime;
     }
 

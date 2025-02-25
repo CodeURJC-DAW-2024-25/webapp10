@@ -24,6 +24,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.security.Principal;
 
@@ -99,18 +100,18 @@ public class WebController {
 	 * }
 	 */
 
-	/*
-	 * @GetMapping("/concert/{id}")
-	 * public String showConcert(Model model, @PathVariable long id) {
-	 * Concert concert = ConcertService.getConcertById(id);
-	 * if (concert.isEmpty()) {
-	 * return "/";
-	 * } else {
-	 * model.addAttribute("concert", concert);
-	 * return "concertInfo";
-	 * }
-	 * }
-	 */
+	
+	@GetMapping("/concert/{id}")
+	public String showConcert(Model model, @PathVariable long id) {
+		Optional<Concert> concert = concertService.findById(id);
+		if (concert.isPresent()) {
+			model.addAttribute("concert", concert.get());
+			return "concertInfo";
+		} else {
+			return "/";
+		}
+	}
+	
 
 	@GetMapping("/newconcert")
 	public String newConcert(Model model) {
@@ -126,8 +127,8 @@ public class WebController {
             @RequestParam String concertName,
             @RequestParam("artistIds") List<Long> artistIds,
             @RequestParam String concertDetails,
-            @RequestParam Date concertDate,
-            @RequestParam Time concertTime,
+            @RequestParam String concertDate,
+            @RequestParam String concertTime,
             @RequestParam String location,
 			@RequestParam Integer stadiumPrice,
 			@RequestParam Integer trackPrice,
@@ -137,8 +138,8 @@ public class WebController {
         Concert concert = new Concert();
         concert.setConcertName(concertName);
         concert.setConcertDetails(concertDetails);
-        concert.setConcertDate(concertDate);
-        concert.setConcertTime(concertTime);
+		concert.setConcertDate(concertDate);
+		concert.setConcertTime(concertTime);
         concert.setLocation(location);
 		concert.setStadiumPrice(stadiumPrice);
 		concert.setTrackPrice(trackPrice);
@@ -177,6 +178,6 @@ public class WebController {
 
         artistService.save(artist);
 
-        return "index";
+        return "redirect:/";
 	}
 }

@@ -33,7 +33,7 @@ public class UserService {
 
 		for (User userInUsers: users){
 			if (userInUsers.getEmail().equals(email)){
-				 if (userInUsers.getPassword().equals(password)){
+				 if (userInUsers.getEncodedPassword().equals(password)){
 					return userInUsers;
 				 }
 			}

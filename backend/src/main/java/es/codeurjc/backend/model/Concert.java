@@ -1,5 +1,6 @@
 package es.codeurjc.backend.model;
 
+import java.sql.Blob;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
@@ -8,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -25,8 +27,14 @@ public class Concert {
     private Date concertDate;
     private Time concertTime;
     private String location;
-    private String artistName;
-    private String artistInfo;
+    private Integer stadiumPrice;
+    private Integer trackPrice;
+    private String map;
+
+    @Lob
+    private Blob imageFile;
+
+    private boolean concertImage;
 
     @ManyToMany(mappedBy = "concerts")
     private List<Artist> artists;
@@ -37,16 +45,18 @@ public class Concert {
     //Constructors
     public Concert(){}
     
-    public Concert(String concertName, String artistName, String artistInfo, String concertDetails, Date concertDate, Time concertTime, String location){
+    public Concert(String concertName, String concertDetails, Date concertDate, Time concertTime, String location, Integer stadiumPrice, Integer trackPrice, List<Artist> artists, String map) {
         
         super();
         this.concertName = concertName;
-        this.artistName = artistName;
-        this.artistInfo = artistInfo;
         this.concertDetails = concertDetails;
         this.concertDate = concertDate;
         this.concertTime = concertTime;
         this.location = location;
+        this.artists = artists;
+        this.stadiumPrice = stadiumPrice;
+        this.trackPrice = trackPrice;
+        this.map = map;
     }
 
     //Getters and setters
@@ -57,22 +67,6 @@ public class Concert {
 
     public void setConcertName(String concertName) {
         this.concertName = concertName;
-    }
-
-    public String getArtistName() {
-        return this.artistName;
-    }
-
-    public void setArtistName(String artistName) {
-        this.artistName = artistName;
-    }
-
-    public String getArtistInfo() {
-        return this.artistInfo;
-    }
-
-    public void setArtistInfo(String artistInfo) {
-        this.artistInfo = artistInfo;
     }
 
     public String getConcertDetails() {
@@ -114,4 +108,60 @@ public class Concert {
 	public void setId(long id) {
 		this.id = id;
 	}
+
+    public boolean getConcertImage() {
+        return this.concertImage;
+    }
+
+    public void setConcertImage(boolean concertImage) {
+        this.concertImage = concertImage;
+    }
+
+    public List<Artist> getArtists() {
+        return artists;
+    }
+
+    public Blob getImageFile() {
+		return imageFile;
+	}
+
+	public void setImageFile(Blob image) {
+		this.imageFile = image;
+	}
+
+    public void setArtists(List<Artist> artists) {
+        this.artists = artists;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
+    public Integer getStadiumPrice() {
+        return stadiumPrice;
+    }
+
+    public void setStadiumPrice(Integer stadiumPrice) {
+        this.stadiumPrice = stadiumPrice;
+    }
+
+    public Integer getTrackPrice() {
+        return trackPrice;
+    }
+
+    public void setTrackPrice(Integer trackPrice) {
+        this.trackPrice = trackPrice;
+    }
+
+    public String getMap() {
+        return map;
+    }
+
+    public void setMap(String map) {
+        this.map = map;
+    }
 }

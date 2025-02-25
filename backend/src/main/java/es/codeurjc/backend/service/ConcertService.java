@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import es.codeurjc.backend.model.Concert;
 import es.codeurjc.backend.repository.ConcertRepository;
@@ -12,13 +14,17 @@ import es.codeurjc.backend.repository.ConcertRepository;
 @Service
 public class ConcertService {
 
-    @Autowired
+	@Autowired
 	private ConcertRepository repository;
+
+	public Page<Concert> getConcerts(int page, int size) {
+		return repository.findAll(PageRequest.of(page, size));
+	}
 
 	public Optional<Concert> findById(long id) {
 		return repository.findById(id);
 	}
-	
+
 	public boolean exist(long id) {
 		return repository.existsById(id);
 	}
@@ -33,5 +39,13 @@ public class ConcertService {
 
 	public void delete(long id) {
 		repository.deleteById(id);
+	}
+
+	public void initializeConcerts() {
+		for (int i = 1; i <= 20; i++) {
+			Concert concert = new Concert();
+			concert.setConcertName("Concierto " + i);
+			save(concert);
+		}
 	}
 }

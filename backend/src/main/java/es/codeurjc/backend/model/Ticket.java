@@ -1,7 +1,5 @@
 package es.codeurjc.backend.model;
 
-import java.util.Map;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,18 +23,19 @@ public class Ticket {
     @ManyToOne
     private User userOwner;
     
-    private int numTickets;
+    private Integer numTickets;
 
     @ManyToOne
     private Concert concert;
 
     public Ticket(){}
 
-    public Ticket(Concert concert, TicketType ticketType, Integer prices, User userOwner) {
+    public Ticket(Concert concert, TicketType ticketType, Integer prices, User userOwner, Integer numTickets) {
         this.concert = concert;
         this.ticketType = ticketType;
         this.prices = prices;
         this.userOwner = userOwner;
+        this.numTickets = numTickets;
     }
 
     public Concert getConcert() {
@@ -63,10 +62,6 @@ public class Ticket {
         this.prices = prices;
     }
 
-   /*  public Integer getPriceForType(TicketType type) {
-        return prices.get(type);
-    } */
-
     public User getUserOwner() {
         return userOwner;
     }
@@ -81,5 +76,13 @@ public class Ticket {
 
     public int getNumTickets(){
         return this.numTickets;
+    }
+    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

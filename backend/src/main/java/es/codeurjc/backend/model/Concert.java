@@ -29,9 +29,12 @@ public class Concert {
     private String location;
     private Integer stadiumPrice;
     private Integer trackPrice;
+    private String map;
 
     @Lob
-    private Blob concertImage;
+    private Blob imageFile;
+
+    private boolean concertImage;
 
     @ManyToMany(mappedBy = "concerts")
     private List<Artist> artists;
@@ -42,7 +45,7 @@ public class Concert {
     //Constructors
     public Concert(){}
     
-    public Concert(String concertName, String concertDetails, Date concertDate, Time concertTime, String location, Integer stadiumPrice, Integer trackPrice, List<Artist> artists) {
+    public Concert(String concertName, String concertDetails, Date concertDate, Time concertTime, String location, Integer stadiumPrice, Integer trackPrice, List<Artist> artists, String map) {
         
         super();
         this.concertName = concertName;
@@ -53,6 +56,7 @@ public class Concert {
         this.artists = artists;
         this.stadiumPrice = stadiumPrice;
         this.trackPrice = trackPrice;
+        this.map = map;
     }
 
     //Getters and setters
@@ -105,17 +109,25 @@ public class Concert {
 		this.id = id;
 	}
 
-    public Blob getConcertImage() {
-        return concertImage;
+    public boolean getConcertImage() {
+        return this.concertImage;
     }
 
-    public void setConcertImage(Blob concertImage) {
+    public void setConcertImage(boolean concertImage) {
         this.concertImage = concertImage;
     }
 
     public List<Artist> getArtists() {
         return artists;
     }
+
+    public Blob getImageFile() {
+		return imageFile;
+	}
+
+	public void setImageFile(Blob image) {
+		this.imageFile = image;
+	}
 
     public void setArtists(List<Artist> artists) {
         this.artists = artists;
@@ -143,5 +155,13 @@ public class Concert {
 
     public void setTrackPrice(Integer trackPrice) {
         this.trackPrice = trackPrice;
+    }
+
+    public String getMap() {
+        return map;
+    }
+
+    public void setMap(String map) {
+        this.map = map;
     }
 }

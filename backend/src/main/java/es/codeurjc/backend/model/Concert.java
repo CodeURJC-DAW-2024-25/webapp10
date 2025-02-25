@@ -57,6 +57,7 @@ public class Concert {
         this.stadiumPrice = stadiumPrice;
         this.trackPrice = trackPrice;
         this.map = map;
+        this.concertImage = false;
     }
 
     //Getters and setters

@@ -24,7 +24,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.io.IOException;
 import java.util.List;
-
+import java.util.stream.Collectors;
 import java.security.Principal;
 
 
@@ -124,23 +124,32 @@ public class WebController {
 	@PostMapping("/newconcert")
 	public String newConcertProcess(
             @RequestParam String concertName,
-            @RequestParam String artistName,
-            @RequestParam String artistInfo,
+            @RequestParam("artistIds") List<Long> artistIds,
             @RequestParam String concertDetails,
             @RequestParam Date concertDate,
             @RequestParam Time concertTime,
             @RequestParam String location,
-            @RequestParam MultipartFile imageField,
+			@RequestParam Integer stadiumPrice,
+			@RequestParam Integer trackPrice,
+            //@RequestParam MultipartFile imageField,
             Model model) throws IOException {
 
         Concert concert = new Concert();
         concert.setConcertName(concertName);
-        //concert.setArtists(artistName);
         concert.setConcertDetails(concertDetails);
         concert.setConcertDate(concertDate);
         concert.setConcertTime(concertTime);
         concert.setLocation(location);
+		concert.setStadiumPrice(stadiumPrice);
+		concert.setTrackPrice(trackPrice);
+		//concert.setImage(imageField.getBytes();
 
+		List<Artist> selectedArtists = artistIds.stream()
+        .map(id -> artistService.findById(id)
+            .orElseThrow(() -> new RuntimeException("No existe artista con ID " + id))
+        )
+        .collect(Collectors.toList());
+    	concert.setArtists(selectedArtists);
 
         concertService.save(concert);
 

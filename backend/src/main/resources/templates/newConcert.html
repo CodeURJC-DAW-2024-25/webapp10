@@ -34,17 +34,13 @@
                             <input name="concertName" type="text" class="form-control" id="concertName" placeholder="Enter Full name">
                         </div>
                         <div class="mb-3">
-                            <label for="artistName">Artist name:</label>
-                            <select name="artistName" class="form-control" id="artistName" name="artistName">
+                            <label for="artistIds">Artists:</label>
+                            <select id="artistIds" name="artistIds" class="form-control" multiple>
                                 <option value="" disabled selected>Select an artist</option>
                                 {{#artists}}
-                                    <option value="{{id}}">{{name}}</option>
+                                    <option value="{{id}}">{{artistName}}</option>
                                 {{/artists}}
                             </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="artistInfo">Artist Information:</label>
-                            <input name="artistInfo" type="text" class="form-control" id="artistInfo" placeholder="Enter information about the artist">
                         </div>
                         <div class="mb-3">
                             <label for="concertDetails">Concert Details:</label>
@@ -62,7 +58,14 @@
                             <label for="location">Location:</label>
                             <input name="location" type="text" class="form-control" id="location" placeholder="Enter the location">
                         </div>
-    
+                        <div class="mb-3">
+                            <label for="stadiumPrice">Stadium Price:</label>
+                            <input name="stadiumPrice" type="number" class="form-control" id="stadiumPrice" placeholder="Enter the stadium price">
+                        </div>
+                        <div class="mb-3">
+                            <label for="trackPrice">Track price:</label>
+                            <input name="trackPrice" type="number" class="form-control" id="trackPrice" placeholder="Enter the track price">
+                        </div>
                         <div class="d-flex align-items-center justify-content-between">
                             <a href="index.html">
                                 <button class="btn btn-primary" type="button">

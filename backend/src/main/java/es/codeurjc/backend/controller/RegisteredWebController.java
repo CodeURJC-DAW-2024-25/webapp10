@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,9 @@ public class RegisteredWebController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
@@ -42,19 +46,16 @@ public class RegisteredWebController {
  
     @PostMapping("/user/new")
     public String registerMethod(Model model, @ModelAttribute User user, MultipartFile profilePhoto) throws IOException {
-
         
-
         if (userService.userExists(user.getUserName())){
             model.addAttribute("error", "Name already exists");
             return "register";
         }
 
-         if (user.getFullName() == null || user.getFullName().isEmpty()) {
+        if (user.getFullName() == null || user.getFullName().isEmpty()) {
             model.addAttribute("error", "Fill the gap name");
             return "register";
         } 
-
           
         if (user.getUserName() == null || user.getUserName().isEmpty()) {
             model.addAttribute("error", "Fill the gap username");
@@ -77,6 +78,8 @@ public class RegisteredWebController {
             model.addAttribute("error", "Fill the gap password");
             return "register";
         }
+
+        user.setEncodedPassword(passwordEncoder.encode(user.getEncodedPassword()));
 
         if (!profilePhoto.isEmpty()) {
 			user.setProfilePhoto(BlobProxy.generateProxy(profilePhoto.getInputStream(), profilePhoto.getSize()));

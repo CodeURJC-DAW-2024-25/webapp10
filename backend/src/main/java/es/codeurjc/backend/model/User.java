@@ -51,6 +51,7 @@ public class User {
         this.email=email;
         this.encodedPassword=encodedPassword;
         this.age=age;
+        this.image=false;
         this.roles = List.of(roles);
     }
 

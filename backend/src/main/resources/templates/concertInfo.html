@@ -36,6 +36,12 @@
                     <h5>Date: <span>{{concert.date}}</span></h5>
                     <h5>Time: <span>{{concert.time}}</span></h5>
                     <h5>Location: <span>{{concert.location}}</span></h5>
+                    <h5>Artist: </h5>
+                    <ul>
+                        {{#concert.artists}}
+                        <li>{{.name}}</li>
+                        {{/concert.artists}}
+                    </ul>
                 </div>
                 <h4>Location</h4>
                 {{#concert.map}}

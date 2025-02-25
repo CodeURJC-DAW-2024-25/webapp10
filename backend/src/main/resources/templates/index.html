@@ -25,12 +25,12 @@
             {{#concerts}}
             <article class="concert-card">
                 <a href="concertInfo.html?id={{id}}" class="link">
-                    <!--<img src="{{image}}" alt="{{name}}">-->
-                    
-                    <div class="concert-info">
-                        <h5>{{name}}</h5>
-                        <p>Artist: {{artist.name}}</p>
-                    </div>
+                    {{#concert.concertImage}}
+                        <img src="{{imagefile}}" alt="{{name}}">
+                    {{/concert.concertImage}}
+                    {{^concert.concertImage}}
+                        <img src="/images/Concerts/noImage.jpg" alt="No image available">
+                    {{/concert.concertImage}}
                 </a>
             </article>
             {{/concerts}}

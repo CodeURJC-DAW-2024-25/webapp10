@@ -63,11 +63,16 @@ public class DatabaseInitializer {
 		artistRepository.save(Duki);
 		artistRepository.save(KanyeWest);
 
-		Concert concert1 = new Concert("The Eras Tour Concert", "The biggest concert of Taylor Swift", Date.valueOf("2025-08-07"), Time.valueOf("20:00:00"), "Madrid", 100, 50, List.of(TaylorSwift), "https://maps.app.goo.gl/YMYM7WxM2PubhQTSA");
-		Concert concert2 = new Concert("One Direction Reunion Tour", "The biggest concert of One Direction", Date.valueOf("2025-08-16"), Time.valueOf("19:00:00"), "Seville", 150, 75, List.of(HarryStyles, ZaynMalik, NiallHoran, LiamPayne, LouisTomlinson), "https://maps.app.goo.gl/YMYM7WxM2PubhQTSA");
-		Concert concert3 = new Concert("Wonder Tour", "The biggest concert of Shawn Mendes", Date.valueOf("2025-12-25"), Time.valueOf("20:30:00"), "Valencia", 110, 55, List.of(ShawnMendes), "https://maps.app.goo.gl/YMYM7WxM2PubhQTSA");
-		Concert concert4 = new Concert("The Ameri Concert", "The biggest concert of Duki and Rauw Alejandro", Date.valueOf("2025-03-21"), Time.valueOf("22:00:00"), "Bilbao", 130, 65, List.of(Duki), "https://maps.app.goo.gl/YMYM7WxM2PubhQTSA");
-		Concert concert5 = new Concert("The Galactic Duo", "A special concert featuring Taylor Swift and Kanye West", Date.valueOf("2025-12-15"), Time.valueOf("21:00:00"), "Barcelona", 200, 100, List.of(TaylorSwift, KanyeWest), "https://maps.app.goo.gl/YMYM7WxM2PubhQTSA");
+		Concert concert1 = new Concert("The Eras Tour Concert", "The biggest concert of Taylor Swift, featuring her greatest hits and new releases. This concert will take you on a journey through her musical career, with stunning visuals and unforgettable performances.", 
+				Date.valueOf("2025-08-07"), Time.valueOf("20:00:00"), "Madrid", 100, 50, List.of(TaylorSwift), "https://maps.app.goo.gl/YMYM7WxM2PubhQTSA");
+		Concert concert2 = new Concert("One Direction Reunion Tour", "The biggest concert of One Direction, reuniting all original members for an unforgettable night. Fans will enjoy a nostalgic trip with their favorite hits and new surprises.", 
+				Date.valueOf("2025-08-16"), Time.valueOf("19:00:00"), "Seville", 150, 75, List.of(HarryStyles, ZaynMalik, NiallHoran, LiamPayne, LouisTomlinson), "https://maps.app.goo.gl/YMYM7WxM2PubhQTSA");
+		Concert concert3 = new Concert("Wonder Tour", "The biggest concert of Shawn Mendes, performing songs from his latest album and fan favorites. Expect a night full of energy, emotion, and incredible music.", 
+				Date.valueOf("2025-12-25"), Time.valueOf("20:30:00"), "Valencia", 110, 55, List.of(ShawnMendes), "https://maps.app.goo.gl/YMYM7WxM2PubhQTSA");
+		Concert concert4 = new Concert("The Ameri Concert", "The biggest concert of Duki, bringing the best of Trap music. This event promises to be a high-energy show with electrifying performances.", 
+				Date.valueOf("2025-03-21"), Time.valueOf("22:00:00"), "Bilbao", 130, 65, List.of(Duki), "https://maps.app.goo.gl/YMYM7WxM2PubhQTSA");
+		Concert concert5 = new Concert("The Galactic Duo", "A special concert featuring Taylor Swift and Kanye West, a unique collaboration of Pop and Hip-Hop. This once-in-a-lifetime event will showcase their greatest hits and new collaborations.", 
+				Date.valueOf("2025-12-15"), Time.valueOf("21:00:00"), "Barcelona", 200, 100, List.of(TaylorSwift, KanyeWest), "https://maps.app.goo.gl/YMYM7WxM2PubhQTSA");
 
 		concertRepository.save(concert1);
 		concertRepository.save(concert2);
@@ -75,8 +80,8 @@ public class DatabaseInitializer {
 		concertRepository.save(concert4);
 		concertRepository.save(concert5);
 	
-		// userRepository.save(new User(null, "John Doe", "user", 123456789, "user@example.com", passwordEncoder.encode("pass"), 20));
-		// userRepository.save(new User(null, "Admin User", "admin", 987654321, "admin@example.com", passwordEncoder.encode("admin"), 21));
+		userRepository.save(new User("Registered User", "user", 123456789, "user@example.com", passwordEncoder.encode("user"), 20));
+		userRepository.save(new User("Admin User", "admin", 987654321, "admin@example.com", passwordEncoder.encode("admin"), 21));
 	}
 
 	public void setConcertImage(Concert concert, String classpathResource) throws IOException {

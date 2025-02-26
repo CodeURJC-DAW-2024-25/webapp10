@@ -67,9 +67,15 @@ public class WebController {
 	@GetMapping("/")
 	public String show(Model model) {
 
-		model.addAttribute("concerts", concertService.getConcerts(0, 10));
+		model.addAttribute("concerts", concertService.getConcerts(0, 4));
 
 		return "index";
+	}
+
+	@GetMapping("/load")
+	public String loadMoreConcerts(@RequestParam int page, Model model) {
+		model.addAttribute("concerts", concertService.getConcerts(page, 10).getContent());
+		return "concerts_fragment";
 	}
 
 	@GetMapping("/user/{id}")
@@ -85,37 +91,6 @@ public class WebController {
 		}
 
 	}
-
-	/*
-	 * @GetMapping("/loadMoreConcerts")
-	 * public ResponseEntity<String> loadMoreConcerts(@RequestParam int page) {
-	 * // Carga más conciertos al hacer clic en "Load More"
-	 * var concerts = concertService.getConcerts(page, 10);
-	 * StringBuilder htmlResponse = new StringBuilder();
-	 * 
-	 * // Generar el HTML para los conciertos y devolverlo
-	 * concerts.forEach(concert -> {
-	 * htmlResponse.append("<article class=\"concert-card\">")
-	 * .append("<a href=\"concertInfo.html?id=")
-	 * .append(concert.getId())
-	 * .append("\" class=\"link\">")
-	 * .append("<img src=\"")
-	 * .append(concert.getConcertDetails()) // Reemplazar con la URL o path de
-	 * imagen
-	 * .append("\" alt=\"")
-	 * .append(concert.getConcertName())
-	 * .append("\">")
-	 * .append("<div class=\"concert-info\">")
-	 * .append("<h5>")
-	 * .append(concert.getConcertName())
-	 * .append("</h5>")
-	 * .append("<p>Artist: ")
-	 * .append(concert.getArtistName())
-	 * .append("</p></div></a></article>");
-	 * });
-	 * return ResponseEntity.ok(htmlResponse.toString());
-	 * }
-	 */
 
 	@GetMapping("/concert/{id}")
 	public String showConcert(Model model, @PathVariable long id) {

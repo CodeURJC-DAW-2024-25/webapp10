@@ -38,7 +38,7 @@
                             <select id="artistIds" name="artistIds" class="form-control" multiple>
                                 <option value="" disabled selected>Select an artist</option>
                                 {{#artists}}
-                                    <option value="{{id}}">{{artistName}}</option>
+                                    <option value="{{id}}" class="text-muted">{{artistName}}</option>
                                 {{/artists}}
                             </select>
                         </div>
@@ -66,8 +66,9 @@
                             <label for="trackPrice">Track price:</label>
                             <input name="trackPrice" type="number" class="form-control" id="trackPrice" placeholder="Enter the track price">
                         </div>
+                        <input type="hidden" name="_csrf" value="{{token}}" />
                         <div class="d-flex align-items-center justify-content-between">
-                            <a href="index.html">
+                            <a href="/">
                                 <button class="btn btn-primary" type="button">
                                     <i class="bi bi-reply-all-fill"></i> Go back
                                 </button>

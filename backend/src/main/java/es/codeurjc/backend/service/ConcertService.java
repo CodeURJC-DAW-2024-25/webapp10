@@ -17,8 +17,8 @@ public class ConcertService {
 	@Autowired
 	private ConcertRepository repository;
 
-	public Page<Concert> getConcerts(int page, int size) {
-		return repository.findAll(PageRequest.of(page, size));
+	public List<Concert> getConcerts() {
+		return repository.findAll();
 	}
 
 	public Optional<Concert> findById(long id) {

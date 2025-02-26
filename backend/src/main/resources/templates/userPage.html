@@ -56,17 +56,20 @@
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Favorite Music Genre:</td>
-                                    <td></td>
+                                    <td>{{favoriteGenre}}</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Tickets Bought:</td>
-                                    <td></td>
+                                    <td>{{numTicketsBought}}</td>
                                 </tr>
                                 <tr>
-                                    {{#roles}}
+                                    
                                     <td class="fw-bold">User Type:</td>
-                                    <td>{{.}}</td>
+                                    <td>
+                                    {{#roles}}
+                                    ({{.}})
                                     {{/roles}}
+                                    </td>
 
                                     {{^roles}}
                                     <td class="fw-bold">User Type:</td>
@@ -90,51 +93,45 @@
                 <div class="col-md-4 d-flex align-items-center justify-content-center">
                     <div class="p-4 bg-white shadow rounded w-75">
                         <h2 class="text-muted text-center mb-3">Purchase History</h2>
-                        {{#ticketsHistory}}
-                        <!-- <table class="table table-bordered">
+                        {{#tickets}}
+                        <table class="table table-bordered">
                             <tbody>
-                                {{#user.purchases}}
+                                {{#concert}}
                                 <tr class="table-primary">
-                                    <td colspan="2" class="fw-bold text-center">{{concert.name}} - {{concert.location}}</td>
+                                    <td colspan="2" class="fw-bold text-center">{{concertName}} - {{location}}</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Concert Date:</td>
-                                    <td>{{concert.date}}</td>
+                                    <td>{{concertDate}}</td>
                                 </tr>
+                                {{/concert}}
                                 <tr>
                                     <td class="fw-bold">Tickets Bought:</td>
-                                    <td>{{numTickets}} ({{ticketType}})</td>
+                                    <td>{{numTickets}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Ticket type:</td>
+                                    <td>{{ticketType}}</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Total Price:</td>
-                                    <td>{{totalPrice}}</td>
+                                    <td>{{prices}}</td>
                                 </tr>
-                                <tr>
-                                    <td class="fw-bold">Status:</td>
-                                    <td>{{status}}</td>
-                                </tr>
-                                {{/user.purchases}}
                             </tbody>
                         </table>
-                        {{#user.hasPendingTickets}}
-                        <div class="d-flex align-items-center justify-content-center">
-                                <button class="btn btn-success ">
-                                    <i class="bi bi-download"></i> Download ticket</button>
-                        </div>
-                        {{/user.hasPendingTickets}} -->
-                        {{/ticketsHistory}}
+                        {{/tickets}}
 
-                        {{^ticketsHistory}}
+                        {{^tickets}}
                         <p class="text-muted text-center mb-3">No tickets yet</p>
-                        {{/ticketsHistory}}
+                        {{/tickets}}
                     </div>
 
 
 
                 </div>
-
+                {{/user}}
             </div>
-            {{/user}}
+            
         </div>
 
 

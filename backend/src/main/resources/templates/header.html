@@ -10,8 +10,8 @@
     <div class="navButtons">
         {{#logged}}
             {{#admin}}
-                <button  onclick="window.location.href='newConcert.html'" type="button" class="btn btn-dark">New Concert</button>
-                <button onclick="window.location.href='newArtist.html'" type="button" class="btn btn-dark">New Artist</button>
+                <button  onclick="window.location.href='/newconcert'" type="button" class="btn btn-dark">New Concert</button>
+                <button onclick="window.location.href='/newartist'" type="button" class="btn btn-dark">New Artist</button>
             {{/admin}} 
             <div class="navButtons">
                 <button onclick="window.location.href='/user/{{id}}'" type="button" class="btn btn-dark">User page</button>

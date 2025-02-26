@@ -16,7 +16,9 @@
     {{>header}}
     <div id="container-concertInfoPage" class="container mt-5">
 
-        <h1 class="mb-4">{{concert.name}}</h1>
+
+        {{#concert}}
+        <h1 class="mb-4">{{concertName}}</h1>
         <div class="row">
             <!-- Left side with artist image -->
             <div class="col-md-4">
@@ -27,32 +29,31 @@
 
             <!-- Right side concert details -->
             <div class="col-md-8">
-                <h4>{{artist.name}}</h4>
-                <p>{{artist.description}}</p>
+                <h4>{{concertName}}</h4>
+                <p>{{concertDetails}}</p>
 
                 <h4>Concert Details</h4>
-                <p>{{concert.details}}</p>
+                <p>{{concertDetails}}</p>
                 <div class="d-flex justify-content-between">
-                    <h5>Date: <span>{{concert.date}}</span></h5>
-                    <h5>Time: <span>{{concert.time}}</span></h5>
-                    <h5>Location: <span>{{concert.location}}</span></h5>
-                    <h5>Artist: </h5>
+                    <h5>Date: <span>{{concertDate}}</span></h5>
+                    <h5>Time: <span>{{concertTime}}</span></h5>
+                    <h5>Location: <span>{{location}}</span></h5>
+                    <h5>Artists:
                     <ul>
-                        {{#concert.artists}}
-                        <li>{{.name}}</li>
-                        {{/concert.artists}}
+                        {{#artists}}
+                        <li>{{.}}</li>
+                        {{/artists}}
                     </ul>
+                    </h5>
                 </div>
                 <h4>Location</h4>
-                {{#concert.map}}
-                <iframe src="{{concert.map}}" allowfullscreen="" loading="lazy"></iframe>
-                {{/concert.map}}
+
 
                 <div class="d-flex align-items-center justify-content-between mt-3">
                     {{#logged}}
-                        <a href="purchasePage.html" class="btn btn-primary mt-3 flex-grow-1 me-2">
-                            <i class="bi bi-cart-fill"></i> Purchase Tickets
-                        </a>
+                    <a href="/concert/purchasePage/{{concertId}}" class="btn btn-primary mt-3 flex-grow-1 me-2">
+                        <i class="bi bi-cart-fill"></i> Purchase Tickets
+                    </a>
                     {{/logged}}
 
                     {{^logged}}
@@ -61,12 +62,13 @@
                     </a>
                     {{/logged}}
 
-                    <a href="index.html" class="btn btn-primary mt-3">
+                    <a href="/" class="btn btn-primary mt-3">
                         <i class="bi bi-reply-all-fill"></i> Go back
                     </a>
                 </div>
             </div>
         </div>
+        {{/concert}}
     </div>
     <!--Footer-->
     {{>footer}}

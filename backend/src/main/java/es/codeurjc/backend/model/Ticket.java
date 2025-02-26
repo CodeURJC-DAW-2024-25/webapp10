@@ -9,16 +9,11 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Ticket {
 
-    public enum TicketType{
-        Stadium_Stand,
-        Concert_Track
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private TicketType ticketType;
+    private String ticketType;
     private Integer prices;
     @ManyToOne
     private User userOwner;
@@ -30,9 +25,9 @@ public class Ticket {
 
     public Ticket(){}
 
-    public Ticket(Concert concert, TicketType ticketType, Integer prices, User userOwner, Integer numTickets) {
+    public Ticket(Concert concert, String ticketType, Integer prices, User userOwner, Integer numTickets) {
         this.concert = concert;
-        this.ticketType = ticketType;
+        this.ticketType= ticketType;
         this.prices = prices;
         this.userOwner = userOwner;
         this.numTickets = numTickets;
@@ -46,12 +41,12 @@ public class Ticket {
         this.concert = concert;
     }
 
-    public TicketType getTicketType() {
+    public String getTicketType() {
         return ticketType;
     }
 
-    public void setTicketType(TicketType ticketType) {
-        this.ticketType = ticketType;
+    public void setTicketType(String ticketType) {
+        this.ticketType= ticketType;
     }
 
     public Integer getPrices() {

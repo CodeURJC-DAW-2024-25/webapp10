@@ -24,7 +24,7 @@
         <section class="concert-grid">
             {{#concerts}}
             <article class="concert-card">
-                <a href="concertInfo.html?id={{id}}" class="link">
+                <a href="concert/{{-index}}" class="link">
                     {{#concert.concertImage}}
                         <img src="{{imagefile}}" alt="{{name}}">
                     {{/concert.concertImage}}
@@ -49,7 +49,7 @@
     <!--Footer-->
     {{>footer}}
 
-    <script>
+    <!-- <script>
         let currentPage = 0;
 
         function loadMore() {
@@ -68,7 +68,7 @@
                     document.getElementById('loading-spinner').style.display = 'none';
                 });
         }
-    </script>
+    </script> -->
 
 </body>
 

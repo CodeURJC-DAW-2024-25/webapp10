@@ -20,23 +20,23 @@
     <div id="container-userPage">        
         <div class="content-purchase-page d-flex align-items-center justify-content-center">
             <div class="row g-0 align-items-center h-100 w-75">
-
+                {{#concert}}
                 <!--CONCERT INFO-->
                 <div class="col-md-4 d-flex flex-column align-items-center justify-content-center p-4">
-                    <img src="{{concert.image}}" class="img-fluid rounded" alt="Artist Image" style="object-fit: cover; width: 100%; height: auto; aspect-ratio: 14 / 16" alt="Concert Poster">
-                    <h2 class="mt-3 text-center">{{concert.name}}</h2>
-                    <p class="text-center">{{concert.date}}</p>
+                    <img src="" class="img-fluid rounded" alt="Artist Image" style="object-fit: cover; width: 100%; height: auto; aspect-ratio: 14 / 16" alt="Concert Poster">
+                    <h2 class="mt-3 text-center">{{concertName}}</h2>
+                    <p class="text-center">{{concertDate}}</p>
                 </div>
 
                 <!--TICKETS PURCHASE-->
                 <div class="col-md-8 d-flex flex-column align-items-center justify-content-center p-4">
                     <h4 class="text-center mb-3">Ticket Prices</h4>
-                    <p class="text-center">{{concert.price.stadium}}</p>
-                    <p class="text-center">{{concert.price.concertTrack}}</p>
-                    <form role="form" class="w-100">
+                    <p class="text-center" name="stadiu">Stadium price: {{stadiumPrice}}</p>
+                    <p class="text-center">Track price: {{trackPrice}}</p>
+                    <form role="form" class="w-100" method="post" action="/concert/purchasePage/{{concertId}}">
                         <div class="mb-3">
                             <label for="ticketType">Ticket Type:</label>
-                            <select id="ticketType" class="form-select">
+                            <select id="ticketType" name="ticketType" class="form-select">
                                 <option value="stadiumStand" class="text-muted">Stadium stand</option>
                                 <option value="concertTrack" class="text-muted">Concert track</option>
                             </select>
@@ -44,15 +44,16 @@
         
                         <div class="mb-3">
                             <label for="ticketNumber">Number of tickets:</label>
-                            <input type="number" class="form-control" id="ticketNumber" min="1" max="10" value="1">
+                            <input type="number" class="form-control" name="numTickets" id="numTickets" min="1" max="10" value="1">
                         </div>
     
+                        <input type="hidden" name="_csrf" value="{{token}}" />
                         <div class="d-flex align-items-center justify-content-between">
-                            <a href="concertInfo.html" class="btn btn-primary">
+                            <a href="/concert/{{concertId}}" class="btn btn-primary">
                                 <i class="bi bi-reply-all-fill"></i> Go Back
                             </a>
                             {{#logged}}
-                                <button class="btn btn-success" type="submit">
+                                <button class="btn btn-success" type="submit" value="Enviar">
                                     <i class="bi bi-cart-fill"></i> Purchase Tickets
                                 </button>
                             {{/logged}}
@@ -66,6 +67,7 @@
                     </form>
                     
                 </div>
+                {{/concert}}
             </div>
         </div>
     </div>

@@ -2,6 +2,7 @@ package es.codeurjc.backend.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.backend.model.Concert;
+import es.codeurjc.backend.model.Ticket;
 import es.codeurjc.backend.model.User;
 import es.codeurjc.backend.service.ConcertService;
 import es.codeurjc.backend.service.ArtistService;
@@ -67,7 +69,7 @@ public class WebController {
 	@GetMapping("/")
 	public String show(Model model) {
 
-		model.addAttribute("concerts", concertService.getConcerts(0, 10));
+		model.addAttribute("concerts", concertService.getConcerts());
 
 		return "index";
 	}
@@ -118,14 +120,72 @@ public class WebController {
 	 */
 
 	@GetMapping("/concert/{id}")
-	public String showConcert(Model model, @PathVariable long id) {
+	public String showConcert(Model model, @PathVariable long id,HttpServletRequest request) {
+
+		addAttributes(model, request);
 		Optional<Concert> concert = concertService.findById(id);
 		if (concert.isPresent()) {
 			model.addAttribute("concert", concert.get());
+			model.addAttribute("concertId", id);
 			return "concertInfo";
 		} else {
-			return "/";
+			return "index";
 		}
+	}
+
+	@GetMapping("/concert/purchasePage/{id}")
+	public String showPurchasePage(Model model, @PathVariable long id,HttpServletRequest request) {
+
+		addAttributes(model, request);
+		Optional<Concert> concert = concertService.findById(id);
+		if (concert.isPresent()) {
+			model.addAttribute("concert", concert.get());
+			model.addAttribute("concertId", id);
+			return "purchasePage";
+		} else {
+			return "index";
+		}
+	}
+
+	@PostMapping("/concert/purchasePage/{id}")
+	public String purchase(HttpServletRequest request,Model model, @PathVariable long id,
+	@RequestParam String ticketType,
+	@RequestParam Integer numTickets
+	) throws IOException {
+
+		Principal principal= request.getUserPrincipal();
+		Integer prices;
+		Optional<Concert> concerts = concertService.findById(id);
+		if (!concerts.isPresent() || principal==null){
+			return "redirect:/";
+		}
+		Optional<User> user= userService.findByUserName(principal.getName());
+		Concert concert= concerts.get();
+
+		Ticket ticket= new Ticket();
+
+		if ("stadiumStand".equals(ticketType)) {
+			 prices= concert.getStadiumPrice();
+			 ticket.setPrices(prices*numTickets);
+		} else if ("concertTrack".equals(ticketType)) {
+			 prices= concert.getTrackPrice();	
+			 ticket.setPrices(prices*numTickets);
+		} 
+
+		ticket.setConcert(concert);
+		concert.addTickets(ticket);
+		ticket.setTicketType(ticketType);
+		ticket.setUserOwner(user.get());
+		ticket.setNumTickets(numTickets);
+		user.get().addTickets(ticket);
+		user.get().setNumTicketsBought(numTickets);
+		user.get().addFavoriteGenre();
+		concertService.save(concert);
+		userService.save(user.get());
+		ticketService.save(ticket);
+		model.addAttribute("ticket", ticket.getId());
+		System.out.println("Tickets del usuario: " + user.get().getTickets().size());
+		return "redirect:/";
 	}
 
 	@GetMapping("/newconcert")
@@ -165,12 +225,13 @@ public class WebController {
 						.orElseThrow(() -> new RuntimeException("No existe artista con ID " + id)))
 				.collect(Collectors.toList());
 		concert.setArtists(selectedArtists);
+		concert.setMap(location);
 
 		concertService.save(concert);
 
 		model.addAttribute("concertId", concert.getId());
 
-		return "redirect:/concert/" + concert.getId();
+		return "redirect:/";
 	}
 
 	@GetMapping("/newartist")

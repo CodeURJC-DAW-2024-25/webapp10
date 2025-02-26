@@ -44,14 +44,14 @@ public class WebSecurityConfig {
 						.requestMatchers("/images/**").permitAll() 
 						.requestMatchers("/register/**").permitAll()
 						.requestMatchers("/login/**").permitAll()
-                        .requestMatchers("/concertInfo/**").permitAll()
+                        .requestMatchers("/concert/**").permitAll()
 						.requestMatchers("/user/new/**").permitAll()
 						// PRIVATE PAGES
-						.requestMatchers("/purchasePage").hasAnyRole("USER","ADMIN")
+						.requestMatchers("/concert/purchasePage/**").hasAnyRole("USER","ADMIN")
 						.requestMatchers("/user/**").hasAnyRole("USER","ADMIN")
                         .requestMatchers("/userPage").hasAnyRole("USER","ADMIN")
-                        .requestMatchers("/newArtist/*").hasAnyRole("ADMIN")
-						.requestMatchers("/newConcert/*").hasAnyRole("ADMIN"))
+                        .requestMatchers("/newartist").hasAnyRole("ADMIN")
+						.requestMatchers("/newconcert").hasAnyRole("ADMIN"))
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login")
 						.failureUrl("/loginerror")

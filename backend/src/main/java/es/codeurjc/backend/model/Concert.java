@@ -34,7 +34,7 @@ public class Concert {
 
     private boolean concertImage;
 
-    @ManyToMany(mappedBy = "concerts")
+    @ManyToMany
     private List<Artist> artists;
 
     @OneToMany(mappedBy = "concert")
@@ -61,6 +61,10 @@ public class Concert {
 
     public String getConcertName() {
         return concertName;
+    }
+
+    public void addTickets(Ticket ticket){
+        this.tickets.add(ticket);
     }
 
     public void setConcertName(String concertName) {
@@ -103,7 +107,7 @@ public class Concert {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -116,7 +120,7 @@ public class Concert {
     }
 
     public List<Artist> getArtists() {
-        return artists;
+        return this.artists;
     }
 
     public Blob getImageFile() {

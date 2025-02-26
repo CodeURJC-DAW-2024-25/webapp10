@@ -10,60 +10,61 @@ import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Artist {
-    
+
     @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-    
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     private String artistName;
     private String musicalStyle;
     private String artistInfo;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "artists")
     private List<Concert> concerts;
 
-    //Constructors
-    public Artist(){}
+    // Constructors
+    public Artist() {
+    }
 
-    public Artist (String artistName, String musicalStyle, String artisInfo) {
+    public Artist(String artistName, String musicalStyle, String artisInfo) {
         this.artistName = artistName;
         this.musicalStyle = musicalStyle;
         this.artistInfo = artisInfo;
     }
 
-    //Getters and setters
-    
-    public void setArtistName (String artistName){
+    // Getters and setters
+
+    public void setArtistName(String artistName) {
         this.artistName = artistName;
     }
 
-    public String getArtistName(){
-            return artistName;
-        }
+    public String getArtistName() {
+        return artistName;
+    }
 
-    public void setMusicalStyle (String musicalStyle){
+    public void setMusicalStyle(String musicalStyle) {
         this.musicalStyle = musicalStyle;
     }
 
-    public String getMuscialStyle(){
-            return musicalStyle;
-        }
+    public String getMusicalStyle() {
+        return this.musicalStyle;
+    }
 
-    public void setArtistInfo (String artistName){
+    public void setArtistInfo(String artistName) {
         this.artistName = artistName;
     }
 
-    public String getArtistInfo(){
+    public String getArtistInfo() {
         return artistInfo;
     }
 
     public Long getId() {
-		return id;
-	}
+        return id;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public List<Concert> getConcerts() {
         return concerts;
@@ -72,4 +73,10 @@ public class Artist {
     public void setConcerts(List<Concert> concerts) {
         this.concerts = concerts;
     }
+
+    @Override
+    public String toString() {
+        return ""+ getArtistName() + "("+getMusicalStyle()+")";
+    }
+
 }

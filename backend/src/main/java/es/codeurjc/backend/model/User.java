@@ -2,7 +2,9 @@ package es.codeurjc.backend.model;
 
 import java.sql.Blob;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -29,6 +31,8 @@ public class User {
     private String email;
     private String encodedPassword;
     private Integer age;
+    private Integer numTicketsBought;
+    private String favoriteGenre;
 
     @Lob
     private Blob profilePhoto;
@@ -52,7 +56,9 @@ public class User {
         this.encodedPassword=encodedPassword;
         this.age=age;
         this.image=false;
+        this.numTicketsBought=0;
         this.roles = List.of(roles);
+        this.favoriteGenre="None";
     }
 
     public Long getId(){
@@ -81,6 +87,47 @@ public class User {
 
     public String getUserName(){
         return this.userName;
+    }
+
+    public void setFavoriteGenre(String favoriteGenre){
+        this.favoriteGenre=favoriteGenre;
+    }
+
+    public void addFavoriteGenre(){
+        
+        Map<String, Integer> frequencyMap = new HashMap<>();
+        for (Ticket ticket : tickets) {
+            Concert concert = ticket.getConcert();
+            if (concert == null) continue; 
+            for (Artist artist : concert.getArtists()) {
+                frequencyMap.put(artist.getMusicalStyle(), frequencyMap.getOrDefault(artist.getMusicalStyle(), 0) + 1);
+            }
+        }
+    
+        if (frequencyMap.isEmpty()) {
+            this.favoriteGenre = "None"; 
+            return;
+        }
+    
+        this.favoriteGenre = frequencyMap.entrySet()
+                          .stream()
+                          .max(Map.Entry.comparingByValue())
+                          .map(Map.Entry::getKey)
+                          .orElse("None");
+
+        
+    }
+
+    public String getFavoriteGenre(){
+        return this.favoriteGenre;
+    }
+
+    public void setNumTicketsBought(Integer num){
+        this.numTicketsBought+=num;
+    }
+
+    public Integer getNumTicketsBought(){
+        return this.numTicketsBought;
     }
 
     public void setUserName(String userName){
@@ -137,6 +184,10 @@ public class User {
 
     public void setTickets(List<Ticket> ticketsHistory) {
         this.tickets = ticketsHistory;
+    }
+
+    public void addTickets(Ticket ticket){
+        this.tickets.add(ticket);
     }
 
     public List<String> getRoles() {

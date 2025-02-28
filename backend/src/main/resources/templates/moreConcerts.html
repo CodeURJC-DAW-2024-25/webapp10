@@ -1,0 +1,16 @@
+        
+    {{#concerts}}
+    <div class="concert-card">
+        <a href="concert/{{-index}}" class="link">
+            {{#concert.concertImage}}
+                <img src="{{imagefile}}" alt="{{name}}">
+            {{/concert.concertImage}}
+            {{^concert.concertImage}}
+                <img src="/images/Concerts/noImage.jpg" alt="No image available">
+            {{/concert.concertImage}}
+        </a>
+    </div>
+    {{/concerts}}
+{{^hasMore}}
+<!--true-->
+{{/hasMore}}

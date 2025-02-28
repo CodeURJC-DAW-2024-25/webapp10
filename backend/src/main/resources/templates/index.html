@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+    <script defer src="/js/loadMore.js"></script>
 </head>
 
 <body>
@@ -22,9 +23,10 @@
             </div>
         </section>
 
-        <section class="concert-grid">
+        <div id="allConcerts" class="concert-grid">
+        
             {{#concerts}}
-            <article class="concert-card">
+            <div class="concert-card">
                 <a href="concert/{{-index}}" class="link">
                     {{#concert.concertImage}}
                         <img src="{{imagefile}}" alt="{{name}}">
@@ -33,16 +35,17 @@
                         <img src="/images/Concerts/noImage.jpg" alt="No image available">
                     {{/concert.concertImage}}
                 </a>
-            </article>
+            </div>
             {{/concerts}}
-        </section>
+        
+        </div>
 
         <!--Spinner-->
         <div id="spinner">Loading...</div>
 
         <!-- Buttom Load More -->
         <div class="load-more-container">
-            <button class="load-more-btn" id="load-more-btn">Load More</button>
+            <button class="load-more-btn" id="load-more-btn" onclick='loadMore()'>Load More</button>
         </div>
 
         
@@ -50,50 +53,6 @@
 
     <!--Footer-->
     {{>footer}}
-
-    <script> 
-        let offset = 4; // Inicialmente mostramos 4 conciertos
-
-        $('#load-more-btn').on('click', function() {
-            // Mostrar el spinner
-            $('#spinner').show();
-
-            $.ajax({
-                url: '/loadMoreConcerts',
-                method: 'GET',
-                data: { offset: offset },
-                success: function(data) {
-                    if (data.length > 0) {
-                        // Añadir los nuevos conciertos al final de la lista
-                        data.forEach(function(concert, index) {
-                            // Verificar si hay imagen o usar una por defecto
-                            let imageSrc = concert.concertImage ? concert.imagefile : "/images/Concerts/noImage.jpg";
-                            let imageAlt = concert.concertImage ? concert.name : "No image available";
-
-                            $('#concert-list').append(`
-                                <article class="concert-card">
-                                    <a href="concert/${index}" class="link">
-                                        <img src="${imageSrc}" alt="${imageAlt}">
-                                    </a>
-                                </article>
-                                    
-                            `);
-                        });
-
-                        
-                        // Actualizamos el offset
-                        offset += 4;
-                    } else {
-                        $('#load-more-btn').hide(); // Ocultar el botón si no hay más conciertos
-                    }
-                    // Ocultar el spinner después de cargar los conciertos
-                    $('#spinner').hide();
-                }
-            });
-        });
-
-        
-    </script>
 
 </body>
 

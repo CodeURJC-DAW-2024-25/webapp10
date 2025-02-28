@@ -55,4 +55,10 @@ public class ConcertService {
 		Page<Concert> concertPage = repository.findAll(pageable);
 		return concertPage.getContent();
 	}
+
+	public Page<Concert> getConcertsPaginated(int page) {
+		int size = 4;
+		Pageable pageable = PageRequest.of(page, size);
+		return repository.findAll(pageable);
+	}
 }

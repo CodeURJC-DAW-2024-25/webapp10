@@ -8,7 +8,6 @@ import es.codeurjc.backend.model.Concert;
 
 public interface ConcertRepository extends JpaRepository<Concert, Long> {
 
-    // concert paging
-    //Page<Concert> findAll(Pageable pageable);
+    Page<Concert> findAll(Pageable pageable);
 
 }

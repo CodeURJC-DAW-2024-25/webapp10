@@ -41,12 +41,13 @@ public class WebSecurityConfig {
 				// PUBLIC PAGES
 				.requestMatchers("/").permitAll()
 				.requestMatchers("/css/**").permitAll()
+				.requestMatchers("/js/**").permitAll()
 				.requestMatchers("/images/**").permitAll()
 				.requestMatchers("/register/**").permitAll()
 				.requestMatchers("/login/**").permitAll()
 				.requestMatchers("/concert/**").permitAll()
 				.requestMatchers("/user/new/**").permitAll()
-				.requestMatchers("/loadMoreConcerts").permitAll()
+				.requestMatchers("/moreConcerts", "/moreConcerts/**").permitAll()
 				.requestMatchers( "/concerts/*/image").permitAll()
 
 				// PRIVATE PAGES
@@ -54,7 +55,9 @@ public class WebSecurityConfig {
 				.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
 				.requestMatchers("/userPage").hasAnyRole("USER", "ADMIN")
 				.requestMatchers("/newartist").hasAnyRole("ADMIN")
-				.requestMatchers("/newconcert").hasAnyRole("ADMIN"))
+				.requestMatchers("/newconcert").hasAnyRole("ADMIN")
+				.requestMatchers("/loadMoreConcerts", "/loadMoreConcerts/**").hasAnyRole("ADMIN, USER"))
+
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login")
 						.failureUrl("/loginerror")

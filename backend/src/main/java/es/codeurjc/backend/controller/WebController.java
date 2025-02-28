@@ -75,10 +75,14 @@ public class WebController {
 		return "index";
 	}
 
-	@GetMapping("/loadMoreConcerts")
-	@ResponseBody
-	public List<Concert> loadMoreConcerts(@RequestParam("offset") int offset) {
-		return concertService.getConcerts(offset, 4);
+	@GetMapping("/moreConcerts")
+	public String loadMoreConcerts(@RequestParam int page, Model model) {
+		Page<Concert> concerts = concertService.getConcertsPaginated(page);
+		boolean hasMore = page < concerts.getTotalPages() - 1;
+		model.addAttribute("hasMore", hasMore);
+
+		model.addAttribute("concerts", concerts);
+		return "moreConcerts";
 	}
 
 	@GetMapping("/user/{id}")

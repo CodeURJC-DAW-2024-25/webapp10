@@ -25,33 +25,35 @@ public class WebSecurityConfig {
 		authProvider.setPasswordEncoder(passwordEncoder());
 
 		return authProvider;
-    } 
+	}
 
 	@Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http.authenticationProvider(authenticationProvider());
 
 		http.authorizeHttpRequests(authorize -> authorize
-						// PUBLIC PAGES
-						.requestMatchers("/").permitAll()
-                        .requestMatchers("/css/**").permitAll()
-						.requestMatchers("/images/**").permitAll() 
-						.requestMatchers("/register/**").permitAll()
-						.requestMatchers("/login/**").permitAll()
-                        .requestMatchers("/concert/**").permitAll()
-						.requestMatchers("/user/new/**").permitAll()
-						// PRIVATE PAGES
-						.requestMatchers("/concert/purchasePage/**").hasAnyRole("USER","ADMIN")
-						.requestMatchers("/user/**").hasAnyRole("USER","ADMIN")
-                        .requestMatchers("/userPage").hasAnyRole("USER","ADMIN")
-                        .requestMatchers("/newartist").hasAnyRole("ADMIN")
-						.requestMatchers("/newconcert").hasAnyRole("ADMIN"))
+				// PUBLIC PAGES
+				.requestMatchers("/").permitAll()
+				.requestMatchers("/css/**").permitAll()
+				.requestMatchers("/images/**").permitAll()
+				.requestMatchers("/register/**").permitAll()
+				.requestMatchers("/login/**").permitAll()
+				.requestMatchers("/concert/**").permitAll()
+				.requestMatchers("/user/new/**").permitAll()
+				.requestMatchers("/loadMoreConcerts").permitAll()
+
+				// PRIVATE PAGES
+				.requestMatchers("/concert/purchasePage/**").hasAnyRole("USER", "ADMIN")
+				.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+				.requestMatchers("/userPage").hasAnyRole("USER", "ADMIN")
+				.requestMatchers("/newartist").hasAnyRole("ADMIN")
+				.requestMatchers("/newconcert").hasAnyRole("ADMIN"))
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login")
 						.failureUrl("/loginerror")
@@ -61,7 +63,7 @@ public class WebSecurityConfig {
 						.logoutUrl("/logout")
 						.logoutSuccessUrl("/")
 						.permitAll());
-     
-                        return http.build();
-	}  
+
+		return http.build();
+	}
 }

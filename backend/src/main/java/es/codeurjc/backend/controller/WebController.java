@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -68,20 +69,17 @@ public class WebController {
 
 	@GetMapping("/")
 	public String show(Model model) {
-
-<<<<<<< HEAD
-		model.addAttribute("concerts", concertService.getConcerts(0, 4));
-=======
-		model.addAttribute("concerts", concertService.getConcerts());
->>>>>>> 9e36c0b3899f4cd0cc97fad20ffdea701e4dfa0d
+		// Load the first 4 concerts.
+		List<Concert> concerts = concertService.getConcerts(0, 4);
+		model.addAttribute("concerts", concerts);
 
 		return "index";
 	}
 
-	@GetMapping("/load")
-	public String loadMoreConcerts(@RequestParam int page, Model model) {
-		model.addAttribute("concerts", concertService.getConcerts(page, 10).getContent());
-		return "concerts_fragment";
+	@GetMapping("/loadMoreConcerts")
+	@ResponseBody
+	public List<Concert> loadMoreConcerts(@RequestParam("offset") int offset) {
+		return concertService.getConcerts(offset, 4);
 	}
 
 	@GetMapping("/user/{id}")
@@ -99,7 +97,7 @@ public class WebController {
 	}
 
 	@GetMapping("/concert/{id}")
-	public String showConcert(Model model, @PathVariable long id,HttpServletRequest request) {
+	public String showConcert(Model model, @PathVariable long id, HttpServletRequest request) {
 
 		addAttributes(model, request);
 		Optional<Concert> concert = concertService.findById(id);
@@ -113,7 +111,7 @@ public class WebController {
 	}
 
 	@GetMapping("/concert/purchasePage/{id}")
-	public String showPurchasePage(Model model, @PathVariable long id,HttpServletRequest request) {
+	public String showPurchasePage(Model model, @PathVariable long id, HttpServletRequest request) {
 
 		addAttributes(model, request);
 		Optional<Concert> concert = concertService.findById(id);
@@ -127,29 +125,28 @@ public class WebController {
 	}
 
 	@PostMapping("/concert/purchasePage/{id}")
-	public String purchase(HttpServletRequest request,Model model, @PathVariable long id,
-	@RequestParam String ticketType,
-	@RequestParam Integer numTickets
-	) throws IOException {
+	public String purchase(HttpServletRequest request, Model model, @PathVariable long id,
+			@RequestParam String ticketType,
+			@RequestParam Integer numTickets) throws IOException {
 
-		Principal principal= request.getUserPrincipal();
+		Principal principal = request.getUserPrincipal();
 		Integer prices;
 		Optional<Concert> concerts = concertService.findById(id);
-		if (!concerts.isPresent() || principal==null){
+		if (!concerts.isPresent() || principal == null) {
 			return "redirect:/";
 		}
-		Optional<User> user= userService.findByUserName(principal.getName());
-		Concert concert= concerts.get();
+		Optional<User> user = userService.findByUserName(principal.getName());
+		Concert concert = concerts.get();
 
-		Ticket ticket= new Ticket();
+		Ticket ticket = new Ticket();
 
 		if ("stadiumStand".equals(ticketType)) {
-			 prices= concert.getStadiumPrice();
-			 ticket.setPrices(prices*numTickets);
+			prices = concert.getStadiumPrice();
+			ticket.setPrices(prices * numTickets);
 		} else if ("concertTrack".equals(ticketType)) {
-			 prices= concert.getTrackPrice();	
-			 ticket.setPrices(prices*numTickets);
-		} 
+			prices = concert.getTrackPrice();
+			ticket.setPrices(prices * numTickets);
+		}
 
 		ticket.setConcert(concert);
 		concert.addTickets(ticket);

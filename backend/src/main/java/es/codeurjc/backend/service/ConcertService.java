@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import es.codeurjc.backend.model.Concert;
 import es.codeurjc.backend.repository.ConcertRepository;
@@ -47,5 +48,11 @@ public class ConcertService {
 			concert.setConcertName("Concierto " + i);
 			save(concert);
 		}
+	}
+
+	public List<Concert> getConcerts(int offset, int limit) {
+		Pageable pageable = PageRequest.of(offset / limit, limit);
+		Page<Concert> concertPage = repository.findAll(pageable);
+		return concertPage.getContent();
 	}
 }

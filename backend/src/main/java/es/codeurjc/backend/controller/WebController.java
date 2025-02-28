@@ -1,38 +1,37 @@
 package es.codeurjc.backend.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.security.Principal;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import es.codeurjc.backend.model.Artist;
 import es.codeurjc.backend.model.Concert;
 import es.codeurjc.backend.model.Ticket;
 import es.codeurjc.backend.model.User;
-import es.codeurjc.backend.service.ConcertService;
 import es.codeurjc.backend.service.ArtistService;
+import es.codeurjc.backend.service.ConcertService;
 import es.codeurjc.backend.service.TicketService;
 import es.codeurjc.backend.service.UserService;
-import es.codeurjc.backend.model.Artist;
-
-import java.sql.Date;
-import java.sql.Time;
-import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.security.Principal;
-
+import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class WebController {
 
@@ -183,7 +182,7 @@ public class WebController {
 			@RequestParam String location,
 			@RequestParam Integer stadiumPrice,
 			@RequestParam Integer trackPrice,
-			// @RequestParam MultipartFile imageField,
+			@RequestParam MultipartFile imageField,
 			Model model) throws IOException {
 
 		Concert concert = new Concert();
@@ -194,7 +193,8 @@ public class WebController {
 		concert.setLocation(location);
 		concert.setStadiumPrice(stadiumPrice);
 		concert.setTrackPrice(trackPrice);
-		// concert.setImage(imageField.getBytes();
+		concert.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
+		concert.setConcertImage(true);
 
 		List<Artist> selectedArtists = artistIds.stream()
 				.map(id -> artistService.findById(id)
@@ -214,6 +214,25 @@ public class WebController {
 	public String newArtist(Model model) {
 		return "newArtist";
 	}
+
+	
+	@GetMapping("/concerts/{id}/image")
+	public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
+		Optional<Concert> concert = concertService.findById(id);
+	
+		if (concert.isPresent() && concert.get().getImageFile() != null) {
+			Resource file = new InputStreamResource(concert.get().getImageFile().getBinaryStream());
+	
+			return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+					.contentLength(concert.get().getImageFile().length())
+					.body(file);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	
 
 	@PostMapping("/newartist")
 	public String newArtistProcess(

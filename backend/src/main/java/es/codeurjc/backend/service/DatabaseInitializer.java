@@ -2,9 +2,6 @@ package es.codeurjc.backend.service;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.sql.Date;
-import java.sql.Time;
-import java.util.Collections;
 import java.util.List;
 
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -95,8 +92,10 @@ public class DatabaseInitializer {
 		Concert karolConcert = new Concert("Karol G Tour", "The biggest concert of Karol G, performing her latest hits and fan favorites. This event promises to be a night full of energy and unforgettable performances.", "2025-07-15", "21:00:00", "Madrid", 150, 75, List.of(KarolG), "https://maps.app.goo.gl/YMYM7WxM2PubhQTSA");
 		Concert aitanaConcert = new Concert("Aitana Tour", "The biggest concert of Aitana, performing her latest hits and fan favorites. This event promises to be a night full of energy and unforgettable performances.", "2025-08-20", "20:00:00", "Barcelona", 140, 70, List.of(Aitana), "https://maps.app.goo.gl/jR39U3coLSbxewF47");
 		Concert latinFestival = new Concert("Latin Festival", "The biggest Latin music festival, featuring the best Latin artists in the world. This event promises to be a night full of energy, unforgettable performances, and a celebration of Latin culture.", "2025-09-30", "18:00:00", "Madrid", 250, 125, List.of(Duki, RauwAlejandro, Saiko, BadBunny, BadGyal, EmiliaMernes, Quevedo, KarolG), "https://maps.app.goo.gl/YMYM7WxM2PubhQTSA");
+		
 		userRepository.save(new User("John Doe", "user", 123456789, "user@example.com", passwordEncoder.encode("pass"), 20,"USER"));
 		userRepository.save(new User("Admin User", "admin", 987654321, "admin@example.com", passwordEncoder.encode("admin"), 21,"USER","ADMIN"));
+		
 		setConcertImage(taylorConcert, "/static/images/Concerts/taylorswift.jpg");
 		setConcertImage(oneDirectionConcert, "/static/images/Concerts/onedirection.jpg");
 		setConcertImage(shawnConcert, "/static/images/Concerts/shawnmendes.jpg");
@@ -110,6 +109,7 @@ public class DatabaseInitializer {
 		setConcertImage(karolConcert, "/static/images/Concerts/karolg.jpg");
 		setConcertImage(aitanaConcert, "/static/images/Concerts/aitana.jpg");
 		setConcertImage(latinFestival, "/static/images/Concerts/latinfest.jpg");
+		setConcertImage(taylorKanyeConcert, "/static/images/Concerts/taylorkanye.jpg");
 
 		concertRepository.save(latinFestival);
 		concertRepository.save(taylorConcert);

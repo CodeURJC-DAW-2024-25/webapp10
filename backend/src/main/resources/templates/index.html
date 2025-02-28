@@ -25,13 +25,13 @@
         <section class="concert-grid">
             {{#concerts}}
             <article class="concert-card">
-                <a href="concert/{{-index}}" class="link">
-                    {{#concert.concertImage}}
-                        <img src="{{imagefile}}" alt="{{name}}">
-                    {{/concert.concertImage}}
-                    {{^concert.concertImage}}
+                <a href="/concert/{{id}}" class="link">
+                    {{#concertImage}}
+                        <img src="/concerts/{{id}}/image" alt="{{concertName}}">
+                    {{/concertImage}}
+                    {{^concertImage}}
                         <img src="/images/Concerts/noImage.jpg" alt="No image available">
-                    {{/concert.concertImage}}
+                    {{/concertImage}}
                 </a>
             </article>
             {{/concerts}}
@@ -52,7 +52,7 @@
     {{>footer}}
 
     <script> 
-        let offset = 4; // Inicialmente mostramos 4 conciertos
+        let offset = 14; // Inicialmente mostramos 4 conciertos
 
         $('#load-more-btn').on('click', function() {
             // Mostrar el spinner

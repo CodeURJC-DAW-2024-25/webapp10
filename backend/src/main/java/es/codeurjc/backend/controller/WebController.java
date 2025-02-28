@@ -69,7 +69,7 @@ public class WebController {
 
 	@GetMapping("/")
 	public String show(Model model) {
-		// Load the first 4 concerts.
+		
 		List<Concert> concerts = concertService.getConcerts(0, 4);
 		model.addAttribute("concerts", concerts);
 

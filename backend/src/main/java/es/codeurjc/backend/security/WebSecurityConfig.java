@@ -55,8 +55,7 @@ public class WebSecurityConfig {
 				.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
 				.requestMatchers("/userPage").hasAnyRole("USER", "ADMIN")
 				.requestMatchers("/newartist").hasAnyRole("ADMIN")
-				.requestMatchers("/newconcert").hasAnyRole("ADMIN")
-				.requestMatchers("/loadMoreConcerts", "/loadMoreConcerts/**").hasAnyRole("ADMIN, USER"))
+				.requestMatchers("/newconcert").hasAnyRole("ADMIN"))
 
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login")

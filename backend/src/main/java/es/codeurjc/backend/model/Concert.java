@@ -3,6 +3,7 @@ package es.codeurjc.backend.model;
 import java.sql.Blob;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,6 +28,8 @@ public class Concert {
     private String location;
     private Integer stadiumPrice;
     private Integer trackPrice;
+    
+    @Column(columnDefinition = "TEXT") 
     private String map;
 
     @Lob

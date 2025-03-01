@@ -130,16 +130,18 @@
                                     <td>{{prices}}</td>
                                 </tr>
                             </tbody>
-                        </table>
+                        </table> 
                         {{/tickets}}
 
                         {{^tickets}}
                         <p class="text-muted text-center mb-3">No tickets yet</p>
                         {{/tickets}}
+                        <div class="text-center mt-3">
+                            <a href="/download/tickets" class="btn btn-success">
+                                <i class="bi bi-file-earmark-arrow-down"></i> Download Tickets PDF
+                            </a>
+                        </div>
                     </div>
-
-
-
                 </div>
                 {{/user}}
             </div>

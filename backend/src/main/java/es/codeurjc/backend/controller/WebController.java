@@ -7,6 +7,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -21,7 +26,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.backend.model.Artist;
@@ -33,6 +37,7 @@ import es.codeurjc.backend.service.ConcertService;
 import es.codeurjc.backend.service.TicketService;
 import es.codeurjc.backend.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class WebController {
 
@@ -238,6 +243,59 @@ public class WebController {
 	}
 	
 	
+	@GetMapping("/download/tickets")
+	public void downloadTickets(HttpServletResponse response, Principal principal) throws IOException {
+		if (principal == null) {
+			response.sendRedirect("/");
+			return;
+		}
+
+		Optional<User> userOptional = userService.findByUserName(principal.getName());
+		if (!userOptional.isPresent()) {
+			response.sendRedirect("/");
+			return;
+		}
+
+		User user = userOptional.get();
+		List<Ticket> tickets = user.getTickets();
+
+		response.setContentType("application/pdf");
+		response.setHeader("Content-Disposition", "attachment; filename=tickets.pdf");
+
+		try (PDDocument document = new PDDocument()) {
+			PDPage page = new PDPage(PDRectangle.A4);
+			document.addPage(page);
+
+			try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
+				contentStream.setFont(PDType1Font.HELVETICA_BOLD, 16);
+				contentStream.beginText();
+				contentStream.newLineAtOffset(50, 750);
+				contentStream.showText("Ticket Purchase History - TicketZone Fest");
+				contentStream.newLineAtOffset(0, -20);
+				contentStream.showText("--------------------------------------");
+				contentStream.newLineAtOffset(0, -20);
+
+				if (tickets.isEmpty()) {
+					contentStream.showText("No tickets purchased.");
+				} else {
+					for (Ticket ticket : tickets) {
+						contentStream.showText("Concert: " + ticket.getConcert().getConcertName());
+						contentStream.newLineAtOffset(0, -15);
+						contentStream.showText("Date: " + ticket.getConcert().getConcertDate());
+						contentStream.newLineAtOffset(0, -15);
+						contentStream.showText("Location: " + ticket.getConcert().getLocation());
+						contentStream.newLineAtOffset(0, -15);
+						contentStream.showText("Number of Tickets: " + ticket.getNumTickets());
+						contentStream.newLineAtOffset(0, -15);
+						contentStream.showText("Total Price: " + ticket.getPrices() + "€");
+						contentStream.newLineAtOffset(0, -25);
+					}
+				}
+				contentStream.endText();
+			}
+			document.save(response.getOutputStream());
+		}
+	}
 
 	@PostMapping("/newartist")
 	public String newArtistProcess(

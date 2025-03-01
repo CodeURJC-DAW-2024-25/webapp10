@@ -93,7 +93,7 @@ public class DatabaseInitializer {
 		Concert aitanaConcert = new Concert("Aitana Tour", "The biggest concert of Aitana, performing her latest hits and fan favorites. This event promises to be a night full of energy and unforgettable performances.", "2025-08-20", "20:00:00", "Barcelona", 140, 70, List.of(Aitana), "https://maps.app.goo.gl/jR39U3coLSbxewF47");
 		Concert latinFestival = new Concert("Latin Festival", "The biggest Latin music festival, featuring the best Latin artists in the world. This event promises to be a night full of energy, unforgettable performances, and a celebration of Latin culture.", "2025-09-30", "18:00:00", "Madrid", 250, 125, List.of(Duki, RauwAlejandro, Saiko, BadBunny, BadGyal, EmiliaMernes, Quevedo, KarolG), "https://maps.app.goo.gl/YMYM7WxM2PubhQTSA");
 		
-		userRepository.save(new User("John Doe", "user", 123456789, "user@example.com", passwordEncoder.encode("pass"), 20,"USER"));
+		userRepository.save(new User("Registered User", "user", 123456789, "user@example.com", passwordEncoder.encode("user"), 20,"USER"));
 		userRepository.save(new User("Admin User", "admin", 987654321, "admin@example.com", passwordEncoder.encode("admin"), 21,"USER","ADMIN"));
 		
 		setConcertImage(taylorConcert, "/static/images/Concerts/taylorswift.jpg");

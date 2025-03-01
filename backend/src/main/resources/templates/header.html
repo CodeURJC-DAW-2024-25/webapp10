@@ -1,27 +1,38 @@
 <header class="header">
     <div class="logo">
-        <a href="index.html">
+        <a href="/">
             <img src="/images/whiteHorizontalLogo.png" alt="TICKETZONE FEST Logo">
         </a>
     </div>
 
     <h1 id="title">TICKETZONE FEST</h1>
 
-    <div class="navButtons">
+    <div class="navButtons" style="text-align: center;"></div>
         {{#logged}}
+        <form action="/logout" method="post" class="d-inline">
+        <button class="btn btn-dark btn-nowrap" type="submit">Log Out</button>
+        <input type="hidden" name="_csrf" value="{{token}}" />
+        </form>
             {{#admin}}
                 <button  onclick="window.location.href='/newconcert'" type="button" class="btn btn-dark">New Concert</button>
                 <button onclick="window.location.href='/newartist'" type="button" class="btn btn-dark">New Artist</button>
             {{/admin}} 
-            <div class="navButtons">
-                <button onclick="window.location.href='/user/{{id}}'" type="button" class="btn btn-dark">User page</button>
+            <div class="navButtons">  
+
+                {{#user.image}}
+                <img src="/concerts/{{concert.id}}/image" class="img-fluid rounded concertimage" alt="{{concert.concertName}}">
+
+                {{/user.image}}
                 
-                <form action="/logout" method="post" class="d-inline">
-                    <button class="btn btn-dark btn-nowrap" type="submit">Log Out</button>
-                    <input type="hidden" name="_csrf" value="{{token}}" />
-                </form>
-                <button  type="button" class="btn btn-success">{{userName}}</button>
-            </div>       
+                {{^user.image}}
+                    <div class="profile-container text-center">
+                        <a href="/user/{{id}}">
+                            <img src="/images/noprofilephoto.png" class="profilephoto" alt="No Image Available">
+                        <div class="username">{{userName}}</div>
+                        </a>
+                    </div>
+                {{/user.image}}
+            </div>             
         {{/logged}}
     </div>
 

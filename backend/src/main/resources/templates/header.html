@@ -7,7 +7,7 @@
 
     <h1 id="title">TICKETZONE FEST</h1>
 
-    <div class="navButtons" style="text-align: center;"></div>
+    <div class="navButtons d-flex justify-content-between align-items-center"></div>
         {{#logged}}
         <form action="/logout" method="post" class="d-inline">
         <button class="btn btn-dark btn-nowrap" type="submit">Log Out</button>
@@ -20,7 +20,7 @@
             <div class="navButtons">  
 
                 {{#user.image}}
-                <img src="/concerts/{{concert.id}}/image" class="img-fluid rounded concertimage" alt="{{concert.concertName}}">
+                <img src="/user/{id}/photo" class="userphoto" alt="{{user.userName}}">
 
                 {{/user.image}}
                 
@@ -28,8 +28,8 @@
                     <div class="profile-container text-center">
                         <a href="/user/{{id}}">
                             <img src="/images/noprofilephoto.png" class="profilephoto" alt="No Image Available">
-                        <div class="username">{{userName}}</div>
                         </a>
+                        <div class="username">{{userName}}</div>
                     </div>
                 {{/user.image}}
             </div>             

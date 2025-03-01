@@ -30,49 +30,54 @@
                 <div class="col-md-8 d-flex flex-column align-items-center justify-content-center p-4">
                     <h4 class="text-center mb-3">TicketZone Fest registration form</h4>
                     <h5 class="error">{{error}}</h5>
-                   
-                    <form role="form" class="w-100" action="/user/new" method="post">
+                    <form role="form" class="w-100" action="/user/new" method="post" onsubmit="return validateForm()" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <label for="fullName">Full name:</label>
-                            <input type="text" class="form-control" name="fullName" id="fullName" placeholder="Enter Full name" required>
+                            <label for="fullName">Full name (only accepts lowercase, uppercase characters, and spaces):</label>
+                            <input type="text" class="form-control" name="fullName" id="fullName" placeholder="Enter Full name" required pattern="^[a-zA-Z ]+$">
                         </div>
+                    
                         <div class="mb-3">
-                            <label for="userName">Username:</label>
-                            <input type="text" class="form-control" name="userName" id="userName" placeholder="Enter Username" required>
+                            <label for="userName">Username (only accepts lowercase, uppercase characters, and spaces):</label>
+                            <input type="text" class="form-control" name="userName" id="userName" placeholder="Enter Username" required pattern="^[a-zA-Z0-9]+$">
                         </div>
-                        <!-- <div class="mb-3">
-                            <label for="photo">Photo:</label>
-                            <input type="text" class="form-control" name="profilePhoto" id="profilePhoto" placeholder="Enter Photo" accept=".jpg, .jpeg">
-                        </div> -->
+                    
                         <div class="mb-3">
-                            <label for="phone">Phone number:</label>
-                            <input type="number" class="form-control" name="phone"  id="phone" placeholder="Enter Phone number" required pattern="\d{9}">
+                            <label for="phone">Phone number of 9 digits:</label>
+                            <input type="tel" class="form-control" name="phone" id="phone" placeholder="Enter Phone number" required pattern="^\d{9}$" inputmode="numeric">
                         </div>
+                    
                         <div class="mb-3">
                             <label for="email">Email:</label>
-                            <input type="text" class="form-control" name="email" id="email" placeholder="Enter Email" required pattern=".*@.*.com">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email" required>
                         </div>
+                    
                         <div class="mb-3">
-                            <label for="password">Password:</label>
-                            <input type="password" class="form-control" name="encodedPassword" id="encodedPassword" placeholder="Enter Password" required>
+                            <label for="encodedPassword">Password (minimum 4 characters):</label>
+                            <input type="password" class="form-control" name="encodedPassword" id="encodedPassword" placeholder="Enter Password" required minlength="4">
                         </div>
+                    
                         <div class="mb-3">
                             <label for="age">Age:</label>
-                            <input type="number" class="form-control" name="age" id="age" placeholder="Enter age" min="0" max="110" required>
+                            <input type="number" class="form-control" name="age" id="age" placeholder="Enter age" min="1" max="110" required>
                         </div>
-        
-        
+
+                        <!-- <div class="mb-3">
+                            <label for="profilePhoto">Optional Profile Photo:</label>
+                            <input type="file" class="form-control" name="profilePhoto" id="profilePhoto" accept=".jpg, .jpeg, .png">
+                        </div>-->
+                    
                         <input type="hidden" name="_csrf" value="{{token}}" />
-    
+                    
                         <div class="d-flex align-items-center justify-content-between">
                             <a href="/" class="btn btn-primary">
                                 <i class="bi bi-reply-all-fill"></i> Go Back
                             </a>
-                            <button class="btn btn-success" type="submit" value="Enviar">
+                            <button class="btn btn-success" type="submit">
                                 <i class="bi bi-check-lg"></i> Register
                             </button>
                         </div>
                     </form>
+                    
                 </div>
             </div>
         </div>

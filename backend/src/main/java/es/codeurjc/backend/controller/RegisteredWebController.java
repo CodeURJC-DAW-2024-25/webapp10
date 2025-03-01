@@ -1,12 +1,10 @@
 package es.codeurjc.backend.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Optional;
 
-import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -15,13 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Optional;
-import java.util.Collections;
 
 import es.codeurjc.backend.model.User;
 import es.codeurjc.backend.repository.UserRepository;
@@ -84,10 +76,6 @@ public class RegisteredWebController {
             return "register";
         }
 
-        /* if (!profilePhoto.isEmpty()) {
-			user.setProfilePhoto(BlobProxy.generateProxy(profilePhoto.getInputStream(), profilePhoto.getSize()));
-			user.setImage(true);
-		} */
         Integer age = user.getAge(); 
         if (age==null || age< 0 || age > 110) {
             model.addAttribute("error", "Enter an age between 0-100");
@@ -99,6 +87,19 @@ public class RegisteredWebController {
 
     }
 
+    @GetMapping("/user/{id}/photo")
+    public ResponseEntity<byte[]> getUserPhoto(@PathVariable Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+
+        if (userOptional.isEmpty() || userOptional.get().getProfilePhoto() == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        User user = userOptional.get();
+        return ResponseEntity.ok()
+                .header("Content-Type", "image/jpg")
+                .body(user.getProfilePhoto());
+    }
     
     
 

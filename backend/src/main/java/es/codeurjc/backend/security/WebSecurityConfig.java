@@ -42,6 +42,7 @@ public class WebSecurityConfig {
 				.requestMatchers("/").permitAll()
 				.requestMatchers("/css/**").permitAll()
 				.requestMatchers("/js/**").permitAll()
+				.requestMatchers("/error").permitAll()
 				.requestMatchers("/images/**").permitAll()
 				.requestMatchers("/register/**").permitAll()
 				.requestMatchers("/login/**").permitAll()
@@ -69,7 +70,9 @@ public class WebSecurityConfig {
 				.logout(logout -> logout
 						.logoutUrl("/logout")
 						.logoutSuccessUrl("/")
-						.permitAll());
+						.permitAll())
+						.exceptionHandling(exceptionHandling -> exceptionHandling
+						.accessDeniedPage("/error"));
 
 		return http.build();
 	}

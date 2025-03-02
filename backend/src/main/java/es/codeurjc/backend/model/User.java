@@ -35,7 +35,7 @@ public class User {
     private String favoriteGenre;
 
     @Lob
-    private byte [] profilePhoto;
+    private Blob profilePhoto;
     private boolean image;
 
     @OneToMany(mappedBy = "userOwner", fetch = FetchType.LAZY)
@@ -47,8 +47,6 @@ public class User {
     public User(){}
 
     public User (String fullName, String userName, Integer phone, String email, String encodedPassword, Integer age, String... roles){
-        
-        super();
         this.fullName=fullName;
         this.userName=userName;
         this.phone=phone;
@@ -170,11 +168,11 @@ public class User {
         }
     }
 
-    public byte [] getProfilePhoto() {
+    public Blob getProfilePhoto() {
         return profilePhoto;
     }
 
-    public void setProfilePhoto(byte [] profilePhoto) {
+    public void setProfilePhoto(Blob profilePhoto) {
         this.profilePhoto = profilePhoto;
     }
 

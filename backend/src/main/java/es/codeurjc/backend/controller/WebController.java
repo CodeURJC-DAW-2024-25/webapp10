@@ -38,6 +38,7 @@ import es.codeurjc.backend.service.TicketService;
 import es.codeurjc.backend.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 @Controller
 public class WebController {
 
@@ -73,12 +74,22 @@ public class WebController {
 	}
 
 	@GetMapping("/")
-	public String show(Model model) {
-		
-		List<Concert> concerts = concertService.getConcerts(0, 4);
-		model.addAttribute("concerts", concerts);
+	public String show(Model model, HttpServletRequest request) {
 
-		return "index";
+		Principal principal = request.getUserPrincipal();
+
+		if (principal != null) {
+			Optional<User> user = userService.findByUserName(principal.getName());
+			if (user.isPresent() && !user.get().getFavoriteGenre().equals("None")){
+				List<Concert> concerts = concertService.getConcerts(0, 4,user.get());
+				model.addAttribute("concerts", concerts);
+				return "index";
+			}
+		}
+				List<Concert> concerts = concertService.getConcerts(0, 4,null);
+				model.addAttribute("concerts", concerts);
+				return "index";
+		
 	}
 
 	@GetMapping("/moreConcerts")
@@ -94,13 +105,20 @@ public class WebController {
 	@GetMapping("/user/{id}")
 	public String showUser(Model model, @PathVariable Long id, HttpServletRequest request) {
 
+		Principal principal = request.getUserPrincipal();
+
+		Optional<User> user = userService.findByUserName(principal.getName());
 		addAttributes(model, request);
-		Optional<User> user = userService.findById(id);
-		if (user.isPresent()) {
-			model.addAttribute("user", user.get());
-			return "userPage";
+		Optional<User> user2 = userService.findById(id);
+		if (user.equals(user2)) {
+			if (user2.isPresent()) {
+				model.addAttribute("user", user2.get());
+				return "userPage";
+			} else {
+				return "index";
+			}
 		} else {
-			return "index";
+			return "loginerror";
 		}
 
 	}
@@ -225,14 +243,13 @@ public class WebController {
 		return "newArtist";
 	}
 
-	
 	@GetMapping("/concerts/{id}/image")
 	public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
 		Optional<Concert> concert = concertService.findById(id);
-	
+
 		if (concert.isPresent() && concert.get().getImageFile() != null) {
 			Resource file = new InputStreamResource(concert.get().getImageFile().getBinaryStream());
-	
+
 			return ResponseEntity.ok()
 					.header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
 					.contentLength(concert.get().getImageFile().length())
@@ -241,8 +258,7 @@ public class WebController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
-	
+
 	@GetMapping("/download/tickets")
 	public void downloadTickets(HttpServletResponse response, Principal principal) throws IOException {
 		if (principal == null) {

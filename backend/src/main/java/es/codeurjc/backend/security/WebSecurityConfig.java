@@ -56,7 +56,6 @@ public class WebSecurityConfig {
 				// PRIVATE PAGES
 				.requestMatchers("/concert/purchasePage/**").hasAnyRole("USER", "ADMIN")
 				.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-				.requestMatchers("/user/**/photo").hasAnyRole("USER", "ADMIN")
 				.requestMatchers("/userPage").hasAnyRole("USER", "ADMIN")
 				.requestMatchers("/newartist").hasAnyRole("ADMIN")
 				.requestMatchers("/newconcert").hasAnyRole("ADMIN"))

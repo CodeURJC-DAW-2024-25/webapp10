@@ -28,7 +28,7 @@
                 <!-- Right side with the form -->
                 <div class="col-md-8 d-flex flex-column align-items-center justify-content-center p-4">
                     <h4 class="text-center mb-3">TicketZone Fest New Concert form</h4>
-                    <form role="form" class="w-100" method="post" action="/newconcert">
+                    <form role="form" class="w-100" method="post" action="/newconcert" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="concertName">Concert name:</label>
                             <input name="concertName" type="text" class="form-control" id="concertName" placeholder="Enter Full name">
@@ -59,12 +59,20 @@
                             <input name="location" type="text" class="form-control" id="location" placeholder="Enter the location">
                         </div>
                         <div class="mb-3">
+                            <label for="map">Map URL:</label>
+                            <input name="map" type="text" class="form-control" id="map" placeholder="Enter the map URL">
+                        </div>
+                        <div class="mb-3">
                             <label for="stadiumPrice">Stadium Price:</label>
                             <input name="stadiumPrice" type="number" class="form-control" id="stadiumPrice" placeholder="Enter the stadium price">
                         </div>
                         <div class="mb-3">
                             <label for="trackPrice">Track price:</label>
                             <input name="trackPrice" type="number" class="form-control" id="trackPrice" placeholder="Enter the track price">
+                        </div>
+                        <div class="mb-3">
+                            <label for="imageFile">Concert Poster:</label>
+                            <input type="file" class="form-control" name="imageFile" id="imageFile" accept=".jpg, .jpeg, .png">
                         </div>
                         <input type="hidden" name="_csrf" value="{{token}}" />
                         <div class="d-flex align-items-center justify-content-between">

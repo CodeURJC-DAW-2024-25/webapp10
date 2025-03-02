@@ -51,6 +51,7 @@ public class WebSecurityConfig {
 				.requestMatchers( "/concerts/*/image").permitAll()
 				.requestMatchers("/download/tickets/**").permitAll()
 				.requestMatchers("/infoGraphic/**").permitAll()
+				.requestMatchers("/newconcert").permitAll()
 
 				// PRIVATE PAGES
 				.requestMatchers("/concert/purchasePage/**").hasAnyRole("USER", "ADMIN")
@@ -58,7 +59,7 @@ public class WebSecurityConfig {
 				.requestMatchers("/user/**/photo").hasAnyRole("USER", "ADMIN")
 				.requestMatchers("/userPage").hasAnyRole("USER", "ADMIN")
 				.requestMatchers("/newartist").hasAnyRole("ADMIN")
-				.requestMatchers("/newconcert").hasAnyRole("ADMIN"))
+				/* .requestMatchers("/newconcert").hasAnyRole("ADMIN") */)
 
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login")

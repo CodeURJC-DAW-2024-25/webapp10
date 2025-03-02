@@ -80,16 +80,16 @@ public class WebController {
 
 		if (principal != null) {
 			Optional<User> user = userService.findByUserName(principal.getName());
-			if (user.isPresent() && !user.get().getFavoriteGenre().equals("None")){
-				List<Concert> concerts = concertService.getConcerts(0, 4,user.get());
+			if (user.isPresent() && !user.get().getFavoriteGenre().equals("None")) {
+				List<Concert> concerts = concertService.getConcerts(0, 4, user.get());
 				model.addAttribute("concerts", concerts);
 				return "index";
 			}
 		}
-				List<Concert> concerts = concertService.getConcerts(0, 4,null);
-				model.addAttribute("concerts", concerts);
-				return "index";
-		
+		List<Concert> concerts = concertService.getConcerts(0, 4, null);
+		model.addAttribute("concerts", concerts);
+		return "index";
+
 	}
 
 	@GetMapping("/moreConcerts")
@@ -107,18 +107,22 @@ public class WebController {
 
 		Principal principal = request.getUserPrincipal();
 
-		Optional<User> user = userService.findByUserName(principal.getName());
-		addAttributes(model, request);
-		Optional<User> user2 = userService.findById(id);
-		if (user.equals(user2)) {
-			if (user2.isPresent()) {
-				model.addAttribute("user", user2.get());
-				return "userPage";
+		if (principal != null) {
+			Optional<User> user = userService.findByUserName(principal.getName());
+			addAttributes(model, request);
+			Optional<User> user2 = userService.findById(id);
+			if (user.equals(user2)) {
+				if (user2.isPresent()) {
+					model.addAttribute("user", user2.get());
+					return "userPage";
+				} else {
+					return "index";
+				}
 			} else {
-				return "index";
+				return "loginerror";
 			}
 		} else {
-			return "loginerror";
+			return "redirect:/";
 		}
 
 	}

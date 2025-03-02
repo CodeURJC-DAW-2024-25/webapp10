@@ -50,6 +50,7 @@ public class WebSecurityConfig {
 				.requestMatchers("/moreConcerts", "/moreConcerts/**").permitAll()
 				.requestMatchers( "/concerts/*/image").permitAll()
 				.requestMatchers("/download/tickets/**").permitAll()
+				.requestMatchers("/infoGraphic/**").permitAll()
 
 				// PRIVATE PAGES
 				.requestMatchers("/concert/purchasePage/**").hasAnyRole("USER", "ADMIN")

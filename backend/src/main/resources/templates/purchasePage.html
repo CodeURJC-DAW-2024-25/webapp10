@@ -23,7 +23,15 @@
                 {{#concert}}
                 <!--CONCERT INFO-->
                 <div class="col-md-4 d-flex flex-column align-items-center justify-content-center p-4">
-                    <img src="" class="img-fluid rounded" alt="Artist Image" style="object-fit: cover; width: 100%; height: auto; aspect-ratio: 14 / 16" alt="Concert Poster">
+                    {{#concert.concertImage}}
+                    <img src="/concerts/{{concert.id}}/image" class="img-fluid rounded" alt="{{concert.concertName}}"
+                        style="object-fit: cover; width: 100%; height: auto; aspect-ratio: 12 / 16;">
+                    {{/concert.concertImage}}
+    
+                    {{^concert.concertImage}}
+                    <img src="/images/Concerts/noImage.jpg" class="img-fluid rounded" alt="No Image Available"
+                        style="object-fit: cover; width: 100%; height: auto; aspect-ratio: 12 / 16;">
+                    {{/concert.concertImage}}
                     <h2 class="mt-3 text-center">{{concertName}}</h2>
                     <p class="text-center">{{concertDate}}</p>
                 </div>

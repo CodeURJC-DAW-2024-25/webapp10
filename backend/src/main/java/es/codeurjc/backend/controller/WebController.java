@@ -12,6 +12,8 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.color.PDColor;
+import org.apache.pdfbox.pdmodel.graphics.color.PDDeviceRGB;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -287,31 +289,48 @@ public class WebController {
 			document.addPage(page);
 
 			try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
-				contentStream.setFont(PDType1Font.HELVETICA_BOLD, 16);
-				contentStream.beginText();
-				contentStream.newLineAtOffset(50, 750);
-				contentStream.showText("Ticket Purchase History - TicketZone Fest");
-				contentStream.newLineAtOffset(0, -20);
-				contentStream.showText("--------------------------------------");
-				contentStream.newLineAtOffset(0, -20);
 
-				if (tickets.isEmpty()) {
-					contentStream.showText("No tickets purchased.");
-				} else {
-					for (Ticket ticket : tickets) {
-						contentStream.showText("Concert: " + ticket.getConcert().getConcertName());
-						contentStream.newLineAtOffset(0, -15);
-						contentStream.showText("Date: " + ticket.getConcert().getConcertDate());
-						contentStream.newLineAtOffset(0, -15);
-						contentStream.showText("Location: " + ticket.getConcert().getLocation());
-						contentStream.newLineAtOffset(0, -15);
-						contentStream.showText("Number of Tickets: " + ticket.getNumTickets());
-						contentStream.newLineAtOffset(0, -15);
-						contentStream.showText("Total Price: " + ticket.getPrices() + "€");
-						contentStream.newLineAtOffset(0, -25);
+				PDColor titleColor = new PDColor(new float[]{75 / 255f, 0 / 255f, 130 / 255f}, PDDeviceRGB.INSTANCE);
+    			contentStream.setNonStrokingColor(titleColor);
+
+				contentStream.setFont(PDType1Font.HELVETICA_BOLD, 20);
+				contentStream.beginText();
+				contentStream.newLineAtOffset(100, 750);
+				contentStream.showText("Ticket Purchase History - TicketZone Fest");
+				contentStream.endText();
+
+				int yPosition = 700;
+				for (Ticket ticket : tickets) {
+
+					PDColor concertNameColor = new PDColor(new float[]{84 / 255f, 26 / 255f, 113 / 255f}, PDDeviceRGB.INSTANCE);
+					contentStream.setNonStrokingColor(concertNameColor);
+
+					contentStream.beginText();
+					contentStream.setFont(PDType1Font.HELVETICA_BOLD, 14);
+					contentStream.newLineAtOffset(50, yPosition);
+					contentStream.showText("Concert: " + ticket.getConcert().getConcertName());
+					contentStream.endText();
+					
+					contentStream.setNonStrokingColor(0, 0, 0);
+					contentStream.setFont(PDType1Font.HELVETICA, 12);
+
+					contentStream.beginText();
+					contentStream.setFont(PDType1Font.HELVETICA, 12);
+					contentStream.newLineAtOffset(50, yPosition - 20);
+					contentStream.showText("Date: " + ticket.getConcert().getConcertDate());
+					contentStream.newLineAtOffset(0, -15);
+					contentStream.showText("Location: " + ticket.getConcert().getLocation());
+					contentStream.newLineAtOffset(0, -15);
+					contentStream.showText("Number of Tickets: " + ticket.getNumTickets());
+					contentStream.newLineAtOffset(0, -15);
+					contentStream.showText("Total Price: " + ticket.getPrices() + "€");
+					contentStream.endText();
+					
+					yPosition -= 100; 
+					if (yPosition < 100) {
+						break; 
 					}
 				}
-				contentStream.endText();
 			}
 			document.save(response.getOutputStream());
 		}

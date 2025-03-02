@@ -33,7 +33,7 @@
                             </a>
                             <h4 class="username">{{userName}}</h4>
                         </div>
-                    {{/image}}
+                    {{/image}}  
                     <h2 class="mt-3 text-center">Welcome to your TicketZone Fest</h2>
                     <p class="text-center">Here you will find all your information.</p>
                 </div>
@@ -99,11 +99,9 @@
 
                 </div>
 
-
-
                 <!-- Right side with purchase history -->
                 <div class="col-md-4 d-flex align-items-center justify-content-center">
-                    <div class="p-4 bg-white shadow rounded w-75">
+                    <div class="p-4 bg-white shadow rounded w-75 purchase-history">
                         <h2 class="text-muted text-center mb-3">Purchase History</h2>
                         {{#tickets}}
                         <table class="table table-bordered">
@@ -132,10 +130,10 @@
                             </tbody>
                         </table> 
                         {{/tickets}}
-
+                
                         {{^tickets}}
                         <p class="text-muted text-center mb-3">No tickets yet</p>
-                        {{/tickets}}
+                        {{/tickets}}           
                         <div class="text-center mt-3">
                             <a href="/download/tickets" class="btn btn-success">
                                 <i class="bi bi-file-earmark-arrow-down"></i> Download Tickets PDF

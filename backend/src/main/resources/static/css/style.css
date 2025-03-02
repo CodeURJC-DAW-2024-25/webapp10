@@ -43,7 +43,7 @@ body {
 
 
 #container-userPage {
-    padding-top: 170px;
+    padding-top: 60px;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -53,9 +53,22 @@ body {
 .content-userPage {
     flex: 1;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     padding: 15px;
+}
+
+.row {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.purchase-history {
+    flex-grow: 1;
+    max-height: 120vh;
+    overflow-y: auto;
+    align-self: stretch;
 }
 
 table {

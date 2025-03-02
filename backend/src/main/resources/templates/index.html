@@ -15,6 +15,17 @@
 <body>
     <!--Header-->
     {{>header}}
+
+    <div class="container mt-3">
+        {{#successMessage}}
+        <div class="alert alert-success alert-dismissible fade show fade-out" role="alert">
+            <strong>Success!</strong> {{successMessage}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {{/successMessage}}
+    </div>
+    
+
     <!--Concerts-->
     <main class="container mt-4">
         <section class="row">
@@ -55,10 +66,9 @@
     {{>footer}}
 
     <script> 
-        let offset = 14; // Inicialmente mostramos 4 conciertos
+        let offset = 14;
 
         $('#load-more-btn').on('click', function() {
-            // Mostrar el spinner
             $('#spinner').show();
 
             $.ajax({
@@ -67,9 +77,7 @@
                 data: { offset: offset },
                 success: function(data) {
                     if (data.length > 0) {
-                        // Añadir los nuevos conciertos al final de la lista
                         data.forEach(function(concert, index) {
-                            // Verificar si hay imagen o usar una por defecto
                             let imageSrc = concert.concertImage ? concert.imagefile : "/images/Concerts/noImage.jpg";
                             let imageAlt = concert.concertImage ? concert.name : "No image available";
 
@@ -83,13 +91,11 @@
                             `);
                         });
 
-                        
-                        // Actualizamos el offset
                         offset += 4;
                     } else {
-                        $('#load-more-btn').hide(); // Ocultar el botón si no hay más conciertos
+                        $('#load-more-btn').hide(); 
                     }
-                    // Ocultar el spinner después de cargar los conciertos
+
                     $('#spinner').hide();
                 }
             });

@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import es.codeurjc.backend.model.Artist;
 import es.codeurjc.backend.model.Concert;
@@ -68,6 +69,7 @@ public class WebController {
 				model.addAttribute("userName", principal.getName());
 				model.addAttribute("id", user.get().getId());
 				model.addAttribute("admin", request.isUserInRole("ADMIN"));
+				model.addAttribute("user", user.get());
 			}
 
 		} else {
@@ -160,7 +162,8 @@ public class WebController {
 	@PostMapping("/concert/purchasePage/{id}")
 	public String purchase(HttpServletRequest request, Model model, @PathVariable long id,
 			@RequestParam String ticketType,
-			@RequestParam Integer numTickets) throws IOException {
+			@RequestParam Integer numTickets,
+			RedirectAttributes redirectAttributes) throws IOException {
 
 		Principal principal = request.getUserPrincipal();
 		Integer prices;
@@ -194,6 +197,9 @@ public class WebController {
 		ticketService.save(ticket);
 		model.addAttribute("ticket", ticket.getId());
 		System.out.println("Tickets del usuario: " + user.get().getTickets().size());
+		
+		redirectAttributes.addFlashAttribute("successMessage", "Your purchase has been completed successfully.");
+		
 		return "redirect:/";
 	}
 

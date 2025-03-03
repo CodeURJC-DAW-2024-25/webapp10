@@ -1,11 +1,12 @@
 {{#concerts}}
 <article class="concert-card">
+    <h4>{{concertName}}</h4>
     <a href="/concert/{{id}}" class="link">
         {{#concertImage}}
-            <img src="/concerts/{{id}}/image" alt="{{concertName}}">
+            <img src="/concerts/{{id}}/image" alt="{{concertName}}" title="{{concertName}}">
         {{/concertImage}}
         {{^concertImage}}
-            <img src="/images/Concerts/noImage.jpg" alt="No image available">
+            <img src="/images/Concerts/noImage.jpg" alt="No image available" title="{{concertName}}">
         {{/concertImage}}
     </a>
 </article>

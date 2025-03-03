@@ -58,6 +58,10 @@ body {
     padding: 15px;
 }
 
+p{
+    font-weight: bold;
+}
+
 .row {
     display: flex;
     align-items: flex-start;
@@ -426,7 +430,7 @@ iframe{
 }
 
 .chartCanvas {
-    width: 400px !important; /* O el tamaño que desees */
-    height: 300px !important; /* Ajusta la altura según lo que necesites */
+    width: 400px !important;
+    height: 200px !important;
+    margin-left: auto;
 }
-  

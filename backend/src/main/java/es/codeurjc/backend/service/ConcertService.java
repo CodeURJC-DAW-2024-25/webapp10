@@ -70,7 +70,7 @@ public class ConcertService {
 						count++;
 					}
 				}
-				if (count > 0) {
+				if (count >= 0) {
 					genreCount.put(concert, count);
 				}
 

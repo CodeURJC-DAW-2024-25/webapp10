@@ -27,6 +27,11 @@
 
                 <!-- Right side with the form -->
                 <div class="col-md-8 d-flex flex-column align-items-center justify-content-center p-4">
+                    {{#newArtistError}}
+                        <div class="alert alert-danger" role="alert">
+                            <strong>Error:</strong> {{newArtistError}}
+                        </div>
+                    {{/newArtistError}}
                     <h4 class="text-center mb-3">TicketZone Fest New Artist Form</h4>
                     <form role="form" class="w-100" method="post" action="/newartist">
                         <div class="mb-3">

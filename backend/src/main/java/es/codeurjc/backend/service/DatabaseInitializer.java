@@ -104,7 +104,10 @@ public class DatabaseInitializer {
 		Concert quevedoConcert = new Concert("Quevedo Live", "The biggest concert of Quevedo, featuring his greatest hits and new releases. This concert will take you on a journey through his musical career, with stunning visuals and unforgettable performances.", "2025-08-10", "20:00:00", "Barcelona", 110, 55, List.of(Quevedo), "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2994.4659881265447!2d2.1520405!3d41.3639595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a26c35ec4be9%3A0x9e9035c097bdfdf4!2sPalau%20Sant%20Jordi!5e0!3m2!1ses!2ses!4v1740848282833!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>");
 		Concert kanyeConcert = new Concert("Yeezus Tour", "The biggest concert of Kanye West, featuring his greatest hits and new releases. This concert will take you on a journey through his musical career, with stunning visuals and unforgettable performances.", "2025-09-15", "21:00:00", "Barcelona", 150, 75, List.of(KanyeWest), "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2994.4659881265447!2d2.1520405!3d41.3639595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a26c35ec4be9%3A0x9e9035c097bdfdf4!2sPalau%20Sant%20Jordi!5e0!3m2!1ses!2ses!4v1740848282833!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>");
 
-		userRepository.save(new User("Registered User", "user", 123456789, "user@example.com", passwordEncoder.encode("user"), 20,"USER"));
+		User user = new User("Registered User", "user", 123456789, "user@example.com", passwordEncoder.encode("user"), 20,"USER");
+
+		user.setFavoriteGenre("Trap");
+		userRepository.save(user);
 		userRepository.save(new User("Admin User", "admin", 987654321, "admin@example.com", passwordEncoder.encode("admin"), 21,"USER","ADMIN"));
 		
 		setConcertImage(taylorConcert, "/static/images/Concerts/taylorswift.jpg");

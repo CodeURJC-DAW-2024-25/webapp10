@@ -37,18 +37,23 @@
                 <h4>{{concertName}}</h4>
                 <p>{{concertDetails}}</p>
 
-                <h4>Concert Details</h4>
-                <p>{{concertDetails}}</p>
-                <div class="d-flex justify-content-between">
-                    <h5>Date: <span>{{concertDate}}</span></h5>
-                    <h5>Time: <span>{{concertTime}}</span></h5>
-                    <h5>Artists:
+                {{#artists}}
+                    <h4>{{.}}</h4>
+                    <p>{{artistInfo}}</p>
+                {{/artists}}
+
+                <!-- <h4>Concert Details</h4>
+                <p>{{concertDetails}}</p> -->
+                <div class="d-flex">
+                    <h5 class="flex-grow-1">Date: <span>{{concertDate}}</span></h5>
+                    <h5 class="flex-grow-1">Time: <span>{{concertTime}}</span></h5>
+                    <!-- <h5>Artists:
                         <ul>
                             {{#artists}}
                             <li>{{.}}</li>
                             {{/artists}}
                         </ul>
-                    </h5>
+                    </h5> -->
                 </div>
                 <h5>Location: <span>{{location}}</span></h5>
                 <div class="d-flex justify-content-between">

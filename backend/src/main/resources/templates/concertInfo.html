@@ -24,13 +24,11 @@
             <!-- Left side with artist image -->
             <div class="col-md-4">
                 {{#concert.concertImage}}
-                <img src="/concerts/{{concert.id}}/image" class="img-fluid rounded" alt="{{concert.concertName}}"
-                    style="object-fit: cover; width: 100%; height: auto; aspect-ratio: 12 / 16;">
+                <img src="/concerts/{{concert.id}}/image" class="img-fluid rounded concertImage" alt="{{concert.concertName}}">
                 {{/concert.concertImage}}
 
                 {{^concert.concertImage}}
-                <img src="/images/Concerts/noImage.jpg" class="img-fluid rounded" alt="No Image Available"
-                    style="object-fit: cover; width: 100%; height: auto; aspect-ratio: 12 / 16;">
+                <img src="/images/Concerts/noImage.jpg" class="img-fluid rounded concertImage" alt="No Image Available">
                 {{/concert.concertImage}}
             </div>
 

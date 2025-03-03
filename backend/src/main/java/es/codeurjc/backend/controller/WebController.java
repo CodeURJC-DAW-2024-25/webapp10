@@ -85,12 +85,12 @@ public class WebController {
 		if (principal != null) {
 			Optional<User> user = userService.findByUserName(principal.getName());
 			if (user.isPresent() && !user.get().getFavoriteGenre().equals("None")) {
-				List<Concert> concerts = concertService.getConcerts(0, 4, user.get());
+				List<Concert> concerts = concertService.getConcerts(0, 10, user.get());
 				model.addAttribute("concerts", concerts);
 				return "index";
 			}
 		}
-		List<Concert> concerts = concertService.getConcerts(0, 4, null);
+		List<Concert> concerts = concertService.getConcerts(0, 10, null);
 		model.addAttribute("concerts", concerts);
 		return "index";
 

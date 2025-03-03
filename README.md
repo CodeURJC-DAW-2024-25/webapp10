@@ -35,31 +35,30 @@
 - Each artist will be classified by its genre. When a registered user signs in, the concerts displayed first will be organized based on the genres of concerts the user has previously purchased tickets for.
 - The concerts that have sold the most tickets will appear first.
 ## Screenshots
-![image](https://github.com/user-attachments/assets/3f99cf42-2f98-4665-8a89-25f70da54d43)
+![indexScreenshot](https://github.com/user-attachments/assets/af78d42a-6cea-4a6b-9a13-7b85600316a3)
 - Description: main page that includes all the information about the different concerts and artists, in addition to allowing navigation to user registration, login and modification of artists and concerts if you are an administrator.
 
-![image](https://github.com/user-attachments/assets/8a9086b1-ff2c-4de6-8178-e25775262a94)
-- Description: page that includes concert information such as date, time, location, as well as including participating artists.
+![concertInfoScreenshot](https://github.com/user-attachments/assets/3870bc0f-7e1b-40ba-874c-ad4cbd2c7634)
+- Description: page that includes concert information such as date, time, location, map, different diagrams as well as including participating artists.
 
-![image](https://github.com/user-attachments/assets/3fadd059-0d51-4dd3-b618-bacac6cdc064)
-- Description: page that allows the user to login in by introducing the username, email and password.
+![loginScreenshot](https://github.com/user-attachments/assets/08271d53-d12a-43d8-bc06-e78d54b97756)
+- Description: page that allows the user to login in by introducing the username and password.
 
-![image](https://github.com/user-attachments/assets/e6772cd8-37e3-4c9e-9d35-346901a51b4f)
-- Description: page that allows users to register by filling out the different fields of the form with their personal information, like their name, username, personal photo, phone number, email, password, birth date, DNI and user type.
+![registerScreenshot](https://github.com/user-attachments/assets/59484c12-38cf-4e4d-84fb-29fbaf33053e)
+- Description: page that allows users to register by filling out the different fields of the form with their personal information, like their name, username, personal photo, phone number, email, password and age.
 
-![image](https://github.com/user-attachments/assets/2284f47d-88a3-45a6-b7f3-3c48f8774536)
-- Description: page that allows the administrator to register a new concert by filling out the different fields of the form with the concert information, like the name, the artists name and information, more cocnert details, date, time and location.
+![newConcertScreenshot](https://github.com/user-attachments/assets/7092d58b-3eec-45b8-82ca-f0af7b9f310b)
+- Description: page that allows the administrator to register a new concert by filling out the different fields of the form with the concert information, like the name, the artists name and information, more concert details, date, stadium price, track price time and location.
 
-![image](https://github.com/user-attachments/assets/548679eb-e6ea-4e8d-8620-6b34dee6c9df)
-- Description: page that allows the administrator to register a new artist by filling out the different fields of the form with the artist information, like the name, musical style and more information.
+![newArtistScreenshot](https://github.com/user-attachments/assets/b29c700f-2bc2-4991-b84d-fb9b3ea61ae2)
+- Description: page that allows the administrator to register a new artist by filling out the different fields of the form with the artist information, like the name and musical style.
 
-![image](https://github.com/user-attachments/assets/7a8a4f9d-cac6-4640-ad37-63da8243ade6)
+![purchasePageScreenshot](https://github.com/user-attachments/assets/2cb1d4b8-bcd8-497f-8e6c-7208231a56d3)
 - Description: page that allows the user to buy tickets for the concert by selecting, allowing the user to choose the tickets they want to buy and whether they want it to be in the stands or on the track.
 
-![image](https://github.com/user-attachments/assets/92c75232-5df6-41fb-9851-5323700d20b4)
+![userPageScreenshot](https://github.com/user-attachments/assets/2e535d5d-6da4-46c2-b18f-929103e3c3e7)
 - Description: page that includes the personal information entered by the user, as well as a history of tickets purchased with the option to download the ticket, if it has not been previously downloaded
 
 ## Navigation Diagram
-![image](https://github.com/user-attachments/assets/96ed63d8-952c-4b30-b5f8-0baa50313456)
-
+![diagramScreenshot](https://github.com/user-attachments/assets/dd84c2c3-78b2-423a-835e-fbace9b5e235)
 

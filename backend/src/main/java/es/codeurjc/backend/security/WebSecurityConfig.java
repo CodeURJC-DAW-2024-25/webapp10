@@ -70,7 +70,7 @@ public class WebSecurityConfig {
 						.logoutUrl("/logout")
 						.logoutSuccessUrl("/")
 						.permitAll())
-						.exceptionHandling(exceptionHandling -> exceptionHandling
+				.exceptionHandling(exceptionHandling -> exceptionHandling
 						.accessDeniedPage("/error"));
 
 		return http.build();

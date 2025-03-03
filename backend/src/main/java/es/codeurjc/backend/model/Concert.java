@@ -26,6 +26,7 @@ public class Concert {
     private String concertDate;
     private String concertTime;
     private String location;
+    private String color;
     private Integer stadiumPrice;
     private Integer trackPrice;
 
@@ -170,6 +171,10 @@ public class Concert {
 
     public void setMap(String map) {
         this.map = map;
+    }
+
+    public String getColor() {
+        return color;
     }
 
     public int countTicketsSold() {

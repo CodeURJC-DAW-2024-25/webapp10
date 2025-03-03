@@ -196,7 +196,6 @@ public class WebController {
 		userService.save(user.get());
 		ticketService.save(ticket);
 		model.addAttribute("ticket", ticket.getId());
-		System.out.println("Tickets del usuario: " + user.get().getTickets().size());
 
 		redirectAttributes.addFlashAttribute("successMessage", "Your purchase has been completed successfully.");
 

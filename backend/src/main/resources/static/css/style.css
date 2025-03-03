@@ -444,4 +444,12 @@ iframe{
     margin-top: 20px;
 }
 
+.chartCanvas {
+    width: 900px !important;
+    height: auto !important;
+    margin-left: auto;
+}
 
+.purchasebuttons{
+    margin-bottom: 20px;
+}

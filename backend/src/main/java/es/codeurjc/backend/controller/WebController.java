@@ -85,12 +85,12 @@ public class WebController {
 		if (principal != null) {
 			Optional<User> user = userService.findByUserName(principal.getName());
 			if (user.isPresent() && !user.get().getFavoriteGenre().equals("None")) {
-				List<Concert> concerts = concertService.getConcerts(0, 4, user.get());
+				List<Concert> concerts = concertService.getConcerts(0, 10, user.get());
 				model.addAttribute("concerts", concerts);
 				return "index";
 			}
 		}
-		List<Concert> concerts = concertService.getConcerts(0, 4, null);
+		List<Concert> concerts = concertService.getConcerts(0, 10, null);
 		model.addAttribute("concerts", concerts);
 		return "index";
 
@@ -220,28 +220,23 @@ public class WebController {
 			@RequestParam String concertDate,
 			@RequestParam String concertTime,
 			@RequestParam String location,
+			@RequestParam String map,
 			@RequestParam Integer stadiumPrice,
 			@RequestParam Integer trackPrice,
-			@RequestParam MultipartFile imageField,
+			@RequestParam MultipartFile imageFile,
 			Model model) throws IOException {
 
-		Concert concert = new Concert();
-		concert.setConcertName(concertName);
-		concert.setConcertDetails(concertDetails);
-		concert.setConcertDate(concertDate);
-		concert.setConcertTime(concertTime);
-		concert.setLocation(location);
-		concert.setStadiumPrice(stadiumPrice);
-		concert.setTrackPrice(trackPrice);
-		concert.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
-		concert.setConcertImage(true);
-
 		List<Artist> selectedArtists = artistIds.stream()
-				.map(id -> artistService.findById(id)
-						.orElseThrow(() -> new RuntimeException("No existe artista con ID " + id)))
-				.collect(Collectors.toList());
-		concert.setArtists(selectedArtists);
-		concert.setMap(location);
+			.map(id -> artistService.findById(id)
+				.orElseThrow(() -> new RuntimeException("No existe artista con ID " + id)))
+			.collect(Collectors.toList());
+
+		Concert concert = new Concert(concertName, concertDetails, concertDate, concertTime, location, stadiumPrice, trackPrice, selectedArtists, map);
+
+		if (imageFile != null && !imageFile.isEmpty()) {
+            concert.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+            concert.setConcertImage(true);
+        }
 
 		concertService.save(concert);
 

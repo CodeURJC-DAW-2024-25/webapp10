@@ -40,10 +40,10 @@
             <article class="concert-card">
                 <a href="/concert/{{id}}" class="link">
                     {{#concertImage}}
-                        <img src="/concerts/{{id}}/image" alt="{{concertName}}">
+                        <img src="/concerts/{{id}}/image" alt="{{concertName}}" title="{{concertName}}">
                     {{/concertImage}}
                     {{^concertImage}}
-                        <img src="/images/Concerts/noImage.jpg" alt="No image available">
+                        <img src="/images/Concerts/noImage.jpg" alt="No image available" title="{{concertName}}">
                     {{/concertImage}}
                 </a>
             </article>
@@ -66,7 +66,7 @@
     {{>footer}}
 
     <script> 
-        let offset = 14;
+        let offset = 10;
 
         $('#load-more-btn').on('click', function() {
             $('#spinner').show();
@@ -80,18 +80,18 @@
                         data.forEach(function(concert, index) {
                             let imageSrc = concert.concertImage ? concert.imagefile : "/images/Concerts/noImage.jpg";
                             let imageAlt = concert.concertImage ? concert.name : "No image available";
+                            let imageTitle = concert.name;
 
                             $('#concert-list').append(`
                                 <article class="concert-card">
                                     <a href="concert/${index}" class="link">
-                                        <img src="${imageSrc}" alt="${imageAlt}">
+                                        <img src="${imageSrc}" alt="${imageAlt}" title="${imageTitle}">
                                     </a>
                                 </article>
-                                    
                             `);
                         });
 
-                        offset += 4;
+                        offset += 10;
                     } else {
                         $('#load-more-btn').hide(); 
                     }
@@ -101,7 +101,7 @@
             });
         });
 
-        
+
     </script>
 
 </body>

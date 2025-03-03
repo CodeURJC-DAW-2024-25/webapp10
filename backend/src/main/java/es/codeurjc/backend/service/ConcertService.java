@@ -92,7 +92,7 @@ public class ConcertService {
 	}
 
 	public Page<Concert> getConcertsPaginated(int page) {
-		int size = 4;
+		int size = 10;
 		Pageable pageable = PageRequest.of(page, size);
 		return repository.findAll(pageable);
 	}

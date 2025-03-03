@@ -226,42 +226,47 @@ public class WebController {
 			Model model) throws IOException {
 
 		if (concertName == null || concertName.isEmpty() || concertName.length() < 2) {
-			model.addAttribute("error", "Concert name is required and must be at least 2 characters long.");
+			model.addAttribute("newConcertError", "Concert name is required and must be at least 2 characters long.");
 			return "newConcert";
 		}
 
+		/* if ((artistIds == null || artistIds.isEmpty()) || (artistIds.size() == 1 && artistIds.get(0) == 0)) {
+			model.addAttribute("newConcertError", "At least one artist is required.");
+			return "newConcert";
+		} */
+
 		if (concertDetails == null || concertDetails.isEmpty() || concertDetails.length() < 8) {
-			model.addAttribute("error", "Concert details are required and must be at least 8 characters long.");
+			model.addAttribute("newConcertError", "Concert details are required and must be at least 8 characters long.");
 			return "newConcert";
 		}
 
 		if (concertDate == null || concertDate.isEmpty()) {
-			model.addAttribute("error", "Concert date is required.");
+			model.addAttribute("newConcertError", "Concert date is required.");
 			return "newConcert";
 		}
 
 		if (concertTime == null || concertTime.isEmpty()) {
-			model.addAttribute("error", "Concert time is required.");
+			model.addAttribute("newConcertError", "Concert time is required.");
 			return "newConcert";
 		}
 
 		if (location == null || location.isEmpty()) {
-			model.addAttribute("error", "Location is required.");
+			model.addAttribute("newConcertError", "Location is required.");
 			return "newConcert";
 		}
 
 		if (map == null || map.isEmpty()) {
-			model.addAttribute("error", "Map is required.");
+			model.addAttribute("newConcertError", "Map is required.");
 			return "newConcert";
 		}
 
 		if (stadiumPrice == null || stadiumPrice <= 0) {
-			model.addAttribute("error", "Stadium price is required and must be greater than 0.");
+			model.addAttribute("newConcertError", "Stadium price is required and must be greater than 0.");
 			return "newConcert";
 		}
 
 		if (trackPrice == null || trackPrice <= 0) {
-			model.addAttribute("error", "Track price is required and must be greater than 0.");
+			model.addAttribute("newConcertError", "Track price is required and must be greater than 0.");
 			return "newConcert";
 		}
 

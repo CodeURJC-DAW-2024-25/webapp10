@@ -27,6 +27,11 @@
 
                 <!-- Right side with the form -->
                 <div class="col-md-8 d-flex flex-column align-items-center justify-content-center p-4">
+                    {{#newConcertError}}
+                        <div class="alert alert-danger" role="alert">
+                            <strong>Error:</strong> {{newConcertError}}
+                        </div>
+                    {{/newConcertError}}
                     <h4 class="text-center mb-3">TicketZone Fest New Concert form</h4>
                     <form role="form" class="w-100" method="post" action="/newconcert" enctype="multipart/form-data">
                         <div class="mb-3">
@@ -36,7 +41,7 @@
                         <div class="mb-3">
                             <label for="artistIds">Artists:</label>
                             <select id="artistIds" name="artistIds" class="form-control" multiple required>
-                                <option value="" disabled selected>Select an artist</option>
+                                <option value=0 class="text-muted" disabled selected>Select an artist</option>
                                 {{#artists}}
                                     <option value="{{id}}" class="text-muted">{{artistName}}</option>
                                 {{/artists}}
@@ -60,7 +65,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="map">Map URL (Please insert an iframe from Google Maps):</label>
-                            <input name="map" type="url" class="form-control" id="map" placeholder="Enter the map URL" required>
+                            <input name="map" type="text" class="form-control" id="map" placeholder="Enter the map URL" required>
                         </div>
                         <div class="mb-3">
                             <label for="stadiumPrice">Stadium Price:</label>

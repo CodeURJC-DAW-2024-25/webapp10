@@ -41,9 +41,7 @@ fetch("/ticketsByConcert")
             },
             plugins: {
                 legend: {
-                    labels: {
-                        color: 'white' 
-                    }
+                    display: false
                 }
             }
         }

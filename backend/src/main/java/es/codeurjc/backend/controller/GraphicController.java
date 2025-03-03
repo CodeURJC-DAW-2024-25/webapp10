@@ -58,16 +58,21 @@ public class GraphicController {
 
         List<String> concertNames = new ArrayList<>();
         List<Integer> ticketCounts = new ArrayList<>();
+        List<String> colors = new ArrayList<>();
+        List<Long> concertIds = new ArrayList<>();
 
         for (Concert concert : concerts) {
             concertNames.add(concert.getConcertName());
             ticketCounts.add(concert.countTicketsSold());
+            colors.add(concert.getColor());
+            concertIds.add(concert.getId());
         }
 
         Map<String, Object> response = new HashMap<>();
         response.put("labels", concertNames);
         response.put("data", ticketCounts);
-        response.put("backgroundColor", "blue");
+        response.put("backgroundColor", "colors");
+        response.put("concertIds", concertIds);
 
         return response;
     }

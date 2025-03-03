@@ -227,16 +227,17 @@ public class WebController {
 			Model model) throws IOException {
 
 		List<Artist> selectedArtists = artistIds.stream()
-			.map(id -> artistService.findById(id)
-				.orElseThrow(() -> new RuntimeException("No existe artista con ID " + id)))
-			.collect(Collectors.toList());
+				.map(id -> artistService.findById(id)
+						.orElseThrow(() -> new RuntimeException("No existe artista con ID " + id)))
+				.collect(Collectors.toList());
 
-		Concert concert = new Concert(concertName, concertDetails, concertDate, concertTime, location, stadiumPrice, trackPrice, selectedArtists, map);
+		Concert concert = new Concert(concertName, concertDetails, concertDate, concertTime, location, stadiumPrice,
+				trackPrice, selectedArtists, map);
 
 		if (imageFile != null && !imageFile.isEmpty()) {
-            concert.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-            concert.setConcertImage(true);
-        }
+			concert.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+			concert.setConcertImage(true);
+		}
 
 		concertService.save(concert);
 

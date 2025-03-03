@@ -346,21 +346,21 @@ public class WebController {
 			Model model) {
 	
 	
-	if (artistService.exists(artistName)) {
-		model.addAttribute("error", "Artist already exists.");
+	if (artistService.existsName(artistName)) {
+		model.addAttribute("newArtistError", "Artist with name "+artistName+" already exists.");
 		return "newArtist";
 	}
 
 	if (artistName == null || artistName.isEmpty()){
-		model.addAttribute("error", "Artist name is required.");
+		model.addAttribute("newArtistError", "Artist name is required.");
 		return "newArtist";
 	}
 	if (musicalStyle == null || musicalStyle.isEmpty()){
-		model.addAttribute("error", "Musical style is required.");
+		model.addAttribute("newArtistError", "Musical style is required.");
 		return "newArtist";
 	}
 	if (artistInfo == null || artistInfo.isEmpty()) {
-		model.addAttribute("error", "Artist information is required.");
+		model.addAttribute("newArtistError", "Artist information is required.");
 		return "newArtist";
 	}
 

@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -82,26 +84,48 @@ public class WebController {
 
 		Principal principal = request.getUserPrincipal();
 
+		Pageable pageable = Pageable.ofSize(10).withPage(0);
+
+		Long uId = null;
+
 		if (principal != null) {
 			Optional<User> user = userService.findByUserName(principal.getName());
+
 			if (user.isPresent() && !user.get().getFavoriteGenre().equals("None")) {
-				List<Concert> concerts = concertService.getConcerts(0, 10, user.get());
-				model.addAttribute("concerts", concerts);
-				return "index";
+				uId = user.get().getId();
 			}
 		}
-		List<Concert> concerts = concertService.getConcerts(0, 10, null);
+
+		Page<Concert> concerts = concertService.getConcerts(uId,pageable);
+
 		model.addAttribute("concerts", concerts);
 		return "index";
-
 	}
 
 	@GetMapping("/moreConcerts")
-	public String loadMoreConcerts(@RequestParam int page, Model model) {
-		Page<Concert> concerts = concertService.getConcertsPaginated(page);
-		boolean hasMore = page < concerts.getTotalPages() - 1;
-		model.addAttribute("hasMore", hasMore);
+	public String loadMoreConcerts(@RequestParam int page, Model model, HttpServletRequest request) {
 
+		Principal principal = request.getUserPrincipal();
+
+		Pageable pageable = Pageable.ofSize(10).withPage(page);
+
+		Page<Concert> concerts = null;
+
+		Long uId = null;
+
+		if (principal != null) {
+			Optional<User> user = userService.findByUserName(principal.getName());
+
+			if (user.isPresent() && !user.get().getFavoriteGenre().equals("None")) {
+				uId = user.get().getId();
+			}
+		}
+		
+		concerts = concertService.getConcerts(uId, pageable);
+
+		boolean hasMore = page < concerts.getTotalPages() - 1;
+
+		model.addAttribute("hasMore", hasMore);
 		model.addAttribute("concerts", concerts);
 		return "moreConcerts";
 	}

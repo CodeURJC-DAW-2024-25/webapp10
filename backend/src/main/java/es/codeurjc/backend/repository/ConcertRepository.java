@@ -12,6 +12,11 @@ import es.codeurjc.backend.model.Concert;
 
 public interface ConcertRepository extends JpaRepository<Concert, Long> {
 
+    @Query(value = "SELECT c.* FROM concerts c LEFT JOIN concerts_artists ca ON c.id = ca.concerts_id LEFT JOIN artist a ON ca.artists_id = a.id JOIN user_table u ON u.id = :userId GROUP BY c.id ORDER BY SUM(IF(a.musical_style = u.favorite_genre, 1, 0)) DESC",
+        countQuery = "SELECT count(c.id) FROM concerts c LEFT JOIN concerts_artists ca ON c.id = ca.concerts_id LEFT JOIN artist a ON ca.artists_id = a.id JOIN user_table u ON u.id = :userId GROUP BY c.id",
+        nativeQuery = true)
+    Page<Concert> findConcertsByUserPreference(@Param("userId") Long userId, Pageable pageable);
+
     Page<Concert> findAll(Pageable pageable);
 
     Optional<Concert> findById(Long id);

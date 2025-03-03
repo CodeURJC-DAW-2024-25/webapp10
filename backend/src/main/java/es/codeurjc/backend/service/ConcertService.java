@@ -56,39 +56,11 @@ public class ConcertService {
 		}
 	}
 
-	public List<Concert> getConcerts(int offset, int limit, User user) {
-		Pageable pageable = PageRequest.of(offset / limit, limit);
-		List<Concert> allConcerts = repository.findAll();
-
-		if (user != null) {
-			String favoriteGenre = user.getFavoriteGenre();
-			Map<Concert, Integer> genreCount = new HashMap<>();
-			for (Concert concert : allConcerts) {
-				int count = 0;
-				for (Artist artist : concert.getArtists()) {
-					if (artist.getMusicalStyle().equals(favoriteGenre)) {
-						count++;
-					}
-				}
-				if (count >= 0) {
-					genreCount.put(concert, count);
-				}
-
-			}
-			List<Concert> sortedConcerts = genreCount.entrySet().stream()
-					.sorted(Map.Entry.<Concert, Integer>comparingByValue().reversed())
-					.map(Map.Entry::getKey)
-					.collect(Collectors.toList());
-
-			return sortedConcerts.stream()
-					.skip(offset)
-					.limit(limit)
-					.collect(Collectors.toList());
-
+	public Page<Concert> getConcerts(Long userId, Pageable pageable) {
+		if (userId == null) {
+			return repository.findAll(pageable);
 		}
-		Page<Concert> concertPage = repository.findAll(pageable);
-		return concertPage.getContent();
-
+		return repository.findConcertsByUserPreference(userId, pageable);
 	}
 
 	public Page<Concert> getConcertsPaginated(int page) {

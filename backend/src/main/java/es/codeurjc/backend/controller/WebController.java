@@ -225,6 +225,46 @@ public class WebController {
 			@RequestParam MultipartFile imageFile,
 			Model model) throws IOException {
 
+		if (concertName == null || concertName.isEmpty() || concertName.length() < 2) {
+			model.addAttribute("error", "Concert name is required and must be at least 2 characters long.");
+			return "newConcert";
+		}
+
+		if (concertDetails == null || concertDetails.isEmpty() || concertDetails.length() < 8) {
+			model.addAttribute("error", "Concert details are required and must be at least 8 characters long.");
+			return "newConcert";
+		}
+
+		if (concertDate == null || concertDate.isEmpty()) {
+			model.addAttribute("error", "Concert date is required.");
+			return "newConcert";
+		}
+
+		if (concertTime == null || concertTime.isEmpty()) {
+			model.addAttribute("error", "Concert time is required.");
+			return "newConcert";
+		}
+
+		if (location == null || location.isEmpty()) {
+			model.addAttribute("error", "Location is required.");
+			return "newConcert";
+		}
+
+		if (map == null || map.isEmpty()) {
+			model.addAttribute("error", "Map is required.");
+			return "newConcert";
+		}
+
+		if (stadiumPrice == null || stadiumPrice <= 0) {
+			model.addAttribute("error", "Stadium price is required and must be greater than 0.");
+			return "newConcert";
+		}
+
+		if (trackPrice == null || trackPrice <= 0) {
+			model.addAttribute("error", "Track price is required and must be greater than 0.");
+			return "newConcert";
+		}
+
 		List<Artist> selectedArtists = artistIds.stream()
 				.map(id -> artistService.findById(id)
 						.orElseThrow(() -> new RuntimeException("No existe artista con ID " + id)))

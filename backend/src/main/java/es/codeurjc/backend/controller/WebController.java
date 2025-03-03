@@ -141,7 +141,7 @@ public class WebController {
 			model.addAttribute("concertId", id);
 			return "concertInfo";
 		} else {
-			return "index";
+			return "concertError";
 		}
 	}
 

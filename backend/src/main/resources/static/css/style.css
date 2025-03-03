@@ -57,10 +57,10 @@ body {
     justify-content: center;
     padding: 15px;
 }
-
+/*
 p{
     font-weight: bold;
-}
+}*/
 
 .row {
     display: flex;
@@ -207,7 +207,7 @@ table td {
     font-size: 24px;
     font-weight: bold;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin-top: 50px;
+    margin-top: 70px;
     position: relative;
     text-transform: uppercase;
     margin-right: 20px;
@@ -240,6 +240,10 @@ table td {
 .concert-card:hover {
     transform: scale(1.05);
     box-shadow: 0 0 15px rgb(147, 144, 144);
+}
+
+.concert-card:hover img{
+    filter: brightness(0.5);
 }
 
 /* Images */
@@ -282,6 +286,7 @@ table td {
     border-radius: 5px;
     cursor: pointer;
     transition: 0.3s ease;
+    text-decoration: none;
 }
 
 .load-more-btn:hover {
@@ -434,3 +439,9 @@ iframe{
     height: 200px !important;
     margin-left: auto;
 }
+
+.alert{
+    margin-top: 20px;
+}
+
+

@@ -197,9 +197,9 @@ public class WebController {
 		ticketService.save(ticket);
 		model.addAttribute("ticket", ticket.getId());
 		System.out.println("Tickets del usuario: " + user.get().getTickets().size());
-		
+
 		redirectAttributes.addFlashAttribute("successMessage", "Your purchase has been completed successfully.");
-		
+
 		return "redirect:/";
 	}
 
@@ -296,8 +296,8 @@ public class WebController {
 
 			try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
 
-				PDColor titleColor = new PDColor(new float[]{75 / 255f, 0 / 255f, 130 / 255f}, PDDeviceRGB.INSTANCE);
-    			contentStream.setNonStrokingColor(titleColor);
+				PDColor titleColor = new PDColor(new float[] { 75 / 255f, 0 / 255f, 130 / 255f }, PDDeviceRGB.INSTANCE);
+				contentStream.setNonStrokingColor(titleColor);
 
 				contentStream.setFont(PDType1Font.HELVETICA_BOLD, 20);
 				contentStream.beginText();
@@ -308,7 +308,8 @@ public class WebController {
 				int yPosition = 700;
 				for (Ticket ticket : tickets) {
 
-					PDColor concertNameColor = new PDColor(new float[]{84 / 255f, 26 / 255f, 113 / 255f}, PDDeviceRGB.INSTANCE);
+					PDColor concertNameColor = new PDColor(new float[] { 84 / 255f, 26 / 255f, 113 / 255f },
+							PDDeviceRGB.INSTANCE);
 					contentStream.setNonStrokingColor(concertNameColor);
 
 					contentStream.beginText();
@@ -316,7 +317,7 @@ public class WebController {
 					contentStream.newLineAtOffset(50, yPosition);
 					contentStream.showText("Concert: " + ticket.getConcert().getConcertName());
 					contentStream.endText();
-					
+
 					contentStream.setNonStrokingColor(0, 0, 0);
 					contentStream.setFont(PDType1Font.HELVETICA, 12);
 
@@ -331,10 +332,10 @@ public class WebController {
 					contentStream.newLineAtOffset(0, -15);
 					contentStream.showText("Total Price: " + ticket.getPrices() + "€");
 					contentStream.endText();
-					
-					yPosition -= 100; 
+
+					yPosition -= 100;
 					if (yPosition < 100) {
-						break; 
+						break;
 					}
 				}
 			}
@@ -358,4 +359,5 @@ public class WebController {
 
 		return "redirect:/";
 	}
+
 }

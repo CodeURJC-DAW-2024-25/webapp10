@@ -76,19 +76,18 @@ public class ConcertService {
 
 			}
 			List<Concert> sortedConcerts = genreCount.entrySet().stream()
-            .sorted(Map.Entry.<Concert, Integer>comparingByValue().reversed()) 
-            .map(Map.Entry::getKey) 
-            .collect(Collectors.toList());
+					.sorted(Map.Entry.<Concert, Integer>comparingByValue().reversed())
+					.map(Map.Entry::getKey)
+					.collect(Collectors.toList());
 
-        return sortedConcerts.stream()
-            .skip(offset) 
-            .limit(limit) 
-            .collect(Collectors.toList());
+			return sortedConcerts.stream()
+					.skip(offset)
+					.limit(limit)
+					.collect(Collectors.toList());
 
-		} 
-			Page<Concert> concertPage = repository.findAll(pageable);
-			return concertPage.getContent();
-		
+		}
+		Page<Concert> concertPage = repository.findAll(pageable);
+		return concertPage.getContent();
 
 	}
 
@@ -96,5 +95,9 @@ public class ConcertService {
 		int size = 4;
 		Pageable pageable = PageRequest.of(page, size);
 		return repository.findAll(pageable);
+	}
+
+	public List<Concert> findAllConcerts() {
+		return repository.findAll();
 	}
 }

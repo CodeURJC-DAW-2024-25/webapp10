@@ -18,18 +18,18 @@ import jakarta.persistence.Table;
 public class Concert {
 
     @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-    
-    private String concertName; 
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    private String concertName;
     private String concertDetails;
     private String concertDate;
     private String concertTime;
     private String location;
     private Integer stadiumPrice;
     private Integer trackPrice;
-    
-    @Column(columnDefinition = "TEXT") 
+
+    @Column(columnDefinition = "TEXT")
     private String map;
 
     @Lob
@@ -43,11 +43,13 @@ public class Concert {
     @OneToMany(mappedBy = "concert")
     private List<Ticket> tickets;
 
-    //Constructors
-    public Concert(){}
-    
-    public Concert(String concertName, String concertDetails, String concertDate, String concertTime, String location, Integer stadiumPrice, Integer trackPrice, List<Artist> artists, String map) {
-        
+    // Constructors
+    public Concert() {
+    }
+
+    public Concert(String concertName, String concertDetails, String concertDate, String concertTime, String location,
+            Integer stadiumPrice, Integer trackPrice, List<Artist> artists, String map) {
+
         super();
         this.concertName = concertName;
         this.concertDetails = concertDetails;
@@ -60,13 +62,13 @@ public class Concert {
         this.map = map;
     }
 
-    //Getters and setters
+    // Getters and setters
 
     public String getConcertName() {
         return concertName;
     }
 
-    public void addTickets(Ticket ticket){
+    public void addTickets(Ticket ticket) {
         this.tickets.add(ticket);
     }
 
@@ -107,12 +109,12 @@ public class Concert {
     }
 
     public Long getId() {
-		return id;
-	}
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public boolean getConcertImage() {
         return this.concertImage;
@@ -127,12 +129,12 @@ public class Concert {
     }
 
     public Blob getImageFile() {
-		return imageFile;
-	}
+        return imageFile;
+    }
 
-	public void setImageFile(Blob image) {
-		this.imageFile = image;
-	}
+    public void setImageFile(Blob image) {
+        this.imageFile = image;
+    }
 
     public void setArtists(List<Artist> artists) {
         this.artists = artists;
@@ -168,5 +170,15 @@ public class Concert {
 
     public void setMap(String map) {
         this.map = map;
+    }
+
+    public int countTicketsSold() {
+        int totalTickets = 0;
+
+        for (Ticket ticket : tickets) {
+            totalTickets += ticket.getNumTickets();
+        }
+
+        return totalTickets;
     }
 }

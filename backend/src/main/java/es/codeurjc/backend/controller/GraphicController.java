@@ -33,12 +33,13 @@ public class GraphicController {
             rank51110 = 0;
             for (Ticket tickets : concertGet.getTickets()) {
                 age = tickets.getUserOwner().getAge();
+                int numTickets = tickets.getNumTickets();
                 if (age <= 18) {
-                    rank018++;
+                    rank018 += numTickets;
                 } else if (age >= 19 && age <= 50) {
-                    rank1950++;
+                    rank1950 += numTickets;
                 } else if (age >= 51 && age <= 110) {
-                    rank51110++;
+                    rank51110 += numTickets;
                 }
             }
             Map<String, Object> datos = Map.of(
@@ -53,20 +54,20 @@ public class GraphicController {
 
     @GetMapping("/ticketsByConcert")
     public Map<String, Object> getTicketsByConcert() {
-        List<Concert> concerts = concertService.findAll(); // Obtener todos los conciertos
+        List<Concert> concerts = concertService.findAll();
 
         List<String> concertNames = new ArrayList<>();
         List<Integer> ticketCounts = new ArrayList<>();
 
         for (Concert concert : concerts) {
-            concertNames.add(concert.getConcertName()); // Nombre del concierto
-            ticketCounts.add(concert.countTicketsSold()); // Número de entradas vendidas
+            concertNames.add(concert.getConcertName());
+            ticketCounts.add(concert.countTicketsSold());
         }
 
         Map<String, Object> response = new HashMap<>();
         response.put("labels", concertNames);
         response.put("data", ticketCounts);
-        response.put("backgroundColor", "blue"); // Color de las barras
+        response.put("backgroundColor", "blue");
 
         return response;
     }

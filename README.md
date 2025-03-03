@@ -38,7 +38,7 @@
 ![indexScreenshot](https://github.com/user-attachments/assets/af78d42a-6cea-4a6b-9a13-7b85600316a3)
 - Description: main page that includes all the information about the different concerts and artists, in addition to allowing navigation to user registration, login and modification of artists and concerts if you are an administrator.
 
-![concertInfoScreenshot](https://github.com/user-attachments/assets/e29163c2-2218-4df3-8792-c535b7047c71)
+![concertInfoScreenshot](https://github.com/user-attachments/assets/3870bc0f-7e1b-40ba-874c-ad4cbd2c7634)
 - Description: page that includes concert information such as date, time, location, map, different diagrams as well as including participating artists.
 
 ![loginScreenshot](https://github.com/user-attachments/assets/08271d53-d12a-43d8-bc06-e78d54b97756)
@@ -60,5 +60,5 @@
 - Description: page that includes the personal information entered by the user, as well as a history of tickets purchased with the option to download the ticket, if it has not been previously downloaded
 
 ## Navigation Diagram
-![diagramScreenshot](https://github.com/user-attachments/assets/dd243193-c64c-44cf-99f2-4bcc3865b97c)
+![diagramScreenshot](https://github.com/user-attachments/assets/dd84c2c3-78b2-423a-835e-fbace9b5e235)
 

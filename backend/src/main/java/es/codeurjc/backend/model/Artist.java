@@ -50,8 +50,8 @@ public class Artist {
         return this.musicalStyle;
     }
 
-    public void setArtistInfo(String artistName) {
-        this.artistName = artistName;
+    public void setArtistInfo(String artistInfo) {
+        this.artistInfo = artistInfo;
     }
 
     public String getArtistInfo() {

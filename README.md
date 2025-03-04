@@ -62,3 +62,12 @@
 ## Navigation Diagram
 ![diagramScreenshot](https://github.com/user-attachments/assets/dd84c2c3-78b2-423a-835e-fbace9b5e235)
 
+## Execution instructions
+
+## Database entities diagram
+![dbDiagram](https://github.com/user-attachments/assets/c6b5bf1c-4bf1-4fa4-a63f-d2d6995e5b43)
+
+
+## Classes and templates diagram
+
+## Members participation

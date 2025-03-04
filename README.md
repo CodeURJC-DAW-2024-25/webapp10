@@ -73,8 +73,34 @@
 
 
 ## Members participation
-Alberto Manjón López:
-César Valero Bueno:
-Irene García López:
-Andrea Garrobo Guzmán:
-Natalia Méndez Barrios:
+- **Alberto Manjón López:**
+  - Commit 1 : Add login and register controller and function (https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/52c0821a2f639b8ed67da6bc5fc17ce41f01a608)
+  - Commit 2 : Enhance concert management features: add ticket purchasing functionality and update concert retrieval method (https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/9e36c0b3899f4cd0cc97fad20ffdea701e4dfa0d)
+  - Commit 3 : Add error page (https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/50096b1de6aed1c435dd7a2aede5aece178626c5)
+  - Commit 4 : Add Ticket and User model methods (https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/936a428dc7d79278cb081e5325fdd0b683b44cd9)
+  - Commit 5 : Add pie graphic (https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/a642ad7afe0e00caa307c0c28699e899d2f32792)
+- **César Valero Bueno:**
+  - Commit 1 : 
+  - Commit 2 : 
+  - Commit 3 : 
+  - Commit 4 : 
+  - Commit 5 :
+- **Irene García López:**
+  - Commit 1 :
+  - Commit 2 : 
+  - Commit 3 : 
+  - Commit 4 : 
+  - Commit 5 :
+- **Andrea Garrobo Guzmán:**
+  - Commit 1 : 
+  - Commit 2 : 
+  - Commit 3 : 
+  - Commit 4 : 
+  - Commit 5 :
+- **Natalia Méndez Barrios:**
+  - Commit 1 :
+  - Commit 2 : 
+  - Commit 3 : 
+  - Commit 4 : 
+  - Commit 5 :
+    

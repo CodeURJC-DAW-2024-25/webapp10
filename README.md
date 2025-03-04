@@ -69,5 +69,12 @@
 
 
 ## Classes and templates diagram
+![class_templates_diagram](https://github.com/user-attachments/assets/a3243b7a-25b6-4591-9252-16dd8809ac2f)
+
 
 ## Members participation
+Alberto Manjón López:
+César Valero Bueno:
+Irene García López:
+Andrea Garrobo Guzmán:
+Natalia Méndez Barrios:

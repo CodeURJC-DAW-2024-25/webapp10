@@ -40,13 +40,13 @@
                         </div>
                         <div class="mb-3">
                             <label for="artistIds">Artists:</label>
-                            <select id="artistIds" name="artistIds" class="form-control" multiple required>
-                                <option value=0 class="text-muted" disabled selected>Select an artist</option>
+                            <select id="artistIds" name="artistIds" class="form-control" multiple>
                                 {{#artists}}
                                     <option value="{{id}}" class="text-muted">{{artistName}}</option>
                                 {{/artists}}
                             </select>
                         </div>
+                        
                         <div class="mb-3">
                             <label for="concertDetails">Concert Details:</label>
                             <input name="concertDetails" type="text" class="form-control" id="concertDetails" placeholder="Enter concert details" required>
@@ -65,8 +65,9 @@
                         </div>
                         <div class="mb-3">
                             <label for="map">Map URL (Please insert an iframe from Google Maps):</label>
-                            <input name="map" type="text" class="form-control" id="map" placeholder="Enter the map URL" required>
+                            <textarea name="map" class="form-control" id="map" rows="4" placeholder="Paste Google Maps iframe code here" required></textarea>
                         </div>
+                        
                         <div class="mb-3">
                             <label for="stadiumPrice">Stadium Price:</label>
                             <input name="stadiumPrice" type="number" class="form-control" id="stadiumPrice" placeholder="Enter the stadium price" required>
@@ -77,7 +78,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="imageFile">Concert Poster:</label>
-                            <input type="file" class="form-control" name="imageFile" id="imageFile" accept=".jpg, .jpeg, .png" required>
+                            <input type="file" class="form-control" name="imageFile" id="imageFile" accept=".jpg, .jpeg, .png">
                         </div>
                         <input type="hidden" name="_csrf" value="{{token}}" />
                         <div class="d-flex align-items-center justify-content-between">

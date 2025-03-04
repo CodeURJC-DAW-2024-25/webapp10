@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -238,7 +237,7 @@ public class WebController {
 	@PostMapping("/newconcert")
 	public String newConcertProcess(
 			@RequestParam String concertName,
-			@RequestParam("artistIds") List<Long> artistIds,
+			@RequestParam(value = "artistIds", required = false) List<Long> artistIds,
 			@RequestParam String concertDetails,
 			@RequestParam String concertDate,
 			@RequestParam String concertTime,
@@ -249,15 +248,18 @@ public class WebController {
 			@RequestParam MultipartFile imageFile,
 			Model model) throws IOException {
 
+		List<Artist> artists = artistService.findAll();
+		model.addAttribute("artists", artists);
+
 		if (concertName == null || concertName.isEmpty() || concertName.length() < 2) {
 			model.addAttribute("newConcertError", "Concert name is required and must be at least 2 characters long.");
 			return "newConcert";
 		}
 
-		/* if ((artistIds == null || artistIds.isEmpty()) || (artistIds.size() == 1 && artistIds.get(0) == 0)) {
+		if ((artistIds == null || artistIds.isEmpty())) {
 			model.addAttribute("newConcertError", "At least one artist is required.");
 			return "newConcert";
-		} */
+		}
 
 		if (concertDetails == null || concertDetails.isEmpty() || concertDetails.length() < 8) {
 			model.addAttribute("newConcertError", "Concert details are required and must be at least 8 characters long.");
@@ -282,6 +284,11 @@ public class WebController {
 		if (map == null || map.isEmpty()) {
 			model.addAttribute("newConcertError", "Map is required.");
 			return "newConcert";
+		}
+
+		if (!map.startsWith("<iframe src=\"https://www.google.com/maps/embed?")) {
+			model.addAttribute("newConcertError", "You must provide a valid embedded Google Maps iframe.");
+			return "newconcert";
 		}
 
 		if (stadiumPrice == null || stadiumPrice <= 0) {

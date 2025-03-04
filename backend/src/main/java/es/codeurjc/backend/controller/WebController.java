@@ -529,6 +529,14 @@ public class WebController {
 			model.addAttribute("editConcertError", "Concert not found.");
 			return "editConcert";
 		}
+
+		Principal principal = request.getUserPrincipal();
+		Optional<User> user = userService.findByUserName(principal.getName());
+
+		if (!user.isPresent() || principal == null) {
+			return "redirect:/";
+		}
+		
 		Concert concert = concertOptional.get();
 		concert.setConcertName(concertName);
 		concert.setConcertDetails(concertDetails);
@@ -547,6 +555,9 @@ public class WebController {
 		concert.setArtists(selectedArtists);
 
 		concertService.save(concert);
+
+		user.get().addFavoriteGenre();	
+		userService.save(user.get());
 
 		model.addAttribute("concertId", concert.getId());
 

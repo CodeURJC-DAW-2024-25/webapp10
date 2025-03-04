@@ -95,7 +95,7 @@ public class WebController {
 			}
 		}
 
-		Page<Concert> concerts = concertService.getConcerts(uId,pageable);
+		Page<Concert> concerts = concertService.getConcerts(uId, pageable);
 
 		model.addAttribute("concerts", concerts);
 		return "index";
@@ -119,7 +119,7 @@ public class WebController {
 				uId = user.get().getId();
 			}
 		}
-		
+
 		concerts = concertService.getConcerts(uId, pageable);
 
 		boolean hasMore = page < concerts.getTotalPages() - 1;
@@ -262,7 +262,8 @@ public class WebController {
 		}
 
 		if (concertDetails == null || concertDetails.isEmpty() || concertDetails.length() < 8) {
-			model.addAttribute("newConcertError", "Concert details are required and must be at least 8 characters long.");
+			model.addAttribute("newConcertError",
+					"Concert details are required and must be at least 8 characters long.");
 			return "newConcert";
 		}
 
@@ -420,25 +421,24 @@ public class WebController {
 			@RequestParam String musicalStyle,
 			@RequestParam String artistInfo,
 			Model model) {
-	
-	
-	if (artistService.existsName(artistName)) {
-		model.addAttribute("newArtistError", "Artist with name "+artistName+" already exists.");
-		return "newArtist";
-	}
 
-	if (artistName == null || artistName.isEmpty()){
-		model.addAttribute("newArtistError", "Artist name is required.");
-		return "newArtist";
-	}
-	if (musicalStyle == null || musicalStyle.isEmpty()){
-		model.addAttribute("newArtistError", "Musical style is required.");
-		return "newArtist";
-	}
-	if (artistInfo == null || artistInfo.isEmpty()) {
-		model.addAttribute("newArtistError", "Artist information is required.");
-		return "newArtist";
-	}
+		if (artistService.existsName(artistName)) {
+			model.addAttribute("newArtistError", "Artist with name " + artistName + " already exists.");
+			return "newArtist";
+		}
+
+		if (artistName == null || artistName.isEmpty()) {
+			model.addAttribute("newArtistError", "Artist name is required.");
+			return "newArtist";
+		}
+		if (musicalStyle == null || musicalStyle.isEmpty()) {
+			model.addAttribute("newArtistError", "Musical style is required.");
+			return "newArtist";
+		}
+		if (artistInfo == null || artistInfo.isEmpty()) {
+			model.addAttribute("newArtistError", "Artist information is required.");
+			return "newArtist";
+		}
 
 		Artist artist = new Artist();
 		artist.setArtistName(artistName);
@@ -448,6 +448,130 @@ public class WebController {
 		artistService.save(artist);
 
 		return "redirect:/";
+	}
+
+	@GetMapping("/editconcert/{id}")
+	public String editConcertPage(Model model, @PathVariable long id, HttpServletRequest request) {
+
+		addAttributes(model, request);
+		Optional<Concert> concert = concertService.findById(id);
+		if (concert.isPresent()) {
+			List<Artist> artists = artistService.findAll();
+			model.addAttribute("artists", artists);
+			model.addAttribute("concert", concert.get());
+			return "editConcert";
+		} else {
+			return "index";
+		}
+	}
+
+	@PostMapping("/editconcert/{id}")
+	public String editConcert(HttpServletRequest request, boolean removeImage, Model model, @PathVariable long id,
+			@RequestParam String concertName,
+			@RequestParam("artistIds") List<Long> artistIds,
+			@RequestParam String concertDetails,
+			@RequestParam String concertDate,
+			@RequestParam String concertTime,
+			@RequestParam String location,
+			@RequestParam String map,
+			@RequestParam Integer stadiumPrice,
+			@RequestParam Integer trackPrice,
+			@RequestParam MultipartFile imageFile,
+			RedirectAttributes redirectAttributes) throws IOException, SQLException {
+
+		if (concertName == null || concertName.isEmpty()) {
+			model.addAttribute("editConcertError", "Concert name is required and must be at least 2 characters long.");
+			return "editConcert";
+		}
+		if (concertDetails == null || concertDetails.isEmpty()) {
+			model.addAttribute("editConcertError",
+					"Concert details are required and must be at least 8 characters long.");
+			return "editConcert";
+		}
+
+		if (artistIds == null || artistIds.isEmpty() || (artistIds.size() == 1 && artistIds.get(0) == 0)) {
+			model.addAttribute("editConcertError", "At least one artist is required.");
+			return "editConcert";
+		}
+
+		if (concertDate == null || concertDate.isEmpty()) {
+			model.addAttribute("editConcertError", "Concert date is required.");
+			return "editConcert";
+		}
+
+		if (concertTime == null || concertTime.isEmpty()) {
+			model.addAttribute("editConcertError", "Concert time is required.");
+			return "editConcert";
+		}
+
+		if (location == null || location.isEmpty()) {
+			model.addAttribute("editConcertError", "Location is required.");
+			return "editConcert";
+		}
+
+		if (map == null || map.isEmpty()) {
+			model.addAttribute("editConcertError", "Map is required.");
+			return "editConcert";
+		}
+
+		if (stadiumPrice == null || stadiumPrice <= 0) {
+			model.addAttribute("editConcertError", "Stadium price is required and must be greater than 0.");
+			return "editConcert";
+		}
+
+		if (trackPrice == null || trackPrice <= 0) {
+			model.addAttribute("editConcertError", "Track price is required and must be greater than 0.");
+			return "editConcert";
+		}
+
+		Optional<Concert> concertOptional = concertService.findById(id);
+		if (!concertOptional.isPresent()) {
+			model.addAttribute("editConcertError", "Concert not found.");
+			return "editConcert";
+		}
+		Concert concert = concertOptional.get();
+		concert.setConcertName(concertName);
+		concert.setConcertDetails(concertDetails);
+		concert.setConcertDate(concertDate);
+		concert.setConcertTime(concertTime);
+		concert.setLocation(location);
+		concert.setMap(map);
+		concert.setStadiumPrice(stadiumPrice);
+		concert.setTrackPrice(trackPrice);
+		updateImage(concert, removeImage, imageFile);
+
+		List<Artist> selectedArtists = artistIds.stream()
+				.map(idArtist -> artistService.findById(idArtist)
+						.orElseThrow(() -> new RuntimeException("No existe artista con ID " + idArtist)))
+				.collect(Collectors.toList());
+		concert.setArtists(selectedArtists);
+
+		concertService.save(concert);
+
+		model.addAttribute("concertId", concert.getId());
+
+		redirectAttributes.addFlashAttribute("successMessage", "Concert edit success.");
+
+		return "redirect:/";
+	}
+
+	private void updateImage(Concert concert, boolean removeImage, MultipartFile imageField)
+			throws IOException, SQLException {
+
+		if (removeImage) {
+			concert.setImageFile(null);
+			concert.setConcertImage(false);
+		} else if (imageField != null && !imageField.isEmpty()) {
+			concert.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
+			concert.setConcertImage(true);
+		} else {
+			Concert dbConcert = concertService.findById(concert.getId()).orElseThrow();
+			if (dbConcert.getConcertImage()) {
+				concert.setImageFile(BlobProxy.generateProxy(dbConcert.getImageFile().getBinaryStream(),
+						dbConcert.getImageFile().length()));
+				concert.setConcertImage(true);
+			}
+		}
 	}
 
 }

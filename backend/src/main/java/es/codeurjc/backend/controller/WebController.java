@@ -542,7 +542,7 @@ public class WebController {
 
 		List<Artist> selectedArtists = artistIds.stream()
 				.map(idArtist -> artistService.findById(idArtist)
-						.orElseThrow(() -> new RuntimeException("No existe artista con ID " + idArtist)))
+						.orElseThrow(() -> new RuntimeException("Artist with ID " + idArtist + " does not exist")))
 				.collect(Collectors.toList());
 		concert.setArtists(selectedArtists);
 
@@ -572,6 +572,52 @@ public class WebController {
 				concert.setConcertImage(true);
 			}
 		}
+	}
+
+	@GetMapping("/editArtist/{id}")
+	public String editArtistForm(@PathVariable Long id, Model model) {
+		Optional<Artist> artist = artistService.findById(id);
+		if (artist.isPresent()) {
+			model.addAttribute("artist", artist.get());
+			return "editArtist";
+		} else {
+			return "redirect:/"; 
+		}
+	}
+
+	@PostMapping("/editArtist/{id}")
+	public String editArtistProcess(@PathVariable Long id,
+									@RequestParam String artistName,
+									@RequestParam String musicalStyle,
+									@RequestParam String artistInfo,
+									Model model) {
+
+		Optional<Artist> artistOptional = artistService.findById(id);
+
+		Artist artist = artistOptional.get();
+		if (artistName == null || artistName.isEmpty()) {
+			model.addAttribute("editArtistError", "Artist name is required.");
+			model.addAttribute("artist", artist);
+			return "editArtist";
+		}
+		if (musicalStyle == null || musicalStyle.isEmpty()) {
+			model.addAttribute("editArtistError", "Musical style is required.");
+			model.addAttribute("artist", artist);
+			return "editArtist";
+		}
+		if (artistInfo == null || artistInfo.isEmpty()) {
+			model.addAttribute("editArtistError", "Artist information is required.");
+			model.addAttribute("artist", artist);
+			return "editArtist";
+		}
+
+		artist.setArtistName(artistName);
+		artist.setMusicalStyle(musicalStyle);
+		artist.setArtistInfo(artistInfo);
+
+		artistService.save(artist);
+
+		return "redirect:/";
 	}
 
 }

@@ -38,4 +38,24 @@ public class ArtistService {
     public boolean existsName(String artistName) {
         return repository.findByArtistName(artistName).isPresent();
     }
+
+	public Artist getArtistById(long id) {
+		return repository.findById(id)
+			.orElseThrow(() -> new RuntimeException("Artist not found with id: " + id));
+	}
+
+	public void updateArtist(Long id, Artist updatedArtist) {
+		Artist existingArtist = getArtistById(id);
+		if (updatedArtist.getArtistName() != null) {
+			existingArtist.setArtistName(updatedArtist.getArtistName());
+		}
+		if (updatedArtist.getMusicalStyle() != null) {
+			existingArtist.setMusicalStyle(updatedArtist.getMusicalStyle());
+		}
+		if (updatedArtist.getArtistInfo() != null) {
+			existingArtist.setArtistInfo(updatedArtist.getArtistInfo());
+		}
+		repository.save(existingArtist);
+	}
+	
 }

@@ -1,9 +1,7 @@
 package es.codeurjc.backend.controller;
 
 import java.io.IOException;
-import java.sql.Blob;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -11,30 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import es.codeurjc.backend.model.Concert;
 import es.codeurjc.backend.model.User;
-import es.codeurjc.backend.repository.UserRepository;
 import es.codeurjc.backend.service.UserService;
 
 
 @Controller
 public class RegisteredWebController {
-
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private UserService userService;
@@ -103,13 +93,13 @@ public class RegisteredWebController {
             newUser.setImage(true);
         }
         
-        userRepository.save(newUser);
+        userService.save(newUser);
         return "redirect:/";
     }
 
     @GetMapping("/user/{id}/photo")
 	public ResponseEntity<Object> getUserPhoto(@PathVariable long id) throws SQLException {
-		Optional<User> user = userRepository.findById(id);
+		Optional<User> user = userService.findById(id);
 
 		if (user.isPresent() && user.get().getProfilePhoto() != null) {
 			Resource file = new InputStreamResource(user.get().getProfilePhoto().getBinaryStream());

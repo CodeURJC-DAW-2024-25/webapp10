@@ -16,7 +16,6 @@ import es.codeurjc.backend.model.Concert;
 import es.codeurjc.backend.model.User;
 import es.codeurjc.backend.repository.ArtistRepository;
 import es.codeurjc.backend.repository.ConcertRepository;
-import es.codeurjc.backend.repository.TicketRepository;
 import es.codeurjc.backend.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 
@@ -28,9 +27,6 @@ public class DatabaseInitializer {
 
 	@Autowired
 	private ConcertRepository concertRepository;
-
-	@Autowired
-	private TicketRepository ticketRepository;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -108,7 +104,7 @@ public class DatabaseInitializer {
 
 		user.setFavoriteGenre("Trap");
 		userRepository.save(user);
-		userRepository.save(new User("Admin User", "admin", 987654321, "admin@example.com", passwordEncoder.encode("admin"), 21,"USER","ADMIN"));
+		userRepository.save(new User("Admin User", "admin", 987654321, "admin@example.com", passwordEncoder.encode("admin"), 70,"USER","ADMIN"));
 		
 		setConcertImage(taylorConcert, "/static/images/Concerts/taylorswift.jpg");
 		setConcertImage(oneDirectionConcert, "/static/images/Concerts/onedirection.jpg");

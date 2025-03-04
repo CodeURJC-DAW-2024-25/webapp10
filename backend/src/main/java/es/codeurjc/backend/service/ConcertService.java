@@ -1,11 +1,7 @@
 package es.codeurjc.backend.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import es.codeurjc.backend.model.Artist;
 import es.codeurjc.backend.model.Concert;
-import es.codeurjc.backend.model.User;
 import es.codeurjc.backend.repository.ConcertRepository;
 
 @Service
@@ -23,10 +17,6 @@ public class ConcertService {
 
 	@Autowired
 	private ConcertRepository repository;
-
-	public List<Concert> getConcerts() {
-		return repository.findAll();
-	}
 
 	public Optional<Concert> findById(long id) {
 		return repository.findById(id);

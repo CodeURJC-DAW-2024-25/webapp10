@@ -31,7 +31,7 @@ public class ArtistService {
 		repository.save(artist);
 	}
 
-	public void delete(long id) {
+	public void deleteById(long id) {
 		repository.deleteById(id);
 	}
 

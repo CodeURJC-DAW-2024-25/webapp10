@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import es.codeurjc.backend.model.Artist;
 import es.codeurjc.backend.model.Concert;
 import es.codeurjc.backend.repository.ConcertRepository;
 

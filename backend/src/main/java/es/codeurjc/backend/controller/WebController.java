@@ -631,4 +631,35 @@ public class WebController {
 		return "redirect:/";
 	}
 
+
+	@PostMapping("/deleteArtist/{id}")
+	public String deleteArtist(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+		Optional<Artist> artistOptional = artistService.findById(id);
+		if (artistOptional.isPresent()) {
+			System.out.println("Artist found");
+			Artist artist = artistOptional.get();
+
+			List<Concert> concerts = concertService.findAllConcerts();
+
+			for (Concert concert : concerts) {
+				if (concert.getArtists().contains(artist) && concert.getArtists().size() <= 1) {
+					redirectAttributes.addFlashAttribute("errorMessage", "Cannot delete artist. Each concert must have at least one artist.");
+					return "redirect:/";
+				}
+			}
+
+			for (Concert concert : concerts) {
+				if (concert.getArtists().contains(artist)) {
+					concert.getArtists().remove(artist);
+					concertService.save(concert);
+				}
+			}
+
+			artistService.deleteById(id);
+			redirectAttributes.addFlashAttribute("successMessage", "Artist successfully removed.");
+			return "redirect:/";
+		} else {
+			return "deletionError";
+		}
+	}
 }

@@ -73,6 +73,7 @@ p{
     max-height: 120vh;
     overflow-y: auto;
     align-self: stretch;
+    margin-top: 10px;
 }
 
 table {

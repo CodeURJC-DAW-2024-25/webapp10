@@ -523,7 +523,7 @@ public class WebController {
 			model.addAttribute("editConcertError", "Track price is required and must be greater than 0.");
 			return "editConcert";
 		}
-
+		
 		Optional<Concert> concertOptional = concertService.findById(id);
 		if (!concertOptional.isPresent()) {
 			model.addAttribute("editConcertError", "Concert not found.");
@@ -601,7 +601,8 @@ public class WebController {
 									@RequestParam String artistName,
 									@RequestParam String musicalStyle,
 									@RequestParam String artistInfo,
-									Model model) {
+									Model model,
+									RedirectAttributes redirectAttributes) {
 
 		Optional<Artist> artistOptional = artistService.findById(id);
 
@@ -627,6 +628,8 @@ public class WebController {
 		artist.setArtistInfo(artistInfo);
 
 		artistService.save(artist);
+
+		redirectAttributes.addFlashAttribute("successMessage", "Artist edited successfully.");
 
 		return "redirect:/";
 	}
@@ -659,7 +662,8 @@ public class WebController {
 			redirectAttributes.addFlashAttribute("successMessage", "Artist successfully removed.");
 			return "redirect:/";
 		} else {
-			return "deletionError";
+			redirectAttributes.addFlashAttribute("errorMessage", "Artist not found.");
+			return "redirect:/";
 		}
 	}
 }

@@ -20,7 +20,7 @@
 ## User permissions
 - Anonymous user: View concerts
 - Registered user: View concerts, Buy tickets , View tickets 
-- Admin: Add artists, Add concerts, Modify artists, Modify concerts
+- Admin: Add artists, Add concerts, Modify artists, Modify concerts, Delete artists, Delete concerts
 ## Images
 - User: Profile picture
 - Artist: Profile picture

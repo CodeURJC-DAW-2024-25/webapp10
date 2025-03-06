@@ -93,7 +93,7 @@ To clone the project using **VSCode**, follow these steps:
   ```sql
   CREATE DATABASE concerts;
 
-### 3️⃣ Execution
+### ▶️ Execution
 ####  Run from VSCode
 - Open the **Spring Boot Dashboard** in VSCode and start the application
 
@@ -119,66 +119,68 @@ To clone the project using **VSCode**, follow these steps:
 - **Alberto Manjón López**
   - *Task done descriptions*
     - Task
-| **Section**                               |                 | **Details**                                                                |
-| ----------------------------------------  | --------------- | -------------------------------------------------------------------------- |
-| **Most significant commits**              | **Commit 1**    | [Add login and register controller and function](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/52c0821a2f639b8ed67da6bc5fc17ce41f01a608)     |
+| **Section**                               |                 | **Details**                                                       |
+| ----------------------------------------  | --------------- | ----------------------------------------------------------------- |
+| **Most significant commits**              | **Commit 1**    | [Add login and register controller and function](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/52c0821a2f639b8ed67da6bc5fc17ce41f01a608)    |
 |                                           | **Commit 2**    | [Add ticket purchasing functionality and update concert retrieval method](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/9e36c0b3899f4cd0cc97fad20ffdea701e4dfa0d)     |
 |                                           | **Commit 3**    | [Add error page](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/50096b1de6aed1c435dd7a2aede5aece178626c5)     |
 |                                           | **Commit 4**    | [Add edit concert](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/1c11e4c259f33c811a9c49582bda24583e8a7ad1)     |
 |                                           | **Commit 5**    | [Add pie graphic](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/a642ad7afe0e00caa307c0c28699e899d2f32792)     |
-| **Files that have participated the most** | **File 1**      | Link to file 1                                                             |
-|                                           | **File 2**      | Link to file 2                                                             |
-|                                           | **File 3**      | Link to file 3                                                             |
-|                                           | **File 4**      | Link to file 4                                                             |
-|                                           | **File 5**      | Link to file 5                                                             |
+| **Files that have participated the most** | **File 1**      | [FileName](link)|
+|                                           | **File 2**      | [FileName](link)|
+|                                           | **File 3**      | [FileName](link)|
+|                                           | **File 4**      | [FileName](link)|
+|                                           | **File 5**      | [FileName](link)|
+
 
 - **César Valero Bueno**
   - *Task done descriptions*
     - Task
-| **Section**                               |                 | **Details**          |
-| ----------------------------------------  | --------------- | -------------------- |
-| **Most significant commits**              | **Commit 1**    | Link to commit 1     |
-|                                           | **Commit 2**    | Link to commit 2     |
-|                                           | **Commit 3**    | Link to commit 3     |
-|                                           | **Commit 4**    | Link to commit 4     |
-|                                           | **Commit 5**    | Link to commit 5     |
-| **Files that have participated the most** | **File 1**      | Link to file 1       |
-|                                           | **File 2**      | Link to file 2       |
-|                                           | **File 3**      | Link to file 3       |
-|                                           | **File 4**      | Link to file 4       |
-|                                           | **File 5**      | Link to file 5       |
+| **Section**                               |                 | **Details**                                                       |
+| ----------------------------------------  | --------------- | ----------------------------------------------------------------- |
+| **Most significant commits**              | **Commit 1**    | [CommitName](link)|
+|                                           | **Commit 2**    | [CommitName](link)|
+|                                           | **Commit 3**    | [CommitName](link)|
+|                                           | **Commit 4**    | [CommitName](link)|
+|                                           | **Commit 5**    | [CommitName](link)|
+| **Files that have participated the most** | **File 1**      | [FileName](link)|
+|                                           | **File 2**      | [FileName](link)|
+|                                           | **File 3**      | [FileName](link)|
+|                                           | **File 4**      | [FileName](link)|
+|                                           | **File 5**      | [FileName](link)|
 
 - **Irene García López**
   - *Task done descriptions*
     - Task
-| **Section**                               |                 | **Details**          |
-| ----------------------------------------  | --------------- | -------------------- |
-| **Most significant commits**              | **Commit 1**    | Link to commit 1     |
-|                                           | **Commit 2**    | Link to commit 2     |
-|                                           | **Commit 3**    | Link to commit 3     |
-|                                           | **Commit 4**    | Link to commit 4     |
-|                                           | **Commit 5**    | Link to commit 5     |
-| **Files that have participated the most** | **File 1**      | Link to file 1       |
-|                                           | **File 2**      | Link to file 2       |
-|                                           | **File 3**      | Link to file 3       |
-|                                           | **File 4**      | Link to file 4       |
-|                                           | **File 5**      | Link to file 5       |
+| **Section**                               |                 | **Details**                                                       |
+| ----------------------------------------  | --------------- | ----------------------------------------------------------------- |
+| **Most significant commits**              | **Commit 1**    | [CommitName](link)|
+|                                           | **Commit 2**    | [CommitName](link)|
+|                                           | **Commit 3**    | [CommitName](link)|
+|                                           | **Commit 4**    | [CommitName](link)|
+|                                           | **Commit 5**    | [CommitName](link)|
+| **Files that have participated the most** | **File 1**      | [FileName](link)|
+|                                           | **File 2**      | [FileName](link)|
+|                                           | **File 3**      | [FileName](link)|
+|                                           | **File 4**      | [FileName](link)|
+|                                           | **File 5**      | [FileName](link)|
 
 - **Andrea Garrobo Guzmán**
   - *Task done descriptions*
     - Task
-| **Section**                               |                 | **Details**          |
-| ----------------------------------------  | --------------- | -------------------- |
-| **Most significant commits**              | **Commit 1**    | Link to commit 1     |
-|                                           | **Commit 2**    | Link to commit 2     |
-|                                           | **Commit 3**    | Link to commit 3     |
-|                                           | **Commit 4**    | Link to commit 4     |
-|                                           | **Commit 5**    | Link to commit 5     |
-| **Files that have participated the most** | **File 1**      | Link to file 1       |
-|                                           | **File 2**      | Link to file 2       |
-|                                           | **File 3**      | Link to file 3       |
-|                                           | **File 4**      | Link to file 4       |
-|                                           | **File 5**      | Link to file 5       |
+| **Section**                               |                 | **Details**                                                       |
+| ----------------------------------------  | --------------- | ----------------------------------------------------------------- |
+| **Most significant commits**              | **Commit 1**    | [CommitName](link)|
+|                                           | **Commit 2**    | [CommitName](link)|
+|                                           | **Commit 3**    | [CommitName](link)|
+|                                           | **Commit 4**    | [CommitName](link)|
+|                                           | **Commit 5**    | [CommitName](link)|
+| **Files that have participated the most** | **File 1**      | [FileName](link)|
+|                                           | **File 2**      | [FileName](link)|
+|                                           | **File 3**      | [FileName](link)|
+|                                           | **File 4**      | [FileName](link)|
+|                                           | **File 5**      | [FileName](link)|
+
 
 - **Natalia Méndez Barrios**
   - *Task done descriptions*

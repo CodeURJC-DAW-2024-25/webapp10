@@ -23,6 +23,12 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         {{/successMessage}}
+        {{#errorMessage}}
+        <div class="alert alert-danger alert-dismissible fade show fade-out" role="alert">
+            <strong>Error:</strong> {{errorMessage}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {{/errorMessage}}
     </div>
     
 

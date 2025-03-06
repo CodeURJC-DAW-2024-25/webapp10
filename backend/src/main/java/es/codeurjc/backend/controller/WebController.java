@@ -636,7 +636,7 @@ public class WebController {
 		return "redirect:/";
 	}
 
-	@PostMapping("/deleteArtist/{id}")
+	@GetMapping("/deleteArtist/{id}")
 	public String deleteArtist(@PathVariable Long id, RedirectAttributes redirectAttributes) {
 		Optional<Artist> artistOptional = artistService.findById(id);
 		if (artistOptional.isPresent()) {
@@ -669,7 +669,7 @@ public class WebController {
 		}
 	}
 
-	@PostMapping("concert/{id}/delete")
+	@GetMapping("/concert/delete/{id}")
 	public String deleteConcert(@PathVariable Long id, RedirectAttributes redirectAttributes) {
 		Optional<Concert> concertOptional = concertService.findById(id);
 

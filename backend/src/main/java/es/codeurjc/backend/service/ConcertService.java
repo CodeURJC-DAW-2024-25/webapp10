@@ -63,4 +63,8 @@ public class ConcertService {
 	public List<Concert> findAllConcerts() {
 		return repository.findAll();
 	}
+
+	public void deleteById(long id) {
+		repository.deleteById(id);
+	}
 }

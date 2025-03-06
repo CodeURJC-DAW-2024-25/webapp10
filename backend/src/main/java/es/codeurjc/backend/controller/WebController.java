@@ -22,6 +22,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +43,7 @@ import es.codeurjc.backend.service.TicketService;
 import es.codeurjc.backend.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class WebController {
@@ -523,7 +525,7 @@ public class WebController {
 			model.addAttribute("editConcertError", "Track price is required and must be greater than 0.");
 			return "editConcert";
 		}
-		
+
 		Optional<Concert> concertOptional = concertService.findById(id);
 		if (!concertOptional.isPresent()) {
 			model.addAttribute("editConcertError", "Concert not found.");
@@ -536,7 +538,7 @@ public class WebController {
 		if (!user.isPresent() || principal == null) {
 			return "redirect:/";
 		}
-		
+
 		Concert concert = concertOptional.get();
 		concert.setConcertName(concertName);
 		concert.setConcertDetails(concertDetails);
@@ -556,7 +558,7 @@ public class WebController {
 
 		concertService.save(concert);
 
-		user.get().addFavoriteGenre();	
+		user.get().addFavoriteGenre();
 		userService.save(user.get());
 
 		model.addAttribute("concertId", concert.getId());
@@ -592,17 +594,17 @@ public class WebController {
 			model.addAttribute("artist", artist.get());
 			return "editArtist";
 		} else {
-			return "redirect:/"; 
+			return "redirect:/";
 		}
 	}
 
 	@PostMapping("/editArtist/{id}")
 	public String editArtistProcess(@PathVariable Long id,
-									@RequestParam String artistName,
-									@RequestParam String musicalStyle,
-									@RequestParam String artistInfo,
-									Model model,
-									RedirectAttributes redirectAttributes) {
+			@RequestParam String artistName,
+			@RequestParam String musicalStyle,
+			@RequestParam String artistInfo,
+			Model model,
+			RedirectAttributes redirectAttributes) {
 
 		Optional<Artist> artistOptional = artistService.findById(id);
 
@@ -634,7 +636,6 @@ public class WebController {
 		return "redirect:/";
 	}
 
-
 	@PostMapping("/deleteArtist/{id}")
 	public String deleteArtist(@PathVariable Long id, RedirectAttributes redirectAttributes) {
 		Optional<Artist> artistOptional = artistService.findById(id);
@@ -646,7 +647,8 @@ public class WebController {
 
 			for (Concert concert : concerts) {
 				if (concert.getArtists().contains(artist) && concert.getArtists().size() <= 1) {
-					redirectAttributes.addFlashAttribute("errorMessage", "Cannot delete artist. Each concert must have at least one artist.");
+					redirectAttributes.addFlashAttribute("errorMessage",
+							"Cannot delete artist. Each concert must have at least one artist.");
 					return "redirect:/";
 				}
 			}
@@ -666,4 +668,20 @@ public class WebController {
 			return "redirect:/";
 		}
 	}
+
+	@PostMapping("concert/{id}/delete")
+	public String deleteConcert(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+		Optional<Concert> concertOptional = concertService.findById(id);
+
+		if (concertOptional.isPresent()) {
+			concertService.deleteById(id);
+			redirectAttributes.addFlashAttribute("successMessage", "Concert deleted successfully.");
+			return "redirect:/";
+		} else {
+			redirectAttributes.addFlashAttribute("errorMessage", "Concert not found.");
+			return "concertError";
+		}
+
+	}
+
 }

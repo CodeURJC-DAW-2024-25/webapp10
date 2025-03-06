@@ -640,7 +640,6 @@ public class WebController {
 	public String deleteArtist(@PathVariable Long id, RedirectAttributes redirectAttributes) {
 		Optional<Artist> artistOptional = artistService.findById(id);
 		if (artistOptional.isPresent()) {
-			System.out.println("Artist found");
 			Artist artist = artistOptional.get();
 
 			List<Concert> concerts = concertService.findAllConcerts();

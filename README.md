@@ -119,6 +119,7 @@ To clone the project using **VSCode**, follow these steps:
 - **Alberto Manjón López**
   - *Task done descriptions*
     - Task
+
 | **Section**                               |                 | **Details**                                                               |
 | ----------------------------------------  | --------------- | ------------------------------------------------------------------------- |
 | **Most significant commits**              | **Commit 1**    | [Add login and register controller and function](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/52c0821a2f639b8ed67da6bc5fc17ce41f01a608)    |
@@ -136,6 +137,7 @@ To clone the project using **VSCode**, follow these steps:
 - **César Valero Bueno**
   - *Task done descriptions*
     - Task
+
 | **Section**                               |                 | **Details**       |
 | ----------------------------------------  | --------------- | ----------------- |
 | **Most significant commits**              | **Commit 1**    | [CommitName](link)|
@@ -152,6 +154,7 @@ To clone the project using **VSCode**, follow these steps:
 - **Irene García López**
   - *Task done descriptions*
     - Task
+
 | **Section**                               |                 | **Details**       |
 | ----------------------------------------  | --------------- | ----------------- |
 | **Most significant commits**              | **Commit 1**    | [CommitName](link)|
@@ -168,6 +171,7 @@ To clone the project using **VSCode**, follow these steps:
 - **Andrea Garrobo Guzmán**
   - *Task done descriptions*
     - Task
+
 | **Section**                               |                 | **Details**       |
 | ----------------------------------------  | --------------- | ----------------- |
 | **Most significant commits**              | **Commit 1**    | [CommitName](link)|

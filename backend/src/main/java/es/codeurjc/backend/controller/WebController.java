@@ -92,6 +92,8 @@ public class WebController {
 		if (principal != null) {
 			Optional<User> user = userService.findByUserName(principal.getName());
 
+			user.get().addFavoriteGenre();
+
 			if (user.isPresent() && !user.get().getFavoriteGenre().equals("None")) {
 				uId = user.get().getId();
 			}
@@ -142,6 +144,9 @@ public class WebController {
 			Optional<User> user2 = userService.findById(id);
 			if (user.equals(user2)) {
 				if (user2.isPresent()) {
+
+					user2.get().addFavoriteGenre();
+					
 					model.addAttribute("user", user2.get());
 					return "userPage";
 				} else {

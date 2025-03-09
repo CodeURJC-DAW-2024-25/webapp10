@@ -136,20 +136,20 @@ To clone the project using **VSCode**, follow these steps:
 
 - **César Valero Bueno**
   - *Task done descriptions*
-    - Task
+    - Organized database entities models, their attributes, relations... Implemented features such as user registration, adding new concerts, deleting artists and concerts, and image use in concerts and users. Implemented the query for the algorithm, helped with some of the error handling, and helped fix other different issues and errors.
 
 | **Section**                               |                 | **Details**       |
 | ----------------------------------------  | --------------- | ----------------- |
-| **Most significant commits**              | **Commit 1**    | [CommitName](link)|
-|                                           | **Commit 2**    | [CommitName](link)|
-|                                           | **Commit 3**    | [CommitName](link)|
-|                                           | **Commit 4**    | [CommitName](link)|
-|                                           | **Commit 5**    | [CommitName](link)|
-| **Files that have participated the most** | **File 1**      | [FileName](link)  |
-|                                           | **File 2**      | [FileName](link)  |
-|                                           | **File 3**      | [FileName](link)  |
-|                                           | **File 4**      | [FileName](link)  |
-|                                           | **File 5**      | [FileName](link)  |
+| **Most significant commits**              | **Commit 1**    | [Implement posibility for registered users to have a profile picture](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/e3d74079f9d30902c7cf5423eadadfac99eddf03)|
+|                                           | **Commit 2**    | [Implemented query in algorithm for recomended concerts](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/a110005d23c9af2dddcca337e77d7d7913eae88f)|
+|                                           | **Commit 3**    | [Fix model entities attributes](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/19af8aa60f8a7d3bc9f1ff5733f6776150fc6277)|
+|                                           | **Commit 4**    | [Refactor web controller and add /concer/{id}; create ArtistService, ConcertService, and TicketService](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/05700877121a450f902fcbbee96322941c79d7a2)|
+|                                           | **Commit 5**    | [Improve error handling and validation messages in new concert form](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/03e0e5cd74293fdffe1790a49ceef8f31be46497)|
+| **Files that have participated the most** | **File 1**      | [WebController.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/controller/WebController.java)  |
+|                                           | **File 2**      | [Concert.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/model/Concert.java)  |
+|                                           | **File 3**      | [User.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/model/User.java)  |
+|                                           | **File 4**      | [RegisteredWebController.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/controller/RegisteredWebController.java)  |
+|                                           | **File 5**      | [ConcertService.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/service/ConcertService.java)  |
 
 - **Irene García López**
   - *Task done descriptions*

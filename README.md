@@ -118,13 +118,17 @@ To clone the project using **VSCode**, follow these steps:
 
 
 ## Classes and templates diagram
-![class_templates_diagram](https://github.com/user-attachments/assets/a3243b7a-25b6-4591-9252-16dd8809ac2f)
-
+![Classes Templates_diagram](https://github.com/user-attachments/assets/11da09d1-bdd2-4431-a61e-feb14b06b7ac)
 
 ## Members participation
 - **Alberto Manjón López**
   - *Task done descriptions*
-    - Task
+    - Implement controllers like: RegisteredWebController in order to add the register function; LoginWebController to add the login function; GraphicController to add the pie graphic; CustomErrorController to add the redirect to error URLs.
+    - Implement functions like: Register, login, purchase tickets, pie graphic, edit concert.
+    - Implement services like: UserService.
+    - Implement Models like: ticket and user, and in general modify some things in all the models in order to add the functionalities.
+    - Corrections in: WebController in order to add the functionalities of purchase tickets, edit concerts and some corrections; Security in general.
+    - Modify templates in order to correct the web like the header, userPage, concertInfo; add error.html, editConcert.html.
 
 | **Section**                               |                 | **Details**                                                               |
 | ----------------------------------------  | --------------- | ------------------------------------------------------------------------- |
@@ -133,11 +137,11 @@ To clone the project using **VSCode**, follow these steps:
 |                                           | **Commit 3**    | [Add error page](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/50096b1de6aed1c435dd7a2aede5aece178626c5)     |
 |                                           | **Commit 4**    | [Add edit concert](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/1c11e4c259f33c811a9c49582bda24583e8a7ad1)     |
 |                                           | **Commit 5**    | [Add pie graphic](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/a642ad7afe0e00caa307c0c28699e899d2f32792)     |
-| **Files that have participated the most** | **File 1**      | [FileName](link)|
-|                                           | **File 2**      | [FileName](link)|
-|                                           | **File 3**      | [FileName](link)|
-|                                           | **File 4**      | [FileName](link)|
-|                                           | **File 5**      | [FileName](link)|
+| **Files that have participated the most** | **File 1**      | [[WebController.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/controller/WebController.java)|
+|                                           | **File 2**      | [User.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blame/main/backend/src/main/java/es/codeurjc/backend/model/User.java)|
+|                                           | **File 3**      | [userPage.html](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/resources/templates/userPage.html)|
+|                                           | **File 4**      | [editConcert.html](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/resources/templates/editConcert.html)|
+|                                           | **File 5**      | [register.html](https://github.com/CodeURJC-DAW-2024-25/webapp10/blame/main/backend/src/main/resources/templates/register.html)|
 
 
 - **César Valero Bueno**

@@ -59,14 +59,14 @@
 ![userPageScreenshot](https://github.com/user-attachments/assets/2e535d5d-6da4-46c2-b18f-929103e3c3e7)
 - Description: page that includes the personal information entered by the user, as well as a history of tickets purchased with the option to download the ticket, if it has not been previously downloaded
 
-![editArtistScreenshot](imagesReadme\editArtistScreenshot.png)
+![editArtistScreenshot](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/imagesReadme/editArtistScreenshot.png)
 - Description: page that allows the administrator to modify an existing artist by changing out the different fields of the form
 
-![editConcertScreenshot](imagesReadme\editConcertScreenshot.png)
+![editConcertScreenshot](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/imagesReadme/editConcertScreenshot.png)
 - Description: page that allows the administrator to modify an existing concert by changing out the different fields of the form
 
 ## Navigation Diagram
-![navigationDiagram](imagesReadme\navigationDiagram.png)
+![navigationDiagram](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/imagesReadme/navigationDiagram.png)
 
 
 ## 🚀 Execution Instructions

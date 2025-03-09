@@ -153,20 +153,20 @@ To clone the project using **VSCode**, follow these steps:
 
 - **Irene García López**
   - *Task done descriptions*
-    - Task
+    - In the development of this web application, I have implemented the artist editing functionality, created the concert info model, added a PDF download feature, and integrated an iframe displaying the map for each concert. I also ensured that a "purchase successful" message appears after completing a purchase and that concert images load correctly on the index page, purchase page, and concert info page. Additionally, I added default images for missing concert and user profile pictures. I handled the entire database initialization, improved the application's responsiveness for different screen sizes, implemented most of the changes to Mustache templates, and set up the initial configuration for web security.
 
 | **Section**                               |                 | **Details**       |
 | ----------------------------------------  | --------------- | ----------------- |
-| **Most significant commits**              | **Commit 1**    | [CommitName](link)|
-|                                           | **Commit 2**    | [CommitName](link)|
-|                                           | **Commit 3**    | [CommitName](link)|
-|                                           | **Commit 4**    | [CommitName](link)|
-|                                           | **Commit 5**    | [CommitName](link)|
-| **Files that have participated the most** | **File 1**      | [FileName](link)  |
-|                                           | **File 2**      | [FileName](link)  |
-|                                           | **File 3**      | [FileName](link)  |
-|                                           | **File 4**      | [FileName](link)  |
-|                                           | **File 5**      | [FileName](link)  |
+| **Most significant commits**              | **Commit 1**    | [Edit artist funcionality](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/f475b12b70f7cf306504191b44475118b544010a)|
+|                                           | **Commit 2**    | [Add tickets download functionality as PDF](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/63824cf7f9529745045d7d56d1a82ade2a12296a)|
+|                                           | **Commit 3**    | [Success message for ticket purchase, fix profile photo in header and scrollable purchase history](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/10f34c58258ea73eab6f35e32a3e398257c7185b)|
+|                                           | **Commit 4**    | [Security changes](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/96afa4efe0a6fa198ca6e5d3fd63918073df0da2)|
+|                                           | **Commit 5**    | [Fix concert images and concert location](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/56a7d0878346a418ee7203c9e5cd880c66a95b37)|
+| **Files that have participated the most** | **File 1**      | [WebSecurityConfig.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/5617bebc65a0129922b22b41e2576e4b65f8289e/backend/src/main/java/es/codeurjc/backend/security/WebSecurityConfig.java)  |
+|                                           | **File 2**      | [WebController.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/5617bebc65a0129922b22b41e2576e4b65f8289e/backend/src/main/java/es/codeurjc/backend/controller/WebController.java)  |
+|                                           | **File 3**      | [DatabaseInitializer.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/5617bebc65a0129922b22b41e2576e4b65f8289e/backend/src/main/java/es/codeurjc/backend/service/DatabaseInitializer.java)  |
+|                                           | **File 4**      | [concertInfo.html](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/5617bebc65a0129922b22b41e2576e4b65f8289e/backend/src/main/resources/templates/concertInfo.html)  |
+|                                           | **File 5**      | [editArtist.html](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/5617bebc65a0129922b22b41e2576e4b65f8289e/backend/src/main/resources/templates/editArtist.html)  |
 
 - **Andrea Garrobo Guzmán**
   - *Task done descriptions*

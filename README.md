@@ -137,7 +137,7 @@ To clone the project using **VSCode**, follow these steps:
 |                                           | **Commit 3**    | [Add error page](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/50096b1de6aed1c435dd7a2aede5aece178626c5)     |
 |                                           | **Commit 4**    | [Add edit concert](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/1c11e4c259f33c811a9c49582bda24583e8a7ad1)     |
 |                                           | **Commit 5**    | [Add pie graphic](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/a642ad7afe0e00caa307c0c28699e899d2f32792)     |
-| **Files that have participated the most** | **File 1**      | [[WebController.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/controller/WebController.java)|
+| **Files that have participated the most** | **File 1**      | [WebController.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/controller/WebController.java)|
 |                                           | **File 2**      | [User.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blame/main/backend/src/main/java/es/codeurjc/backend/model/User.java)|
 |                                           | **File 3**      | [userPage.html](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/resources/templates/userPage.html)|
 |                                           | **File 4**      | [editConcert.html](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/resources/templates/editConcert.html)|

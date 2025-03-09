@@ -180,20 +180,20 @@ To clone the project using **VSCode**, follow these steps:
 
 - **Andrea Garrobo Guzmán**
   - *Task done descriptions*
-    - Task
+    - I made the pagination of the website, the load more button along with the spinner animation, as well as made sure that when loading more items they had the same appearance. I also added security with the keystore tool and helped all pages to be called from port 8443. Then I implemented the Bar graph and fixed the ticket count to be used in both graphs. An error page, in case a gig was selected that didn't exist and the action to delete a gig for the admin, which my colleague later improved to work correctly.
 
 | **Section**                               |                 | **Details**       |
 | ----------------------------------------  | --------------- | ----------------- |
-| **Most significant commits**              | **Commit 1**    | [CommitName](link)|
-|                                           | **Commit 2**    | [CommitName](link)|
-|                                           | **Commit 3**    | [CommitName](link)|
-|                                           | **Commit 4**    | [CommitName](link)|
-|                                           | **Commit 5**    | [CommitName](link)|
-| **Files that have participated the most** | **File 1**      | [FileName](link)  |
-|                                           | **File 2**      | [FileName](link)  |
-|                                           | **File 3**      | [FileName](link)  |
-|                                           | **File 4**      | [FileName](link)  |
-|                                           | **File 5**      | [FileName](link)  |
+| **Most significant commits**              | **Commit 1**    | [fixed load more button, added security with keystore tool and changed server port to 8443](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/b49ef396c36d10d0c8f07b4ec20b89832b877118)|
+|                                           | **Commit 2**    | [Bar chart and ticket count](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/faaf842a7ab4a9a6983c2c8b916634f5cd404d36)|
+|                                           | **Commit 3**    | [Error page if the concert is not found](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/66a5e4d63b976b9106061f4860921649d6193f4f)|
+|                                           | **Commit 4**    | [Delete concert but it always redirects me to /errore](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/4ce3ad7c2746a05c45789e4a72f5f08577e502da)|
+|                                           | **Commit 5**    | [load more with AJAX](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/43361bbaf576289072e5c8f6c98855ea086e96c7)|
+| **Files that have participated the most** | **File 1**      | [GraphicController.java](backend/src/main/java/es/codeurjc/backend/controller/GraphicController.java)  |
+|                                           | **File 2**      | [loadMore.js](backend/src/main/resources/static/js/loadMore.js)  |
+|                                           | **File 3**      | [WebController.java](backend/src/main/java/es/codeurjc/backend/controller/WebController.java)  |
+|                                           | **File 4**      | [barGraphics.js](backend/src/main/resources/static/js/barGraphics.js)  |
+|                                           | **File 5**      | [index.html](backend/src/main/resources/templates/index.html)  |
 
 
 - **Natalia Méndez Barrios**

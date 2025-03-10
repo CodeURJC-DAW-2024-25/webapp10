@@ -38,7 +38,7 @@
 ![indexScreenshot](https://github.com/user-attachments/assets/af78d42a-6cea-4a6b-9a13-7b85600316a3)
 - Description: main page that includes all the information about the different concerts and artists, in addition to allowing navigation to user registration, login and modification of artists and concerts if you are an administrator.
 
-![concertInfoScreenshot](https://github.com/user-attachments/assets/3870bc0f-7e1b-40ba-874c-ad4cbd2c7634)
+![concertInfoScreenshot](https://github.com/user-attachments/assets/ec2b5a2d-966b-4981-9725-8b9aa2de64c7)
 - Description: page that includes concert information such as date, time, location, map, different diagrams as well as including participating artists.
 
 ![loginScreenshot](https://github.com/user-attachments/assets/08271d53-d12a-43d8-bc06-e78d54b97756)
@@ -66,7 +66,7 @@
 - Description: page that allows the administrator to modify an existing concert by changing out the different fields of the form
 
 ## Navigation Diagram
-![navigationDiagram](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/imagesReadme/navigationDiagram.png)
+![diagramScreenshot](https://github.com/user-attachments/assets/bcf3b361-6f70-4818-9937-f3b3f48c1bfb)
 
 
 ## 🚀 Execution Instructions

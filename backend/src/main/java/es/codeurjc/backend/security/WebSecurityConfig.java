@@ -62,6 +62,7 @@ public class WebSecurityConfig {
 				.requestMatchers("/concert/purchasePage/**").hasAnyRole("USER", "ADMIN")
 				.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
 				.requestMatchers("/userPage").hasAnyRole("USER", "ADMIN")
+				.requestMatchers("/edituser/**").hasAnyRole("USER", "ADMIN")
 				.requestMatchers("/newartist").hasAnyRole("ADMIN")
 				.requestMatchers("/newconcert").hasAnyRole("ADMIN")
 

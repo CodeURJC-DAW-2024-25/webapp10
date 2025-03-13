@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import es.codeurjc.backend.model.Artist;
@@ -59,6 +60,9 @@ public class WebController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
@@ -146,7 +150,7 @@ public class WebController {
 				if (user2.isPresent()) {
 
 					user2.get().addFavoriteGenre();
-					
+
 					model.addAttribute("user", user2.get());
 					return "userPage";
 				} else {
@@ -573,6 +577,78 @@ public class WebController {
 		return "redirect:/";
 	}
 
+	@GetMapping("/edituser/{id}")
+	public String editUserPage(Model model, @PathVariable long id, HttpServletRequest request) {
+
+		addAttributes(model, request);
+		Optional<User> user = userService.findById(id);
+		if (user.isPresent()) {
+			model.addAttribute("user", user.get());
+			return "editUser";
+		} else {
+			return "index";
+		}
+	}
+
+	@PostMapping("/edituser/{id}")
+	public String editUser(HttpServletRequest request, boolean removeImage, Model model, @PathVariable long id,
+			@RequestParam String fullName,
+			@RequestParam Integer phone,
+			@RequestParam String email,
+			@RequestParam Integer age,
+			@RequestParam MultipartFile profilePhoto,
+			RedirectAttributes redirectAttributes) throws IOException, SQLException {
+
+		Optional<User> userOptional = userService.findById(id);
+		if (!userOptional.isPresent()) {
+			model.addAttribute("edituserError", "User not found.");
+			return "editUser";
+		}
+
+		if (fullName == null || fullName.isEmpty()) {
+			model.addAttribute("edituserError", "Fill the gap name");
+			return "editUser";
+		}
+
+		if (email == null || email.isEmpty() || !email.contains("@") || !email.contains(".com")) {
+			model.addAttribute("error", "Write a valid email");
+			return "register";
+		}
+
+		if (phone == null || String.valueOf(phone).length() != 9) {
+			model.addAttribute("edituserError", "Phone number must be 9 digits");
+			return "editUser";
+		}
+
+		if (age == null || age < 0 || age > 110) {
+			model.addAttribute("edituserError", "Enter an age between 0-110");
+			return "editUser";
+		}
+
+		Principal principal = request.getUserPrincipal();
+		Optional<User> userPrincipal = userService.findByUserName(principal.getName());
+
+		if (!userPrincipal.isPresent() || principal == null) {
+			return "redirect:/";
+		}
+
+		User user = userOptional.get();
+		user.setFullName(fullName);
+		user.setAge(age);
+		user.setPhone(phone);
+		user.setEmail(email);
+		updateImageUser(user, removeImage, profilePhoto);
+
+		userService.save(user);
+
+		model.addAttribute("userId", user.getId());
+
+		redirectAttributes.addFlashAttribute("successMessage", "User edit success.");
+
+		return "redirect:/";
+
+	}
+
 	private void updateImage(Concert concert, boolean removeImage, MultipartFile imageField)
 			throws IOException, SQLException {
 
@@ -588,6 +664,25 @@ public class WebController {
 				concert.setImageFile(BlobProxy.generateProxy(dbConcert.getImageFile().getBinaryStream(),
 						dbConcert.getImageFile().length()));
 				concert.setConcertImage(true);
+			}
+		}
+	}
+
+	private void updateImageUser(User user, boolean removeImage, MultipartFile imageField)
+			throws IOException, SQLException {
+
+		if (removeImage) {
+			user.setProfilePhoto(null);
+			user.setImage(false);
+		} else if (imageField != null && !imageField.isEmpty()) {
+			user.setProfilePhoto(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
+			user.setImage(true);
+		} else {
+			User dbUser = userService.findById(user.getId()).orElseThrow();
+			if (dbUser.getImage()) {
+				user.setProfilePhoto(BlobProxy.generateProxy(dbUser.getProfilePhoto().getBinaryStream(),
+						dbUser.getProfilePhoto().length()));
+				user.setImage(true);
 			}
 		}
 	}

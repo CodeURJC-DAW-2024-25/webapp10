@@ -22,7 +22,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +33,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import es.codeurjc.backend.dto.ConcertDTO;
+import es.codeurjc.backend.dto.TicketDTO;
+import es.codeurjc.backend.dto.ArtistDTO;
+import es.codeurjc.backend.dto.UserDTO;
 import es.codeurjc.backend.model.Artist;
 import es.codeurjc.backend.model.Concert;
 import es.codeurjc.backend.model.Ticket;
@@ -44,7 +47,6 @@ import es.codeurjc.backend.service.TicketService;
 import es.codeurjc.backend.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class WebController {
@@ -70,7 +72,7 @@ public class WebController {
 		Principal principal = request.getUserPrincipal();
 
 		if (principal != null) {
-			Optional<User> user = userService.findByUserName(principal.getName());
+			Optional<UserDTO> user = userService.findByUserName(principal.getName());
 			if (user.isPresent()) {
 				model.addAttribute("logged", true);
 				model.addAttribute("userName", principal.getName());
@@ -94,7 +96,7 @@ public class WebController {
 		Long uId = null;
 
 		if (principal != null) {
-			Optional<User> user = userService.findByUserName(principal.getName());
+			Optional<UserDTO> user = userService.findByUserName(principal.getName());
 
 			user.get().addFavoriteGenre();
 
@@ -103,7 +105,7 @@ public class WebController {
 			}
 		}
 
-		Page<Concert> concerts = concertService.getConcerts(uId, pageable);
+		Page<ConcertDTO> concerts = concertService.getConcerts(uId, pageable);
 
 		model.addAttribute("concerts", concerts);
 		return "index";
@@ -116,12 +118,12 @@ public class WebController {
 
 		Pageable pageable = Pageable.ofSize(10).withPage(page);
 
-		Page<Concert> concerts = null;
+		Page<ConcertDTO> concerts = null;
 
 		Long uId = null;
 
 		if (principal != null) {
-			Optional<User> user = userService.findByUserName(principal.getName());
+			Optional<UserDTO> user = userService.findByUserName(principal.getName());
 
 			if (user.isPresent() && !user.get().getFavoriteGenre().equals("None")) {
 				uId = user.get().getId();
@@ -143,9 +145,9 @@ public class WebController {
 		Principal principal = request.getUserPrincipal();
 
 		if (principal != null) {
-			Optional<User> user = userService.findByUserName(principal.getName());
+			Optional<UserDTO> user = userService.findByUserName(principal.getName());
 			addAttributes(model, request);
-			Optional<User> user2 = userService.findById(id);
+			Optional<UserDTO> user2 = userService.findById(id);
 			if (user.equals(user2)) {
 				if (user2.isPresent()) {
 
@@ -169,9 +171,9 @@ public class WebController {
 	public String showConcert(Model model, @PathVariable long id, HttpServletRequest request) {
 
 		addAttributes(model, request);
-		Optional<Concert> concert = concertService.findById(id);
-		if (concert.isPresent()) {
-			model.addAttribute("concert", concert.get());
+		Optional<ConcertDTO> concertDTO = concertService.getConcert(id);
+		if (concertDTO.isPresent()) {
+			model.addAttribute("concert", concertDTO.get());
 			model.addAttribute("concertId", id);
 			return "concertInfo";
 		} else {
@@ -183,7 +185,7 @@ public class WebController {
 	public String showPurchasePage(Model model, @PathVariable long id, HttpServletRequest request) {
 
 		addAttributes(model, request);
-		Optional<Concert> concert = concertService.findById(id);
+		Optional<ConcertDTO> concert = concertService.findById(id);
 		if (concert.isPresent()) {
 			model.addAttribute("concert", concert.get());
 			model.addAttribute("concertId", id);
@@ -201,14 +203,14 @@ public class WebController {
 
 		Principal principal = request.getUserPrincipal();
 		Integer prices;
-		Optional<Concert> concerts = concertService.findById(id);
+		Optional<ConcertDTO> concerts = concertService.findById(id);
 		if (!concerts.isPresent() || principal == null) {
 			return "redirect:/";
 		}
-		Optional<User> user = userService.findByUserName(principal.getName());
-		Concert concert = concerts.get();
+		Optional<UserDTO> user = userService.findByUserName(principal.getName());
+		ConcertDTO concert = concerts.get();
 
-		Ticket ticket = new Ticket();
+		TicketDTO ticket = new TicketDTO();
 
 		if ("stadiumStand".equals(ticketType)) {
 			prices = concert.getStadiumPrice();
@@ -238,7 +240,7 @@ public class WebController {
 
 	@GetMapping("/newconcert")
 	public String newConcert(Model model) {
-		List<Artist> artists = artistService.findAll();
+		List<ArtistDTO> artists = artistService.findAll();
 
 		model.addAttribute("artists", artists);
 
@@ -259,7 +261,7 @@ public class WebController {
 			@RequestParam MultipartFile imageFile,
 			Model model) throws IOException {
 
-		List<Artist> artists = artistService.findAll();
+		List<ArtistDTO> artists = artistService.findAll();
 		model.addAttribute("artists", artists);
 
 		if (concertName == null || concertName.isEmpty() || concertName.length() < 2) {
@@ -313,12 +315,12 @@ public class WebController {
 			return "newConcert";
 		}
 
-		List<Artist> selectedArtists = artistIds.stream()
+		List<ArtistDTO> selectedArtists = artistIds.stream()
 				.map(id -> artistService.findById(id)
 						.orElseThrow(() -> new RuntimeException("No existe artista con ID " + id)))
 				.collect(Collectors.toList());
 
-		Concert concert = new Concert(concertName, concertDetails, concertDate, concertTime, location, stadiumPrice,
+		ConcertDTO concert = new ConcertDTO(concertName, concertDetails, concertDate, concertTime, location, stadiumPrice,
 				trackPrice, selectedArtists, map);
 
 		if (imageFile != null && !imageFile.isEmpty()) {
@@ -340,7 +342,7 @@ public class WebController {
 
 	@GetMapping("/concerts/{id}/image")
 	public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
-		Optional<Concert> concert = concertService.findById(id);
+		Optional<ConcertDTO> concert = concertService.findById(id);
 
 		if (concert.isPresent() && concert.get().getImageFile() != null) {
 			Resource file = new InputStreamResource(concert.get().getImageFile().getBinaryStream());
@@ -361,14 +363,14 @@ public class WebController {
 			return;
 		}
 
-		Optional<User> userOptional = userService.findByUserName(principal.getName());
+		Optional<UserDTO> userOptional = userService.findByUserName(principal.getName());
 		if (!userOptional.isPresent()) {
 			response.sendRedirect("/");
 			return;
 		}
 
-		User user = userOptional.get();
-		List<Ticket> tickets = user.getTickets();
+		UserDTO user = userOptional.get();
+		List<TicketDTO> tickets = user.getTickets();
 
 		response.setContentType("application/pdf");
 		response.setHeader("Content-Disposition", "attachment; filename=tickets.pdf");
@@ -451,7 +453,7 @@ public class WebController {
 			return "newArtist";
 		}
 
-		Artist artist = new Artist();
+		ArtistDTO artist = new ArtistDTO();
 		artist.setArtistName(artistName);
 		artist.setMusicalStyle(musicalStyle);
 		artist.setArtistInfo(artistInfo);
@@ -465,9 +467,9 @@ public class WebController {
 	public String editConcertPage(Model model, @PathVariable long id, HttpServletRequest request) {
 
 		addAttributes(model, request);
-		Optional<Concert> concert = concertService.findById(id);
+		Optional<ConcertDTO> concert = concertService.findById(id);
 		if (concert.isPresent()) {
-			List<Artist> artists = artistService.findAll();
+			List<ArtistDTO> artists = artistService.findAll();
 			model.addAttribute("artists", artists);
 			model.addAttribute("concert", concert.get());
 			return "editConcert";
@@ -535,20 +537,20 @@ public class WebController {
 			return "editConcert";
 		}
 
-		Optional<Concert> concertOptional = concertService.findById(id);
+		Optional<ConcertDTO> concertOptional = concertService.findById(id);
 		if (!concertOptional.isPresent()) {
 			model.addAttribute("editConcertError", "Concert not found.");
 			return "editConcert";
 		}
 
 		Principal principal = request.getUserPrincipal();
-		Optional<User> user = userService.findByUserName(principal.getName());
+		Optional<UserDTO> user = userService.findByUserName(principal.getName());
 
 		if (!user.isPresent() || principal == null) {
 			return "redirect:/";
 		}
 
-		Concert concert = concertOptional.get();
+		ConcertDTO concert = concertOptional.get();
 		concert.setConcertName(concertName);
 		concert.setConcertDetails(concertDetails);
 		concert.setConcertDate(concertDate);
@@ -559,7 +561,7 @@ public class WebController {
 		concert.setTrackPrice(trackPrice);
 		updateImage(concert, removeImage, imageFile);
 
-		List<Artist> selectedArtists = artistIds.stream()
+		List<ArtistDTO> selectedArtists = artistIds.stream()
 				.map(idArtist -> artistService.findById(idArtist)
 						.orElseThrow(() -> new RuntimeException("Artist with ID " + idArtist + " does not exist")))
 				.collect(Collectors.toList());
@@ -581,7 +583,7 @@ public class WebController {
 	public String editUserPage(Model model, @PathVariable long id, HttpServletRequest request) {
 
 		addAttributes(model, request);
-		Optional<User> user = userService.findById(id);
+		Optional<UserDTO> user = userService.findById(id);
 		if (user.isPresent()) {
 			model.addAttribute("user", user.get());
 			return "editUser";
@@ -599,7 +601,7 @@ public class WebController {
 			@RequestParam MultipartFile profilePhoto,
 			RedirectAttributes redirectAttributes) throws IOException, SQLException {
 
-		Optional<User> userOptional = userService.findById(id);
+		Optional<UserDTO> userOptional = userService.findById(id);
 		if (!userOptional.isPresent()) {
 			model.addAttribute("edituserError", "User not found.");
 			return "editUser";
@@ -626,13 +628,13 @@ public class WebController {
 		}
 
 		Principal principal = request.getUserPrincipal();
-		Optional<User> userPrincipal = userService.findByUserName(principal.getName());
+		Optional<UserDTO> userPrincipal = userService.findByUserName(principal.getName());
 
 		if (!userPrincipal.isPresent() || principal == null) {
 			return "redirect:/";
 		}
 
-		User user = userOptional.get();
+		UserDTO user = userOptional.get();
 		user.setFullName(fullName);
 		user.setAge(age);
 		user.setPhone(phone);
@@ -659,7 +661,7 @@ public class WebController {
 			concert.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
 			concert.setConcertImage(true);
 		} else {
-			Concert dbConcert = concertService.findById(concert.getId()).orElseThrow();
+			ConcertDTO dbConcert = concertService.findById(concert.getId()).orElseThrow();
 			if (dbConcert.getConcertImage()) {
 				concert.setImageFile(BlobProxy.generateProxy(dbConcert.getImageFile().getBinaryStream(),
 						dbConcert.getImageFile().length()));
@@ -678,7 +680,7 @@ public class WebController {
 			user.setProfilePhoto(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
 			user.setImage(true);
 		} else {
-			User dbUser = userService.findById(user.getId()).orElseThrow();
+			UserDTO dbUser = userService.findById(user.getId()).orElseThrow();
 			if (dbUser.getImage()) {
 				user.setProfilePhoto(BlobProxy.generateProxy(dbUser.getProfilePhoto().getBinaryStream(),
 						dbUser.getProfilePhoto().length()));
@@ -689,7 +691,7 @@ public class WebController {
 
 	@GetMapping("/editArtist/{id}")
 	public String editArtistForm(@PathVariable Long id, Model model) {
-		Optional<Artist> artist = artistService.findById(id);
+		Optional<ArtistDTO> artist = artistService.findById(id);
 		if (artist.isPresent()) {
 			model.addAttribute("artist", artist.get());
 			return "editArtist";
@@ -706,9 +708,9 @@ public class WebController {
 			Model model,
 			RedirectAttributes redirectAttributes) {
 
-		Optional<Artist> artistOptional = artistService.findById(id);
+		Optional<ArtistDTO> artistOptional = artistService.findById(id);
 
-		Artist artist = artistOptional.get();
+		ArtistDTO artist = artistOptional.get();
 		if (artistName == null || artistName.isEmpty()) {
 			model.addAttribute("editArtistError", "Artist name is required.");
 			model.addAttribute("artist", artist);
@@ -738,13 +740,13 @@ public class WebController {
 
 	@GetMapping("/deleteArtist/{id}")
 	public String deleteArtist(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-		Optional<Artist> artistOptional = artistService.findById(id);
+		Optional<ArtistDTO> artistOptional = artistService.findById(id);
 		if (artistOptional.isPresent()) {
-			Artist artist = artistOptional.get();
+			ArtistDTO artist = artistOptional.get();
 
-			List<Concert> concerts = concertService.findAllConcerts();
+			List<ConcertDTO> concerts = concertService.findAllConcerts();
 
-			for (Concert concert : concerts) {
+			for (ConcertDTO concert : concerts) {
 				if (concert.getArtists().contains(artist) && concert.getArtists().size() <= 1) {
 					redirectAttributes.addFlashAttribute("errorMessage",
 							"Cannot delete artist. Each concert must have at least one artist.");
@@ -752,7 +754,7 @@ public class WebController {
 				}
 			}
 
-			for (Concert concert : concerts) {
+			for (ConcertDTO concert : concerts) {
 				if (concert.getArtists().contains(artist)) {
 					concert.getArtists().remove(artist);
 					concertService.save(concert);
@@ -770,7 +772,7 @@ public class WebController {
 
 	@GetMapping("/concert/delete/{id}")
 	public String deleteConcert(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-		Optional<Concert> concertOptional = concertService.findById(id);
+		Optional<ConcertDTO> concertOptional = concertService.findById(id);
 
 		if (concertOptional.isPresent()) {
 			concertService.deleteById(id);

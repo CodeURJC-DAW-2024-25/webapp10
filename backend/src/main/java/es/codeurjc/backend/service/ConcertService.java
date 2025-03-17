@@ -1,16 +1,23 @@
 package es.codeurjc.backend.service;
 
-import java.util.List;
-import java.util.Optional;
+import java.io.InputStream;
+import java.sql.SQLException;
+import java.util.Collection;
+import java.util.NoSuchElementException;
 
+
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+//import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-
-import es.codeurjc.backend.model.Artist;
+import es.codeurjc.backend.dto.ConcertDTO;
+import es.codeurjc.backend.dto.ConcertMapper;
 import es.codeurjc.backend.model.Concert;
+
 import es.codeurjc.backend.repository.ConcertRepository;
 
 @Service
@@ -19,52 +26,127 @@ public class ConcertService {
 	@Autowired
 	private ConcertRepository repository;
 
-	public Optional<Concert> findById(long id) {
-		return repository.findById(id);
-	}
+	@Autowired
+	private ConcertMapper mapper;
 
 	public boolean exist(long id) {
 		return repository.existsById(id);
 	}
 
-	public List<Concert> findAll() {
-		return repository.findAll();
+	public Page<ConcertDTO> getConcerts(Long concertId, Pageable pageable) {
+        Page<Concert> concerts;
+        if (concertId == null) {
+            concerts = repository.findAll(pageable);
+        } else {
+            concerts = repository.findConcertsByUserPreference(concertId, pageable);
+        }
+        return concerts.map(this::toDTO);
+    }
+
+ /*    public Page<ConcertDTO> getConcertsPaginated(int page) {
+        int size = 10;
+        Pageable pageable = PageRequest.of(page, size);
+        return repository.findAll(pageable).map(this::toDTO);
+    } */
+
+	public ConcertDTO getConcert(long id) {
+		return toDTO(repository.findById(id).orElseThrow());
 	}
 
-	public void save(Concert concert) {
+	public ConcertDTO deleteConcert(long id) {
+
+		Concert concert = repository.findById(id).orElseThrow();
+		ConcertDTO concertDTO = toDTO(concert);
+
+		repository.deleteById(id);
+
+		return concertDTO;
+	}
+
+	public ConcertDTO createConcert(ConcertDTO concertDTO) {
+
+		if (concertDTO.id() != null) {
+			throw new IllegalArgumentException();
+		}
+
+		Concert concert = toDomain(concertDTO);
+
+		repository.save(concert);
+
+		return toDTO(concert);
+	}
+
+	public ConcertDTO replaceConcert(long id, ConcertDTO updateConcertDTO) throws SQLException {
+
+		if (repository.existsById(id)) {
+			Concert updatedConcert = toDomain(updateConcertDTO);
+			updatedConcert.setId(id);
+			repository.save(updatedConcert);
+			return toDTO(updatedConcert);
+		} else {
+			throw new NoSuchElementException();
+		}
+
+	}
+
+	public Resource getConcertImage(long id) throws SQLException {
+
+		Concert concert = repository.findById(id).orElseThrow();
+
+		if (concert.getImageFile() != null) {
+			return new InputStreamResource(concert.getImageFile().getBinaryStream());
+		} else {
+			throw new NoSuchElementException();
+		}
+	}
+
+	public void createConcertImage(long id, InputStream inputStream, long size) {
+
+		Concert concert = repository.findById(id).orElseThrow();
+
+		concert.setConcertImage(true);
+		concert.setImageFile(BlobProxy.generateProxy(inputStream, size));
+
 		repository.save(concert);
 	}
 
-	public void delete(long id) {
-		repository.deleteById(id);
-	}
+	public void replaceConcertImage(long id, InputStream inputStream, long size) {
 
-	public void initializeConcerts() {
-		for (int i = 1; i <= 20; i++) {
-			Concert concert = new Concert();
-			concert.setConcertName("Concierto " + i);
-			save(concert);
+		Concert concert = repository.findById(id).orElseThrow();
+
+		if (!concert.getConcertImage()) {
+			throw new NoSuchElementException();
 		}
+
+		concert.setImageFile(BlobProxy.generateProxy(inputStream, size));
+
+		repository.save(concert);
 	}
 
-	public Page<Concert> getConcerts(Long userId, Pageable pageable) {
-		if (userId == null) {
-			return repository.findAll(pageable);
+	public void deleteConcertImage(long id) {
+
+		Concert concert = repository.findById(id).orElseThrow();
+
+		if (!concert.getConcertImage()) {
+			throw new NoSuchElementException();
 		}
-		return repository.findConcertsByUserPreference(userId, pageable);
+
+		concert.setImageFile(null);
+		concert.setConcertImage(false);
+
+		repository.save(concert);
 	}
 
-	public Page<Concert> getConcertsPaginated(int page) {
-		int size = 10;
-		Pageable pageable = PageRequest.of(page, size);
-		return repository.findAll(pageable);
+	private ConcertDTO toDTO(Concert concert) {
+		return mapper.toDTO(concert);
 	}
 
-	public List<Concert> findAllConcerts() {
-		return repository.findAll();
+	private Concert toDomain(ConcertDTO ConcertDTO) {
+		return mapper.toDomain(ConcertDTO);
 	}
 
-	public void deleteById(long id) {
-		repository.deleteById(id);
+	private Collection<ConcertDTO> toDTOs(Collection<Concert> concerts) {
+		return mapper.toDTOs(concerts);
 	}
+
 }

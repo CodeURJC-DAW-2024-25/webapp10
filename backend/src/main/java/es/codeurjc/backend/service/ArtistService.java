@@ -1,61 +1,84 @@
 package es.codeurjc.backend.service;
 
-import java.util.List;
-import java.util.Optional;
+import java.sql.SQLException;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import es.codeurjc.backend.dto.ArtistDTO;
+import es.codeurjc.backend.dto.ArtistMapper;
 import es.codeurjc.backend.model.Artist;
 import es.codeurjc.backend.repository.ArtistRepository;
 
 @Service
 public class ArtistService {
-    
-    @Autowired
+
+	@Autowired
 	private ArtistRepository repository;
 
-	public Optional<Artist> findById(long id) {
-		return repository.findById(id);
+	@Autowired
+	private ArtistMapper mapper;
+
+	public Collection<ArtistDTO> getArtists() {
+		return toDTOs(repository.findAll());
 	}
-	
+
+	public ArtistDTO getArtist(long id) {
+		return toDTO(repository.findById(id).orElseThrow());
+	}
+
 	public boolean exist(long id) {
 		return repository.existsById(id);
 	}
 
-	public List<Artist> findAll() {
-		return repository.findAll();
-	}
+	public ArtistDTO deleteArtist(long id) {
 
-	public void save(Artist artist) {
-		repository.save(artist);
-	}
+		Artist artist = repository.findById(id).orElseThrow();
+		ArtistDTO artistDTO = toDTO(artist);
 
-	public void deleteById(long id) {
 		repository.deleteById(id);
+
+		return artistDTO;
 	}
 
-    public boolean existsName(String artistName) {
-        return repository.findByArtistName(artistName).isPresent();
-    }
+	public ArtistDTO createArtist(ArtistDTO artistDTO) {
 
-	public Artist getArtistById(long id) {
-		return repository.findById(id)
-			.orElseThrow(() -> new RuntimeException("Artist not found with id: " + id));
+		if (artistDTO.id() != null) {
+			throw new IllegalArgumentException();
+		}
+
+		Artist artist = toDomain(artistDTO);
+
+		repository.save(artist);
+
+		return toDTO(artist);
 	}
 
-	public void updateArtist(Long id, Artist updatedArtist) {
-		Artist existingArtist = getArtistById(id);
-		if (updatedArtist.getArtistName() != null) {
-			existingArtist.setArtistName(updatedArtist.getArtistName());
-		}
-		if (updatedArtist.getMusicalStyle() != null) {
-			existingArtist.setMusicalStyle(updatedArtist.getMusicalStyle());
-		}
-		if (updatedArtist.getArtistInfo() != null) {
-			existingArtist.setArtistInfo(updatedArtist.getArtistInfo());
-		}
-		repository.save(existingArtist);
+	public ArtistDTO replaceArtist(long id, ArtistDTO updateArtistDTO) throws SQLException {
+
+		Artist oldArtist = repository.findById(id).orElseThrow();
+		Artist updatedArtist = toDomain(updateArtistDTO);
+		updatedArtist.setId(id);
+		repository.save(updatedArtist);
+		return toDTO(updatedArtist);
+
 	}
-	
+
+	public boolean existsName(String artistName) {
+		return repository.findByArtistName(artistName).isPresent();
+	}
+
+	private ArtistDTO toDTO(Artist artist) {
+		return mapper.toDTO(artist);
+	}
+
+	private Artist toDomain(ArtistDTO artistDTO) {
+		return mapper.toDomain(artistDTO);
+	}
+
+	private Collection<ArtistDTO> toDTOs(Collection<Artist> artists) {
+		return mapper.toDTOs(artists);
+	}
+
 }

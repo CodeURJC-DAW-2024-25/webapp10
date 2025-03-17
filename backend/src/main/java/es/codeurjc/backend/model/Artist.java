@@ -26,10 +26,10 @@ public class Artist {
     public Artist() {
     }
 
-    public Artist(String artistName, String musicalStyle, String artisInfo) {
+    public Artist(String artistName, String musicalStyle, String artistInfo) {
         this.artistName = artistName;
         this.musicalStyle = musicalStyle;
-        this.artistInfo = artisInfo;
+        this.artistInfo = artistInfo;
     }
 
     // Getters and setters

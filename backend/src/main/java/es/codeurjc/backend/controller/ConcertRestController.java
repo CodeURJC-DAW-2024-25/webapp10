@@ -1,11 +1,12 @@
-package es.codeurjc.daw.library.controller;
+package es.codeurjc.backend.controller;
 
 import java.io.IOException;
 import java.net.URI;
 import java.sql.SQLException;
-import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,36 +20,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import es.codeurjc.backend.dto.ArtistDTO;
 import es.codeurjc.backend.dto.ConcertDTO;
-import es.codeurjc.backend.service.ArtistService;
 import es.codeurjc.backend.service.ConcertService;
-import es.codeurjc.backend.service.TicketService;
-import es.codeurjc.backend.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
 @RequestMapping("/api/concerts")
-public class RestController {
+public class ConcertRestController {
 
 	@Autowired
-	private ArtistService artistService;
     private ConcertService concertService;
-    private TicketService ticketService;
-    private UserService userService;
 
 
 	@GetMapping("/")
-	public Collection<ConcertDTO> getConcerts() {
-
-		return concertService.getConcerts();
+	public Page<ConcertDTO> getConcerts(Long userId, Pageable pageable) {
+		return concertService.getConcerts(userId, pageable);
 	}
 
 	@GetMapping("/{id}")
 	public ConcertDTO getConcert(@PathVariable long id) {
-
 		return concertService.getConcert(id);
 	}
 
@@ -63,9 +53,9 @@ public class RestController {
 	}
 
 	@PutMapping("/{id}")
-	public ConcertDTO replaceConcert(@PathVariable long id, @RequestBody BookDTO updatedBookDTO) throws SQLException {
+	public ConcertDTO replaceConcert(@PathVariable long id, @RequestBody ConcertDTO updatedConcertDTO) throws SQLException {
 
-		return concertService.replaceConcert(id, updatedBookDTO);
+		return concertService.replaceConcert(id, updatedConcertDTO);
 	}
 
 	@DeleteMapping("/{id}")

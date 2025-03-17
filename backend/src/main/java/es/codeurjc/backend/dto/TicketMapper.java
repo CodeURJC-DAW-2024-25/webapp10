@@ -17,5 +17,6 @@ public interface TicketMapper {
     @Mapping(target = "concertId", source = "concert.id")
 
     List<TicketDTO> toDTOs(Collection<Ticket> tickets);
+    Ticket toDomain(TicketDTO TicketDTO);
 
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -34,6 +35,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import es.codeurjc.backend.dto.ConcertDTO;
+import es.codeurjc.backend.dto.NewUserDTO;
 import es.codeurjc.backend.dto.TicketDTO;
 import es.codeurjc.backend.dto.ArtistDTO;
 import es.codeurjc.backend.dto.UserDTO;
@@ -41,6 +43,7 @@ import es.codeurjc.backend.model.Artist;
 import es.codeurjc.backend.model.Concert;
 import es.codeurjc.backend.model.Ticket;
 import es.codeurjc.backend.model.User;
+import es.codeurjc.backend.security.CSRFHandlerConfiguration;
 import es.codeurjc.backend.service.ArtistService;
 import es.codeurjc.backend.service.ConcertService;
 import es.codeurjc.backend.service.TicketService;
@@ -50,6 +53,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class WebController {
+
+    private final CSRFHandlerConfiguration CSRFHandlerConfiguration;
 
 	@Autowired
 	private ConcertService concertService;
@@ -144,24 +149,26 @@ public class WebController {
 
 		Principal principal = request.getUserPrincipal();
 
-		if (principal != null) {
-			Optional<UserDTO> user = userService.findByUserName(principal.getName());
-			addAttributes(model, request);
-			Optional<UserDTO> user2 = userService.findById(id);
-			if (user.equals(user2)) {
-				if (user2.isPresent()) {
+		try {
 
-					user2.get().addFavoriteGenre();
+			if (principal != null) {
 
-					model.addAttribute("user", user2.get());
+				UserDTO userDTOprincipal = userService.getUserByUsername(principal.getName());
+				UserDTO userDTO = userService.getUser(id);
+				addAttributes(model, request);
+
+				if (userDTOprincipal.equals(userDTO)) {
+					model.addAttribute("user", userDTO);
 					return "userPage";
+
 				} else {
-					return "index";
+					return "loginerror";
 				}
 			} else {
-				return "loginerror";
+				return "redirect:/";
 			}
-		} else {
+
+		} catch (NoSuchElementException e) {
 			return "redirect:/";
 		}
 
@@ -320,7 +327,8 @@ public class WebController {
 						.orElseThrow(() -> new RuntimeException("No existe artista con ID " + id)))
 				.collect(Collectors.toList());
 
-		ConcertDTO concert = new ConcertDTO(concertName, concertDetails, concertDate, concertTime, location, stadiumPrice,
+		ConcertDTO concert = new ConcertDTO(concertName, concertDetails, concertDate, concertTime, location,
+				stadiumPrice,
 				trackPrice, selectedArtists, map);
 
 		if (imageFile != null && !imageFile.isEmpty()) {
@@ -583,71 +591,22 @@ public class WebController {
 	public String editUserPage(Model model, @PathVariable long id, HttpServletRequest request) {
 
 		addAttributes(model, request);
-		Optional<UserDTO> user = userService.findById(id);
-		if (user.isPresent()) {
-			model.addAttribute("user", user.get());
+		try{
+			UserDTO userDTO= userService.getUser(id);
+			model.addAttribute("user", userDTO);
 			return "editUser";
-		} else {
-			return "index";
-		}
-	}
-
-	@PostMapping("/edituser/{id}")
-	public String editUser(HttpServletRequest request, boolean removeImage, Model model, @PathVariable long id,
-			@RequestParam String fullName,
-			@RequestParam Integer phone,
-			@RequestParam String email,
-			@RequestParam Integer age,
-			@RequestParam MultipartFile profilePhoto,
-			RedirectAttributes redirectAttributes) throws IOException, SQLException {
-
-		Optional<UserDTO> userOptional = userService.findById(id);
-		if (!userOptional.isPresent()) {
-			model.addAttribute("edituserError", "User not found.");
-			return "editUser";
-		}
-
-		if (fullName == null || fullName.isEmpty()) {
-			model.addAttribute("edituserError", "Fill the gap name");
-			return "editUser";
-		}
-
-		if (email == null || email.isEmpty() || !email.contains("@") || !email.contains(".com")) {
-			model.addAttribute("error", "Write a valid email");
-			return "register";
-		}
-
-		if (phone == null || String.valueOf(phone).length() != 9) {
-			model.addAttribute("edituserError", "Phone number must be 9 digits");
-			return "editUser";
-		}
-
-		if (age == null || age < 0 || age > 110) {
-			model.addAttribute("edituserError", "Enter an age between 0-110");
-			return "editUser";
-		}
-
-		Principal principal = request.getUserPrincipal();
-		Optional<UserDTO> userPrincipal = userService.findByUserName(principal.getName());
-
-		if (!userPrincipal.isPresent() || principal == null) {
+		}catch (NoSuchElementException e) {
 			return "redirect:/";
 		}
 
-		UserDTO user = userOptional.get();
-		user.setFullName(fullName);
-		user.setAge(age);
-		user.setPhone(phone);
-		user.setEmail(email);
-		updateImageUser(user, removeImage, profilePhoto);
+	}
 
-		userService.save(user);
+	@PostMapping("/edituser/{id}")
+	public String editUser(HttpServletRequest request, boolean removeImage, Model model, @PathVariable long id,NewUserDTO newUserDTO) throws IOException, SQLException {
 
-		model.addAttribute("userId", user.getId());
+		UserDTO userDTO= userService.replaceUser(id,newUserDTO,removeImage);
 
-		redirectAttributes.addFlashAttribute("successMessage", "User edit success.");
-
-		return "redirect:/";
+		return "redirect:/user/"+userDTO.id();
 
 	}
 
@@ -669,26 +628,7 @@ public class WebController {
 			}
 		}
 	}
-
-	private void updateImageUser(User user, boolean removeImage, MultipartFile imageField)
-			throws IOException, SQLException {
-
-		if (removeImage) {
-			user.setProfilePhoto(null);
-			user.setImage(false);
-		} else if (imageField != null && !imageField.isEmpty()) {
-			user.setProfilePhoto(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
-			user.setImage(true);
-		} else {
-			UserDTO dbUser = userService.findById(user.getId()).orElseThrow();
-			if (dbUser.getImage()) {
-				user.setProfilePhoto(BlobProxy.generateProxy(dbUser.getProfilePhoto().getBinaryStream(),
-						dbUser.getProfilePhoto().length()));
-				user.setImage(true);
-			}
-		}
-	}
-
+	
 	@GetMapping("/editArtist/{id}")
 	public String editArtistForm(@PathVariable Long id, Model model) {
 		Optional<ArtistDTO> artist = artistService.findById(id);

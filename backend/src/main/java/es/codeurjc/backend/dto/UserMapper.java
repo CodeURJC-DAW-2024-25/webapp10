@@ -12,7 +12,7 @@ public interface UserMapper {
 
     UserDTO toDTO(User user);
 
-    User toDomain(UserDTO userDTO);
+    User toDomain(NewUserDTO newUserDTO);
 
     List<UserDTO> toDTOs(Collection<User> users);
     

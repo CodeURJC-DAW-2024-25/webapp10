@@ -64,7 +64,6 @@ public class WebSecurityConfig {
 				.exceptionHandling(handling -> handling.authenticationEntryPoint(unauthorizedHandlerJwt));
 
 		http.authorizeHttpRequests(authorize -> authorize
-				// cambiar esto de las redirecciones y las rutas OJOOOOOOO!!!!
 				// PRIVATE PAGES
 				.requestMatchers(HttpMethod.GET, "/api/editconcert/**").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.PUT, "/api/editArtist/**").hasRole("ADMIN")

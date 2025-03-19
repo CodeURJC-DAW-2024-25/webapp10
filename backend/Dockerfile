@@ -1,7 +1,7 @@
 #################################################
 # Imagen base para el contenedor de compilación
 #################################################
-FROM maven:3.8.4-eclipse-temurin-17 AS builder
+FROM maven:3.9.9-eclipse-temurin-21 AS builder
 
 # Define el directorio de trabajo donde ejecutar comandos
 WORKDIR /project
@@ -21,7 +21,7 @@ RUN mvn package -o -DskipTests=true
 #################################################
 # Imagen base para el contenedor de la aplicación
 #################################################
-FROM eclipse-temurin:17-jre
+FROM openjdk:21-jdk-slim
 
 # Define el directorio de trabajo donde se encuentra el JAR
 WORKDIR /usr/app/

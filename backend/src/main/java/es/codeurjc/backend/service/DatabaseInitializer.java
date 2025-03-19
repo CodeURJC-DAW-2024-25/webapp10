@@ -130,8 +130,6 @@ public class DatabaseInitializer {
 		concertRepository.save(arianaConcert);
 		concertRepository.save(rauwConcert);
 		concertRepository.save(liamConcert);
-		concertRepository.save(rauwConcert);
-		concertRepository.save(rauwConcert);
 		concertRepository.save(saikoConcert);
 		concertRepository.save(gyalConcert);
 		concertRepository.save(emiliaConcert);

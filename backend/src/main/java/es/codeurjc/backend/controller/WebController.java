@@ -3,6 +3,7 @@ package es.codeurjc.backend.controller;
 import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -38,6 +39,7 @@ import es.codeurjc.backend.dto.ConcertDTO;
 import es.codeurjc.backend.dto.NewUserDTO;
 import es.codeurjc.backend.dto.TicketDTO;
 import es.codeurjc.backend.dto.ArtistDTO;
+import es.codeurjc.backend.dto.NewTicketDTO;
 import es.codeurjc.backend.dto.UserDTO;
 import es.codeurjc.backend.model.Artist;
 import es.codeurjc.backend.model.Concert;
@@ -204,41 +206,19 @@ public class WebController {
 
 	@PostMapping("/concert/purchasePage/{id}")
 	public String purchase(HttpServletRequest request, Model model, @PathVariable long id,
-			@RequestParam String ticketType,
-			@RequestParam Integer numTickets,
-			RedirectAttributes redirectAttributes) throws IOException {
+			NewTicketDTO newTicketDTO ,
+			RedirectAttributes redirectAttributes) throws IOException, SQLException {
 
+		ConcertDTO concertDTO = concertService.getConcert(id);
 		Principal principal = request.getUserPrincipal();
-		Integer prices;
-		Optional<ConcertDTO> concerts = concertService.findById(id);
-		if (!concerts.isPresent() || principal == null) {
-			return "redirect:/";
-		}
-		Optional<UserDTO> user = userService.findByUserName(principal.getName());
-		ConcertDTO concert = concerts.get();
+		UserDTO userDTO = userService.getUserByUsername(principal.getName());
 
-		TicketDTO ticket = new TicketDTO();
+		TicketDTO ticketDTO = createOrReplaceBook(newTicketDTO,null, concertDTO, userDTO);
 
-		if ("stadiumStand".equals(ticketType)) {
-			prices = concert.getStadiumPrice();
-			ticket.setPrices(prices * numTickets);
-		} else if ("concertTrack".equals(ticketType)) {
-			prices = concert.getTrackPrice();
-			ticket.setPrices(prices * numTickets);
-		}
-
-		ticket.setConcert(concert);
-		concert.addTickets(ticket);
-		ticket.setTicketType(ticketType);
-		ticket.setUserOwner(user.get());
-		ticket.setNumTickets(numTickets);
-		user.get().addTickets(ticket);
+		//concert.addTickets(ticket);
+		/* user.get().addTickets(ticket);
 		user.get().setNumTicketsBought(numTickets);
-		user.get().addFavoriteGenre();
-		concertService.save(concert);
-		userService.save(user.get());
-		ticketService.save(ticket);
-		model.addAttribute("ticket", ticket.getId());
+		user.get().addFavoriteGenre(); */
 
 		redirectAttributes.addFlashAttribute("successMessage", "Your purchase has been completed successfully.");
 
@@ -371,14 +351,9 @@ public class WebController {
 			return;
 		}
 
-		Optional<UserDTO> userOptional = userService.findByUserName(principal.getName());
-		if (!userOptional.isPresent()) {
-			response.sendRedirect("/");
-			return;
-		}
+		UserDTO userDTO = userService.getUserByUsername(principal.getName());
 
-		UserDTO user = userOptional.get();
-		List<TicketDTO> tickets = user.getTickets();
+		List<TicketDTO> tickets = userDTO.tickets();
 
 		response.setContentType("application/pdf");
 		response.setHeader("Content-Disposition", "attachment; filename=tickets.pdf");
@@ -399,7 +374,8 @@ public class WebController {
 				contentStream.endText();
 
 				int yPosition = 700;
-				for (Ticket ticket : tickets) {
+				for (TicketDTO ticket : tickets) {
+					ConcertDTO concertDTO= concertService.getConcert(ticket.concertId());
 
 					PDColor concertNameColor = new PDColor(new float[] { 84 / 255f, 26 / 255f, 113 / 255f },
 							PDDeviceRGB.INSTANCE);
@@ -408,7 +384,7 @@ public class WebController {
 					contentStream.beginText();
 					contentStream.setFont(PDType1Font.HELVETICA_BOLD, 14);
 					contentStream.newLineAtOffset(50, yPosition);
-					contentStream.showText("Concert: " + ticket.getConcert().getConcertName());
+					contentStream.showText("Concert: " + concertDTO.concertName());
 					contentStream.endText();
 
 					contentStream.setNonStrokingColor(0, 0, 0);
@@ -417,13 +393,13 @@ public class WebController {
 					contentStream.beginText();
 					contentStream.setFont(PDType1Font.HELVETICA, 12);
 					contentStream.newLineAtOffset(50, yPosition - 20);
-					contentStream.showText("Date: " + ticket.getConcert().getConcertDate());
+					contentStream.showText("Date: " + concertDTO.concertDate());
 					contentStream.newLineAtOffset(0, -15);
-					contentStream.showText("Location: " + ticket.getConcert().getLocation());
+					contentStream.showText("Location: " + concertDTO.location());
 					contentStream.newLineAtOffset(0, -15);
-					contentStream.showText("Number of Tickets: " + ticket.getNumTickets());
+					contentStream.showText("Number of Tickets: " + ticket.numTickets());
 					contentStream.newLineAtOffset(0, -15);
-					contentStream.showText("Total Price: " + ticket.getPrices() + "€");
+					contentStream.showText("Total Price: " + ticket.prices() + "€");
 					contentStream.endText();
 
 					yPosition -= 100;
@@ -724,5 +700,24 @@ public class WebController {
 		}
 
 	}
+
+	private TicketDTO createOrReplaceBook(NewTicketDTO newTicketDTO, Long ticketId, ConcertDTO concertDTO, UserDTO userDTO)
+	throws SQLException, IOException {
+
+		Integer prices=0;
+		if ("stadiumStand".equals(newTicketDTO.ticketType())) {
+			prices = concertDTO.stadiumPrice();
+		} else if ("concertTrack".equals(newTicketDTO.ticketType())) {
+			prices = concertDTO.trackPrice();
+		}
+
+	TicketDTO ticketDTO = new TicketDTO(ticketId,
+		newTicketDTO.ticketType(), prices, userDTO.id(), newTicketDTO.numTickets(), concertDTO.id());
+		
+	ticketService.createOrReplaceTicket(ticketId, ticketDTO);
+
+	return ticketDTO;
+	}
+
 
 }

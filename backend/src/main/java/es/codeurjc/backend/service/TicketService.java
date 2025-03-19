@@ -79,4 +79,15 @@ public class TicketService {
 		return mapper.toDTOs(Tickets);
 	}
 
+	public TicketDTO createOrReplaceTicket(Long id, TicketDTO ticketDTO) throws SQLException {
+		
+		TicketDTO ticket;
+		if(id == null) {
+			ticket = createTicket(ticketDTO);
+		} else {
+			ticket = replaceTicket(id, ticketDTO);
+		}
+		return ticket;
+	}
+
 }

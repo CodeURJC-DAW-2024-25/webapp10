@@ -256,14 +256,14 @@ public class WebController {
 				newConcertDTO.concertTime(), newConcertDTO.location(), newConcertDTO.stadiumPrice(),
 				newConcertDTO.trackPrice(), newConcertDTO.map(), image, null, selectedArtists, tickets);
 
-		ConcertDTO newconcertDTO = concertService.createOrReplaceConcert(concertId, concertDTO);
+		ConcertDTO newconcert = concertService.createOrReplaceConcert(concertId, concertDTO);
 
 		MultipartFile imageField = newConcertDTO.concertImage();
-		if (!imageField.isEmpty()) {
-			concertService.createConcertImage(concertDTO.id(), imageField.getInputStream(), imageField.getSize());
+		if (imageField!=null && !imageField.isEmpty()) {
+			concertService.createConcertImage(newconcert.id(), imageField.getInputStream(), imageField.getSize());
 		}
 
-		return newconcertDTO;
+		return newconcert;
 	}
 
 	private void addTickets(Long concertId, UserDTO userDTO, TicketDTO ticket) throws SQLException {
@@ -351,7 +351,6 @@ public class WebController {
 					contentStream.showText("Concert: " + concertDTO.concertName());
 					contentStream.endText();
 
-					contentStream.setNonStrokingColor(0, 0, 0);
 					contentStream.setFont(PDType1Font.HELVETICA, 12);
 
 					contentStream.beginText();

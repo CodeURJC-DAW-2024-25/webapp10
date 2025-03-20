@@ -132,6 +132,9 @@ public class Concert {
     public Blob getImageFile() {
         return imageFile;
     }
+    public void setColor(String color) {
+        this.color = color;
+    }
 
     public void setImageFile(Blob image) {
         this.imageFile = image;

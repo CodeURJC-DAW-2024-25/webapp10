@@ -51,7 +51,7 @@ public class UserService {
 
 	public UserDTO createUser(UserDTO userDTO) throws SQLException {
 
-		if (userDTO.id() != null) {
+		if (userDTO == null ||userDTO.id() != null) {
 			throw new IllegalArgumentException();
 		}
 

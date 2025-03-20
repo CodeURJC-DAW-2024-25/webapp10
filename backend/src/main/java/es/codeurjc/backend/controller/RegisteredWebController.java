@@ -85,12 +85,16 @@ private UserDTO createOrReplaceUser(NewUserDTO newUserDTO, Long userId, Boolean 
 
 		boolean image = false;
         String userName= newUserDTO.userName();
-        String password= passwordEncoder.encode(newUserDTO.password());
-        Integer numTicketsBought= 0;
+        String password= null;
+        Integer numTicketsBought = 0;
         String favoriteGenre= "None";
         List<TicketDTO>tickets=null;
         List<String> roles= List.of("USER");
 
+        if (newUserDTO.password() != null && !newUserDTO.password().isEmpty()) {
+            password = passwordEncoder.encode(newUserDTO.password());
+        }
+        
 		if (userId != null) {
 			UserDTO olduser = userService.getUser(userId);
 			image = removeImage ? false : olduser.image();
@@ -102,6 +106,7 @@ private UserDTO createOrReplaceUser(NewUserDTO newUserDTO, Long userId, Boolean 
             roles= olduser.roles();
 		}
 
+       
 
 		UserDTO userDTO = new UserDTO(userId,
 				newUserDTO.fullName(), userName, newUserDTO.phone(),
@@ -112,8 +117,8 @@ private UserDTO createOrReplaceUser(NewUserDTO newUserDTO, Long userId, Boolean 
 
 		MultipartFile imageField = newUserDTO.profilePhoto();
 		if (!imageField.isEmpty()) {
-			userService.createUserImage(userDTO.id(), imageField.getInputStream(), imageField.getSize());
-		}
+			userService.createUserImage(newUser.id(), imageField.getInputStream(), imageField.getSize());
+		} 
 
 		return newUser;
 	}

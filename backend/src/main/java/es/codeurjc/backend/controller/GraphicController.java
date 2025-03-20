@@ -5,9 +5,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.codeurjc.backend.dto.ConcertDTO;
+import es.codeurjc.backend.dto.TicketDTO;
+import es.codeurjc.backend.dto.UserDTO;
 import es.codeurjc.backend.model.Concert;
 import es.codeurjc.backend.model.Ticket;
 import es.codeurjc.backend.service.ConcertService;
+import es.codeurjc.backend.service.UserService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,51 +25,52 @@ public class GraphicController {
     @Autowired
     private ConcertService concertService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/infoGraphic/{id}")
     public Map<String, Object> obtainData(@PathVariable Long id) {
 
-        Optional<Concert> concert = concertService.findById(id);
+        ConcertDTO concert = concertService.getConcert(id);
         int rank018, rank1950, rank51110, age;
-        if (concert.isPresent()) {
-            Concert concertGet = concert.get();
-            rank018 = 0;
-            rank1950 = 0;
-            rank51110 = 0;
-            for (Ticket tickets : concertGet.getTickets()) {
-                age = tickets.getUserOwner().getAge();
-                int numTickets = tickets.getNumTickets();
-                if (age <= 18) {
-                    rank018 += numTickets;
-                } else if (age >= 19 && age <= 50) {
-                    rank1950 += numTickets;
-                } else if (age >= 51 && age <= 110) {
-                    rank51110 += numTickets;
-                }
+
+        rank018 = 0;
+        rank1950 = 0;
+        rank51110 = 0;
+        for (TicketDTO tickets : concert.ticketIds()) {
+            UserDTO userDTO = userService.getUser(tickets.userOwnerId());
+            age = userDTO.age();
+            int numTickets = tickets.numTickets();
+            if (age <= 18) {
+                rank018 += numTickets;
+            } else if (age >= 19 && age <= 50) {
+                rank1950 += numTickets;
+            } else if (age >= 51 && age <= 110) {
+                rank51110 += numTickets;
             }
-            Map<String, Object> datos = Map.of(
-                    "labels", new String[] { "0-18", "19-50", "51-110" },
-                    "data", new int[] { rank018, rank1950, rank51110 },
-                    "backgroundColor", new String[] { "red", "blue", "green" });
-            return datos;
-        } else {
-            return null;
         }
+        Map<String, Object> datos = Map.of(
+                "labels", new String[] { "0-18", "19-50", "51-110" },
+                "data", new int[] { rank018, rank1950, rank51110 },
+                "backgroundColor", new String[] { "red", "blue", "green" });
+        return datos;
+
     }
 
     @GetMapping("/ticketsByConcert")
     public Map<String, Object> getTicketsByConcert() {
-        List<Concert> concerts = concertService.findAll();
+        List<ConcertDTO> concerts = new ArrayList<>(concertService.getAllConcert());
 
         List<String> concertNames = new ArrayList<>();
         List<Integer> ticketCounts = new ArrayList<>();
         List<String> colors = new ArrayList<>();
         List<Long> concertIds = new ArrayList<>();
 
-        for (Concert concert : concerts) {
-            concertNames.add(concert.getConcertName());
-            ticketCounts.add(concert.countTicketsSold());
-            colors.add(concert.getColor());
-            concertIds.add(concert.getId());
+        for (ConcertDTO concert : concerts) {
+            concertNames.add(concert.concertName());
+            ticketCounts.add(concert.ticketIds().size());
+            colors.add(concert.color());
+            concertIds.add(concert.id());
         }
 
         Map<String, Object> response = new HashMap<>();

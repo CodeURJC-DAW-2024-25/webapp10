@@ -9,12 +9,12 @@ public record ConcertDTO(
     String concertDate,
     String concertTime,
     String location,
-    String color,
     Integer stadiumPrice,
     Integer trackPrice,
     String map,
     boolean concertImage,
-    List<Long> artistIds,
-    List<Long> ticketIds
+    String color,
+    List<ArtistDTO> artistIds,
+    List<TicketDTO> ticketIds
     
     ) {}

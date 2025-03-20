@@ -2,8 +2,6 @@ package es.codeurjc.backend.dto;
 
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public record UserDTO(    
     Long id,
 	String fullName,
@@ -14,7 +12,7 @@ public record UserDTO(
     Integer age,
     Integer numTicketsBought,
     String favoriteGenre,
-    MultipartFile profilePhoto,
+    Boolean image,
     List<TicketDTO> tickets,
 	List<String> roles
     

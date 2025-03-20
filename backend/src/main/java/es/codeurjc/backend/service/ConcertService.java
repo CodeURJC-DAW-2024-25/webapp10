@@ -53,6 +53,10 @@ public class ConcertService {
 		return toDTO(repository.findById(id).orElseThrow());
 	}
 
+	public Collection<ConcertDTO> getAllConcert() {
+		return toDTOs(repository.findAll());
+	}
+
 	public ConcertDTO deleteConcert(long id) {
 
 		Concert concert = repository.findById(id).orElseThrow();
@@ -135,6 +139,17 @@ public class ConcertService {
 		concert.setConcertImage(false);
 
 		repository.save(concert);
+	}
+
+	public ConcertDTO createOrReplaceConcert(Long id, ConcertDTO concertDTO) throws SQLException {
+		
+		ConcertDTO concert;
+		if(id == null) {
+			concert = createConcert(concertDTO);
+		} else {
+			concert = replaceConcert(id, concertDTO);
+		}
+		return concert;
 	}
 
 	private ConcertDTO toDTO(Concert concert) {

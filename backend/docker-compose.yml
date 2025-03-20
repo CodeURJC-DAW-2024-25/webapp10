@@ -2,6 +2,7 @@ version: "3.9"
 services: 
   web:
     build: .
+    restart: always
     ports:
       - 8443:8443
     environment:
@@ -12,6 +13,7 @@ services:
       - db
   db:
     image: mysql:8
+    restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=concerts

@@ -8,15 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 import es.codeurjc.backend.dto.ConcertDTO;
 import es.codeurjc.backend.dto.TicketDTO;
 import es.codeurjc.backend.dto.UserDTO;
-import es.codeurjc.backend.model.Concert;
-import es.codeurjc.backend.model.Ticket;
 import es.codeurjc.backend.service.ConcertService;
 import es.codeurjc.backend.service.UserService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.List;
 
 @RestController

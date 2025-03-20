@@ -17,10 +17,9 @@ import jakarta.persistence.OneToMany;
 @Entity(name = "UserTable")
 public class User {
 
-
     @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id=null;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id = null;
 
     private String fullName;
     private String userName;
@@ -28,7 +27,7 @@ public class User {
     private String email;
     private String encodedPassword;
     private Integer age;
-    private Integer numTicketsBought;
+    private Integer numTicketsBought = 0;
     private String favoriteGenre;
 
     @Lob
@@ -36,24 +35,26 @@ public class User {
     private boolean image;
 
     @OneToMany(mappedBy = "userOwner", fetch = FetchType.LAZY)
-    private List<Ticket> tickets; 
+    private List<Ticket> tickets;
 
     @ElementCollection(fetch = FetchType.EAGER)
-	private List<String> roles;
+    private List<String> roles;
 
-    public User(){}
+    public User() {
+        this.numTicketsBought = 0; 
+    }
 
-    public User (String fullName, String userName, Integer phone, String email, String encodedPassword, Integer age, String... roles){
-        this.fullName=fullName;
-        this.userName=userName;
-        this.phone=phone;
-        this.email=email;
-        this.encodedPassword=encodedPassword;
-        this.age=age;
-        this.image=false;
-        this.numTicketsBought=0;
+    public User(String fullName, String userName, Integer phone, String email, String encodedPassword, Integer age, String... roles) {
+        this.fullName = fullName;
+        this.userName = userName;
+        this.phone = phone;
+        this.email = email;
+        this.encodedPassword = encodedPassword;
+        this.age = age;
+        this.image = false;
+        this.numTicketsBought = 0; 
         this.roles = List.of(roles);
-        this.favoriteGenre="None";
+        this.favoriteGenre = "None";
     }
 
     public Long getId(){
@@ -118,7 +119,12 @@ public class User {
     }
 
     public void setNumTicketsBought(Integer num){
-        this.numTicketsBought+=num;
+        if (this.numTicketsBought == null) {
+            this.numTicketsBought = 0;
+        }else{
+            this.numTicketsBought += num;
+        }
+        
     }
 
     public Integer getNumTicketsBought(){

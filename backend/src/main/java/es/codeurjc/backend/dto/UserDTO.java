@@ -4,7 +4,7 @@ import java.util.List;
 
 public record UserDTO(    
     Long id,
-	String fullName,
+    String fullName,
     String userName,
     Integer phone,
     String email,
@@ -14,7 +14,6 @@ public record UserDTO(
     String favoriteGenre,
     Boolean image,
     List<TicketDTO> tickets,
-	List<String> roles
-    
-    ) {}
+    List<String> roles
+) {}
 

@@ -11,12 +11,13 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface TicketMapper {
 
-    TicketDTO toDTO(Ticket ticket);
-
     @Mapping(target = "userOwnerId", source = "userOwner.id")
     @Mapping(target = "concertId", source = "concert.id")
+    TicketDTO toDTO(Ticket ticket);
 
     List<TicketDTO> toDTOs(Collection<Ticket> tickets);
-    Ticket toDomain(TicketDTO TicketDTO);
 
+    @Mapping(target = "userOwner.id", source = "userOwnerId")
+    @Mapping(target = "concert.id", source = "concertId")
+    Ticket toDomain(TicketDTO ticketDTO);
 }

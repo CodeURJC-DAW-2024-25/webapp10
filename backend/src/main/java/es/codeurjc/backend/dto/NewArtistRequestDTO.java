@@ -1,8 +1,7 @@
 package es.codeurjc.backend.dto;
 
-public record ArtistDTO(
-    Long id, 
+public record NewArtistRequestDTO (
     String artistName,
     String musicalStyle,
-    String artistInfo
-    ) {}
+    String artistInfo){
+}

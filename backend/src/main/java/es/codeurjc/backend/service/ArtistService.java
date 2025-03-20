@@ -6,8 +6,8 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import es.codeurjc.backend.dto.ArtistDTO;
 import es.codeurjc.backend.dto.ArtistMapper;
+import es.codeurjc.backend.dto.ArtistDTO;
 import es.codeurjc.backend.model.Artist;
 import es.codeurjc.backend.repository.ArtistRepository;
 
@@ -28,23 +28,9 @@ public class ArtistService {
 		return toDTO(repository.findById(id).orElseThrow());
 	}
 
-	public boolean exist(long id) {
-		return repository.existsById(id);
-	}
-
-	public ArtistDTO deleteArtist(long id) {
-
-		Artist artist = repository.findById(id).orElseThrow();
-		ArtistDTO artistDTO = toDTO(artist);
-
-		repository.deleteById(id);
-
-		return artistDTO;
-	}
-
 	public ArtistDTO createArtist(ArtistDTO artistDTO) {
-
-		if (artistDTO.id() != null) {
+		
+		if(artistDTO.id() != null) {
 			throw new IllegalArgumentException();
 		}
 
@@ -55,20 +41,45 @@ public class ArtistService {
 		return toDTO(artist);
 	}
 
-	public ArtistDTO replaceArtist(long id, ArtistDTO updateArtistDTO) throws SQLException {
-
-		Artist oldArtist = repository.findById(id).orElseThrow();
-		Artist updatedArtist = toDomain(updateArtistDTO);
+	public ArtistDTO replaceArtist(long id, ArtistDTO updatedArtistDTO) throws SQLException {
+		
+		Artist updatedArtist = toDomain(updatedArtistDTO);
 		updatedArtist.setId(id);
+
 		repository.save(updatedArtist);
 		return toDTO(updatedArtist);
-
 	}
 
-	public boolean existsName(String artistName) {
-		return repository.findByArtistName(artistName).isPresent();
+	public ArtistDTO createOrReplaceArtist(long id, ArtistDTO artistDTO) throws SQLException {
+		
+		ArtistDTO artist;
+		if (id == 0) {
+			artist = createArtist(artistDTO);
+		} else {
+			artist = replaceArtist(id, artistDTO);
+		}
+		return artist;
 	}
 
+	public ArtistDTO deleteArtist(long id) {
+		Artist artist = repository.findById(id).orElseThrow();
+
+		ArtistDTO artistDTO = toDTO(artist);
+		repository.deleteById(id);
+		return artistDTO;
+	}
+
+
+	public boolean exist(long id) {
+		return repository.existsById(id);
+	}
+
+
+    public boolean existsName(String artistName) {
+        return repository.findByArtistName(artistName).isPresent();
+    }
+
+	//-------------------------------------------DTO mapping methods-------------------------------------------
 	private ArtistDTO toDTO(Artist artist) {
 		return mapper.toDTO(artist);
 	}
@@ -80,5 +91,4 @@ public class ArtistService {
 	private Collection<ArtistDTO> toDTOs(Collection<Artist> artists) {
 		return mapper.toDTOs(artists);
 	}
-
 }

@@ -3,6 +3,7 @@ package es.codeurjc.backend.dto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import es.codeurjc.backend.dto.ArtistDTO;
 import es.codeurjc.backend.model.Artist;
 
 import java.util.Collection;

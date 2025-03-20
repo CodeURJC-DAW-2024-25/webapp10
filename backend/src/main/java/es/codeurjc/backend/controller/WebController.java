@@ -36,11 +36,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import es.codeurjc.backend.dto.ConcertDTO;
+import es.codeurjc.backend.dto.NewArtistRequestDTO;
 import es.codeurjc.backend.dto.NewUserDTO;
 import es.codeurjc.backend.dto.TicketDTO;
-import es.codeurjc.backend.dto.ArtistDTO;
 import es.codeurjc.backend.dto.NewTicketDTO;
 import es.codeurjc.backend.dto.UserDTO;
+import es.codeurjc.backend.dto.ArtistDTO;
 import es.codeurjc.backend.model.Artist;
 import es.codeurjc.backend.model.Concert;
 import es.codeurjc.backend.model.Ticket;
@@ -93,6 +94,7 @@ public class WebController {
 		}
 	}
 
+	//------------------------------SHOWS THE INDEX PAGE----------------------------------------------
 	@GetMapping("/")
 	public String show(Model model, HttpServletRequest request) {
 
@@ -118,6 +120,7 @@ public class WebController {
 		return "index";
 	}
 
+	//------------------------------PAGE TO SHOW MORE CONCERTS------------------------------
 	@GetMapping("/moreConcerts")
 	public String loadMoreConcerts(@RequestParam int page, Model model, HttpServletRequest request) {
 
@@ -146,6 +149,7 @@ public class WebController {
 		return "moreConcerts";
 	}
 
+	//---------------------------------------------------USER---------------------------------------------------
 	@GetMapping("/user/{id}")
 	public String showUser(Model model, @PathVariable Long id, HttpServletRequest request) {
 
@@ -173,9 +177,105 @@ public class WebController {
 		} catch (NoSuchElementException e) {
 			return "redirect:/";
 		}
+	}
+
+	@PostMapping("/edituser/{id}")
+	public String editUser(HttpServletRequest request, boolean removeImage, Model model, @PathVariable long id,NewUserDTO newUserDTO) throws IOException, SQLException {
+
+		UserDTO userDTO= userService.replaceUser(id,newUserDTO,removeImage);
+
+		return "redirect:/user/"+userDTO.id();
 
 	}
 
+	private void updateImage(Concert concert, boolean removeImage, MultipartFile imageField)
+			throws IOException, SQLException {
+
+		if (removeImage) {
+			concert.setImageFile(null);
+			concert.setConcertImage(false);
+		} else if (imageField != null && !imageField.isEmpty()) {
+			concert.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
+			concert.setConcertImage(true);
+		} else {
+			ConcertDTO dbConcert = concertService.findById(concert.getId()).orElseThrow();
+			if (dbConcert.getConcertImage()) {
+				concert.setImageFile(BlobProxy.generateProxy(dbConcert.getImageFile().getBinaryStream(),
+						dbConcert.getImageFile().length()));
+				concert.setConcertImage(true);
+			}
+		}
+	}
+
+	@GetMapping("/download/tickets")
+	public void downloadTickets(HttpServletResponse response, Principal principal) throws IOException {
+		if (principal == null) {
+			response.sendRedirect("/");
+			return;
+		}
+
+		UserDTO userDTO = userService.getUserByUsername(principal.getName());
+
+		List<TicketDTO> tickets = userDTO.tickets();
+
+		response.setContentType("application/pdf");
+		response.setHeader("Content-Disposition", "attachment; filename=tickets.pdf");
+
+		try (PDDocument document = new PDDocument()) {
+			PDPage page = new PDPage(PDRectangle.A4);
+			document.addPage(page);
+
+			try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
+
+				PDColor titleColor = new PDColor(new float[] { 75 / 255f, 0 / 255f, 130 / 255f }, PDDeviceRGB.INSTANCE);
+				contentStream.setNonStrokingColor(titleColor);
+
+				contentStream.setFont(PDType1Font.HELVETICA_BOLD, 20);
+				contentStream.beginText();
+				contentStream.newLineAtOffset(100, 750);
+				contentStream.showText("Ticket Purchase History - TicketZone Fest");
+				contentStream.endText();
+
+				int yPosition = 700;
+				for (TicketDTO ticket : tickets) {
+					ConcertDTO concertDTO= concertService.getConcert(ticket.concertId());
+
+					PDColor concertNameColor = new PDColor(new float[] { 84 / 255f, 26 / 255f, 113 / 255f },
+							PDDeviceRGB.INSTANCE);
+					contentStream.setNonStrokingColor(concertNameColor);
+
+					contentStream.beginText();
+					contentStream.setFont(PDType1Font.HELVETICA_BOLD, 14);
+					contentStream.newLineAtOffset(50, yPosition);
+					contentStream.showText("Concert: " + concertDTO.concertName());
+					contentStream.endText();
+
+					contentStream.setNonStrokingColor(0, 0, 0);
+					contentStream.setFont(PDType1Font.HELVETICA, 12);
+
+					contentStream.beginText();
+					contentStream.setFont(PDType1Font.HELVETICA, 12);
+					contentStream.newLineAtOffset(50, yPosition - 20);
+					contentStream.showText("Date: " + concertDTO.concertDate());
+					contentStream.newLineAtOffset(0, -15);
+					contentStream.showText("Location: " + concertDTO.location());
+					contentStream.newLineAtOffset(0, -15);
+					contentStream.showText("Number of Tickets: " + ticket.numTickets());
+					contentStream.newLineAtOffset(0, -15);
+					contentStream.showText("Total Price: " + ticket.prices() + "€");
+					contentStream.endText();
+
+					yPosition -= 100;
+					if (yPosition < 100) {
+						break;
+					}
+				}
+			}
+			document.save(response.getOutputStream());
+		}
+	}
+
+	//---------------------------------------------------CONCERTS---------------------------------------------------
 	@GetMapping("/concert/{id}")
 	public String showConcert(Model model, @PathVariable long id, HttpServletRequest request) {
 
@@ -323,11 +423,6 @@ public class WebController {
 		return "redirect:/";
 	}
 
-	@GetMapping("/newartist")
-	public String newArtist(Model model) {
-		return "newArtist";
-	}
-
 	@GetMapping("/concerts/{id}/image")
 	public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
 		Optional<ConcertDTO> concert = concertService.findById(id);
@@ -341,348 +436,6 @@ public class WebController {
 					.body(file);
 		} else {
 			return ResponseEntity.notFound().build();
-		}
-	}
-
-	@GetMapping("/download/tickets")
-	public void downloadTickets(HttpServletResponse response, Principal principal) throws IOException {
-		if (principal == null) {
-			response.sendRedirect("/");
-			return;
-		}
-
-		UserDTO userDTO = userService.getUserByUsername(principal.getName());
-
-		List<TicketDTO> tickets = userDTO.tickets();
-
-		response.setContentType("application/pdf");
-		response.setHeader("Content-Disposition", "attachment; filename=tickets.pdf");
-
-		try (PDDocument document = new PDDocument()) {
-			PDPage page = new PDPage(PDRectangle.A4);
-			document.addPage(page);
-
-			try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
-
-				PDColor titleColor = new PDColor(new float[] { 75 / 255f, 0 / 255f, 130 / 255f }, PDDeviceRGB.INSTANCE);
-				contentStream.setNonStrokingColor(titleColor);
-
-				contentStream.setFont(PDType1Font.HELVETICA_BOLD, 20);
-				contentStream.beginText();
-				contentStream.newLineAtOffset(100, 750);
-				contentStream.showText("Ticket Purchase History - TicketZone Fest");
-				contentStream.endText();
-
-				int yPosition = 700;
-				for (TicketDTO ticket : tickets) {
-					ConcertDTO concertDTO= concertService.getConcert(ticket.concertId());
-
-					PDColor concertNameColor = new PDColor(new float[] { 84 / 255f, 26 / 255f, 113 / 255f },
-							PDDeviceRGB.INSTANCE);
-					contentStream.setNonStrokingColor(concertNameColor);
-
-					contentStream.beginText();
-					contentStream.setFont(PDType1Font.HELVETICA_BOLD, 14);
-					contentStream.newLineAtOffset(50, yPosition);
-					contentStream.showText("Concert: " + concertDTO.concertName());
-					contentStream.endText();
-
-					contentStream.setNonStrokingColor(0, 0, 0);
-					contentStream.setFont(PDType1Font.HELVETICA, 12);
-
-					contentStream.beginText();
-					contentStream.setFont(PDType1Font.HELVETICA, 12);
-					contentStream.newLineAtOffset(50, yPosition - 20);
-					contentStream.showText("Date: " + concertDTO.concertDate());
-					contentStream.newLineAtOffset(0, -15);
-					contentStream.showText("Location: " + concertDTO.location());
-					contentStream.newLineAtOffset(0, -15);
-					contentStream.showText("Number of Tickets: " + ticket.numTickets());
-					contentStream.newLineAtOffset(0, -15);
-					contentStream.showText("Total Price: " + ticket.prices() + "€");
-					contentStream.endText();
-
-					yPosition -= 100;
-					if (yPosition < 100) {
-						break;
-					}
-				}
-			}
-			document.save(response.getOutputStream());
-		}
-	}
-
-	@PostMapping("/newartist")
-	public String newArtistProcess(
-			@RequestParam String artistName,
-			@RequestParam String musicalStyle,
-			@RequestParam String artistInfo,
-			Model model) {
-
-		if (artistService.existsName(artistName)) {
-			model.addAttribute("newArtistError", "Artist with name " + artistName + " already exists.");
-			return "newArtist";
-		}
-
-		if (artistName == null || artistName.isEmpty()) {
-			model.addAttribute("newArtistError", "Artist name is required.");
-			return "newArtist";
-		}
-		if (musicalStyle == null || musicalStyle.isEmpty()) {
-			model.addAttribute("newArtistError", "Musical style is required.");
-			return "newArtist";
-		}
-		if (artistInfo == null || artistInfo.isEmpty()) {
-			model.addAttribute("newArtistError", "Artist information is required.");
-			return "newArtist";
-		}
-
-		ArtistDTO artist = new ArtistDTO();
-		artist.setArtistName(artistName);
-		artist.setMusicalStyle(musicalStyle);
-		artist.setArtistInfo(artistInfo);
-
-		artistService.save(artist);
-
-		return "redirect:/";
-	}
-
-	@GetMapping("/editconcert/{id}")
-	public String editConcertPage(Model model, @PathVariable long id, HttpServletRequest request) {
-
-		addAttributes(model, request);
-		Optional<ConcertDTO> concert = concertService.findById(id);
-		if (concert.isPresent()) {
-			List<ArtistDTO> artists = artistService.findAll();
-			model.addAttribute("artists", artists);
-			model.addAttribute("concert", concert.get());
-			return "editConcert";
-		} else {
-			return "index";
-		}
-	}
-
-	@PostMapping("/editconcert/{id}")
-	public String editConcert(HttpServletRequest request, boolean removeImage, Model model, @PathVariable long id,
-			@RequestParam String concertName,
-			@RequestParam("artistIds") List<Long> artistIds,
-			@RequestParam String concertDetails,
-			@RequestParam String concertDate,
-			@RequestParam String concertTime,
-			@RequestParam String location,
-			@RequestParam String map,
-			@RequestParam Integer stadiumPrice,
-			@RequestParam Integer trackPrice,
-			@RequestParam MultipartFile imageFile,
-			RedirectAttributes redirectAttributes) throws IOException, SQLException {
-
-		if (concertName == null || concertName.isEmpty()) {
-			model.addAttribute("editConcertError", "Concert name is required and must be at least 2 characters long.");
-			return "editConcert";
-		}
-		if (concertDetails == null || concertDetails.isEmpty()) {
-			model.addAttribute("editConcertError",
-					"Concert details are required and must be at least 8 characters long.");
-			return "editConcert";
-		}
-
-		if (artistIds == null || artistIds.isEmpty() || (artistIds.size() == 1 && artistIds.get(0) == 0)) {
-			model.addAttribute("editConcertError", "At least one artist is required.");
-			return "editConcert";
-		}
-
-		if (concertDate == null || concertDate.isEmpty()) {
-			model.addAttribute("editConcertError", "Concert date is required.");
-			return "editConcert";
-		}
-
-		if (concertTime == null || concertTime.isEmpty()) {
-			model.addAttribute("editConcertError", "Concert time is required.");
-			return "editConcert";
-		}
-
-		if (location == null || location.isEmpty()) {
-			model.addAttribute("editConcertError", "Location is required.");
-			return "editConcert";
-		}
-
-		if (map == null || map.isEmpty()) {
-			model.addAttribute("editConcertError", "Map is required.");
-			return "editConcert";
-		}
-
-		if (stadiumPrice == null || stadiumPrice <= 0) {
-			model.addAttribute("editConcertError", "Stadium price is required and must be greater than 0.");
-			return "editConcert";
-		}
-
-		if (trackPrice == null || trackPrice <= 0) {
-			model.addAttribute("editConcertError", "Track price is required and must be greater than 0.");
-			return "editConcert";
-		}
-
-		Optional<ConcertDTO> concertOptional = concertService.findById(id);
-		if (!concertOptional.isPresent()) {
-			model.addAttribute("editConcertError", "Concert not found.");
-			return "editConcert";
-		}
-
-		Principal principal = request.getUserPrincipal();
-		Optional<UserDTO> user = userService.findByUserName(principal.getName());
-
-		if (!user.isPresent() || principal == null) {
-			return "redirect:/";
-		}
-
-		ConcertDTO concert = concertOptional.get();
-		concert.setConcertName(concertName);
-		concert.setConcertDetails(concertDetails);
-		concert.setConcertDate(concertDate);
-		concert.setConcertTime(concertTime);
-		concert.setLocation(location);
-		concert.setMap(map);
-		concert.setStadiumPrice(stadiumPrice);
-		concert.setTrackPrice(trackPrice);
-		updateImage(concert, removeImage, imageFile);
-
-		List<ArtistDTO> selectedArtists = artistIds.stream()
-				.map(idArtist -> artistService.findById(idArtist)
-						.orElseThrow(() -> new RuntimeException("Artist with ID " + idArtist + " does not exist")))
-				.collect(Collectors.toList());
-		concert.setArtists(selectedArtists);
-
-		concertService.save(concert);
-
-		user.get().addFavoriteGenre();
-		userService.save(user.get());
-
-		model.addAttribute("concertId", concert.getId());
-
-		redirectAttributes.addFlashAttribute("successMessage", "Concert edit success.");
-
-		return "redirect:/";
-	}
-
-	@GetMapping("/edituser/{id}")
-	public String editUserPage(Model model, @PathVariable long id, HttpServletRequest request) {
-
-		addAttributes(model, request);
-		try{
-			UserDTO userDTO= userService.getUser(id);
-			model.addAttribute("user", userDTO);
-			return "editUser";
-		}catch (NoSuchElementException e) {
-			return "redirect:/";
-		}
-
-	}
-
-	@PostMapping("/edituser/{id}")
-	public String editUser(HttpServletRequest request, boolean removeImage, Model model, @PathVariable long id,NewUserDTO newUserDTO) throws IOException, SQLException {
-
-		UserDTO userDTO= userService.replaceUser(id,newUserDTO,removeImage);
-
-		return "redirect:/user/"+userDTO.id();
-
-	}
-
-	private void updateImage(Concert concert, boolean removeImage, MultipartFile imageField)
-			throws IOException, SQLException {
-
-		if (removeImage) {
-			concert.setImageFile(null);
-			concert.setConcertImage(false);
-		} else if (imageField != null && !imageField.isEmpty()) {
-			concert.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
-			concert.setConcertImage(true);
-		} else {
-			ConcertDTO dbConcert = concertService.findById(concert.getId()).orElseThrow();
-			if (dbConcert.getConcertImage()) {
-				concert.setImageFile(BlobProxy.generateProxy(dbConcert.getImageFile().getBinaryStream(),
-						dbConcert.getImageFile().length()));
-				concert.setConcertImage(true);
-			}
-		}
-	}
-	
-	@GetMapping("/editArtist/{id}")
-	public String editArtistForm(@PathVariable Long id, Model model) {
-		Optional<ArtistDTO> artist = artistService.findById(id);
-		if (artist.isPresent()) {
-			model.addAttribute("artist", artist.get());
-			return "editArtist";
-		} else {
-			return "redirect:/";
-		}
-	}
-
-	@PostMapping("/editArtist/{id}")
-	public String editArtistProcess(@PathVariable Long id,
-			@RequestParam String artistName,
-			@RequestParam String musicalStyle,
-			@RequestParam String artistInfo,
-			Model model,
-			RedirectAttributes redirectAttributes) {
-
-		Optional<ArtistDTO> artistOptional = artistService.findById(id);
-
-		ArtistDTO artist = artistOptional.get();
-		if (artistName == null || artistName.isEmpty()) {
-			model.addAttribute("editArtistError", "Artist name is required.");
-			model.addAttribute("artist", artist);
-			return "editArtist";
-		}
-		if (musicalStyle == null || musicalStyle.isEmpty()) {
-			model.addAttribute("editArtistError", "Musical style is required.");
-			model.addAttribute("artist", artist);
-			return "editArtist";
-		}
-		if (artistInfo == null || artistInfo.isEmpty()) {
-			model.addAttribute("editArtistError", "Artist information is required.");
-			model.addAttribute("artist", artist);
-			return "editArtist";
-		}
-
-		artist.setArtistName(artistName);
-		artist.setMusicalStyle(musicalStyle);
-		artist.setArtistInfo(artistInfo);
-
-		artistService.save(artist);
-
-		redirectAttributes.addFlashAttribute("successMessage", "Artist edited successfully.");
-
-		return "redirect:/";
-	}
-
-	@GetMapping("/deleteArtist/{id}")
-	public String deleteArtist(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-		Optional<ArtistDTO> artistOptional = artistService.findById(id);
-		if (artistOptional.isPresent()) {
-			ArtistDTO artist = artistOptional.get();
-
-			List<ConcertDTO> concerts = concertService.findAllConcerts();
-
-			for (ConcertDTO concert : concerts) {
-				if (concert.getArtists().contains(artist) && concert.getArtists().size() <= 1) {
-					redirectAttributes.addFlashAttribute("errorMessage",
-							"Cannot delete artist. Each concert must have at least one artist.");
-					return "redirect:/";
-				}
-			}
-
-			for (ConcertDTO concert : concerts) {
-				if (concert.getArtists().contains(artist)) {
-					concert.getArtists().remove(artist);
-					concertService.save(concert);
-				}
-			}
-
-			artistService.deleteById(id);
-			redirectAttributes.addFlashAttribute("successMessage", "Artist successfully removed.");
-			return "redirect:/";
-		} else {
-			redirectAttributes.addFlashAttribute("errorMessage", "Artist not found.");
-			return "redirect:/";
 		}
 	}
 
@@ -701,6 +454,7 @@ public class WebController {
 
 	}
 
+	//---------------------------------------------------TICKET---------------------------------------------------
 	private TicketDTO createOrReplaceBook(NewTicketDTO newTicketDTO, Long ticketId, ConcertDTO concertDTO, UserDTO userDTO)
 	throws SQLException, IOException {
 
@@ -719,5 +473,59 @@ public class WebController {
 	return ticketDTO;
 	}
 
+	//---------------------------------------------------ARTIST---------------------------------------------------
+	@GetMapping("/newartist")
+	public String newArtist(Model model) {
+		return "newArtist";
+	}
+
+	@PostMapping("/newartist")
+	public String newArtistProcess(Model model, NewArtistRequestDTO newArtistRequestDTO) throws IOException, SQLException {
+
+		ArtistDTO newArtistDTO = createOrReplaceArtist(newArtistRequestDTO, null);
+		return "redirect:/";
+	}
+
+	
+	@GetMapping("/editArtist/{id}")
+	public String editArtistForm(Model model, @PathVariable Long id) {
+		try {
+			ArtistDTO artist = artistService.getArtist(id);
+			model.addAttribute("artist", artist);
+			return "editArtist";
+		} catch (NoSuchElementException e) {
+			return "redirect:/";
+		}
+	}
+
+	@PostMapping("/editArtist/{id}")
+	public String editArtistProcess(Model model, NewArtistRequestDTO newArtistRequestDTO, long artistId) throws IOException, SQLException {
+
+		ArtistDTO artistDTO = createOrReplaceArtist(newArtistRequestDTO, artistId);
+		
+		return "redirect:/";
+	}
+
+	private ArtistDTO createOrReplaceArtist(NewArtistRequestDTO newArtistRequestDTO, Long artistId) throws SQLException, IOException {
+
+		ArtistDTO artistDTO = new ArtistDTO(artistId, newArtistRequestDTO.artistName(), newArtistRequestDTO.musicalStyle(), newArtistRequestDTO.artistInfo());
+		
+		ArtistDTO newArtistDTO = artistService.createOrReplaceArtist(artistId, artistDTO);
+		return newArtistDTO;
+	}
+
+	@GetMapping("/deleteArtist/{id}")
+	public String deleteArtist(Model model, @PathVariable Long id) {
+
+		try {
+			ArtistDTO artistDTO = artistService.deleteArtist(id);
+			model.addAttribute("artist", artistDTO);
+
+			return "redirect:/";
+
+		} catch (NoSuchElementException e) {
+			return "artistNotFound";
+		}
+	}
 
 }

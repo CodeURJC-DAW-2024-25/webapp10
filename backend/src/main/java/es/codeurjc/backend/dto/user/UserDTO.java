@@ -1,6 +1,8 @@
-package es.codeurjc.backend.dto;
+package es.codeurjc.backend.dto.user;
 
 import java.util.List;
+
+import es.codeurjc.backend.dto.ticket.TicketDTO;
 
 public record UserDTO(    
     Long id,

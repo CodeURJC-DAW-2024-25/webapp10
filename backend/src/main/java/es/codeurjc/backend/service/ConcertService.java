@@ -14,8 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 //import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import es.codeurjc.backend.dto.ConcertDTO;
-import es.codeurjc.backend.dto.ConcertMapper;
+
+import es.codeurjc.backend.dto.concert.ConcertDTO;
+import es.codeurjc.backend.dto.concert.ConcertMapper;
 import es.codeurjc.backend.model.Concert;
 
 import es.codeurjc.backend.repository.ConcertRepository;

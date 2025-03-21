@@ -1,6 +1,9 @@
-package es.codeurjc.backend.dto;
+package es.codeurjc.backend.dto.concert;
 
 import java.util.List;
+
+import es.codeurjc.backend.dto.artist.ArtistDTO;
+import es.codeurjc.backend.dto.ticket.TicketDTO;
 
 public record ConcertDTO(
     Long id,

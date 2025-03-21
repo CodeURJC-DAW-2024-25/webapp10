@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.codeurjc.backend.dto.UserDTO;
+import es.codeurjc.backend.dto.user.UserDTO;
 import es.codeurjc.backend.service.UserService;
 
 @RestController

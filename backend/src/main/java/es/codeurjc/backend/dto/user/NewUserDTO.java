@@ -1,4 +1,4 @@
-package es.codeurjc.backend.dto;
+package es.codeurjc.backend.dto.user;
 
 import org.springframework.web.multipart.MultipartFile;
 

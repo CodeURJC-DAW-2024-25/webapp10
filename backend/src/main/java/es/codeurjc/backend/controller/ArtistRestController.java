@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import es.codeurjc.backend.dto.ArtistDTO;
+
+import es.codeurjc.backend.dto.artist.ArtistDTO;
 import es.codeurjc.backend.service.ArtistService;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 

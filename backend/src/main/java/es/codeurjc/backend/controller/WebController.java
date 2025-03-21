@@ -35,15 +35,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import es.codeurjc.backend.dto.ConcertDTO;
-import es.codeurjc.backend.dto.NewArtistRequestDTO;
-import es.codeurjc.backend.dto.NewConcertDTO;
-
-import es.codeurjc.backend.dto.TicketDTO;
-import es.codeurjc.backend.dto.ArtistDTO;
-import es.codeurjc.backend.dto.NewTicketDTO;
-import es.codeurjc.backend.dto.UserDTO;
-
+import es.codeurjc.backend.dto.artist.ArtistDTO;
+import es.codeurjc.backend.dto.artist.NewArtistRequestDTO;
+import es.codeurjc.backend.dto.concert.ConcertDTO;
+import es.codeurjc.backend.dto.concert.NewConcertDTO;
+import es.codeurjc.backend.dto.ticket.NewTicketDTO;
+import es.codeurjc.backend.dto.ticket.TicketDTO;
+import es.codeurjc.backend.dto.user.UserDTO;
 import es.codeurjc.backend.service.ArtistService;
 import es.codeurjc.backend.service.ConcertService;
 import es.codeurjc.backend.service.TicketService;

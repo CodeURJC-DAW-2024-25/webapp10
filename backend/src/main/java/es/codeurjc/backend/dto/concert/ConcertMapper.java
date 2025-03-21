@@ -1,4 +1,4 @@
-package es.codeurjc.backend.dto;
+package es.codeurjc.backend.dto.concert;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import es.codeurjc.backend.model.Ticket;
-import es.codeurjc.backend.dto.TicketDTO;
-import es.codeurjc.backend.dto.TicketMapper;
+import es.codeurjc.backend.dto.ticket.TicketDTO;
+import es.codeurjc.backend.dto.ticket.TicketMapper;
 import es.codeurjc.backend.repository.TicketRepository;
 
 @Service

@@ -1,4 +1,4 @@
-package es.codeurjc.backend.dto;
+package es.codeurjc.backend.dto.artist;
 
 public record ArtistDTO(
     Long id, 

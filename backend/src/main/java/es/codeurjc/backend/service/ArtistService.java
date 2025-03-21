@@ -6,8 +6,8 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import es.codeurjc.backend.dto.ArtistMapper;
-import es.codeurjc.backend.dto.ArtistDTO;
+import es.codeurjc.backend.dto.artist.ArtistDTO;
+import es.codeurjc.backend.dto.artist.ArtistMapper;
 import es.codeurjc.backend.model.Artist;
 import es.codeurjc.backend.repository.ArtistRepository;
 

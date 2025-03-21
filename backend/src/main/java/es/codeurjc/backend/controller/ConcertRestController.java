@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import es.codeurjc.backend.dto.ConcertDTO;
+import es.codeurjc.backend.dto.concert.ConcertDTO;
 import es.codeurjc.backend.service.ConcertService;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 

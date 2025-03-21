@@ -1,4 +1,4 @@
-package es.codeurjc.backend.dto;
+package es.codeurjc.backend.dto.concert;
 
 import java.util.List;
 import org.springframework.web.multipart.MultipartFile;

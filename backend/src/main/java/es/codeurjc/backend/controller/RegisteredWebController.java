@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import es.codeurjc.backend.dto.UserDTO;
-import es.codeurjc.backend.dto.NewUserDTO;
-import es.codeurjc.backend.dto.TicketDTO;
+import es.codeurjc.backend.dto.ticket.TicketDTO;
+import es.codeurjc.backend.dto.user.NewUserDTO;
+import es.codeurjc.backend.dto.user.UserDTO;
 import es.codeurjc.backend.service.UserService;
 
 @Controller

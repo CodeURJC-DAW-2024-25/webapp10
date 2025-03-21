@@ -2,6 +2,7 @@ package es.codeurjc.backend.service;
 
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class ArtistService {
 		return toDTOs(repository.findAll());
 	}
 
-	public ArtistDTO getArtist(long id) {
+	public ArtistDTO getArtist(Long id) {
 		return toDTO(repository.findById(id).orElseThrow());
 	}
 
@@ -41,19 +42,22 @@ public class ArtistService {
 		return toDTO(artist);
 	}
 
-	public ArtistDTO replaceArtist(long id, ArtistDTO updatedArtistDTO) throws SQLException {
+	public ArtistDTO replaceArtist(Long id, ArtistDTO updatedArtistDTO) throws SQLException {
 		
-		Artist updatedArtist = toDomain(updatedArtistDTO);
-		updatedArtist.setId(id);
-
-		repository.save(updatedArtist);
-		return toDTO(updatedArtist);
+		if (repository.existsById(id)) {
+			Artist updatedArtist = toDomain(updatedArtistDTO);
+			updatedArtist.setId(id);
+			repository.save(updatedArtist);
+			return toDTO(updatedArtist);
+		} else {
+			throw new NoSuchElementException();
+		}
 	}
 
-	public ArtistDTO createOrReplaceArtist(long id, ArtistDTO artistDTO) throws SQLException {
+	public ArtistDTO createOrReplaceArtist(Long id, ArtistDTO artistDTO) throws SQLException {
 		
 		ArtistDTO artist;
-		if (id == 0) {
+		if (id == null) {
 			artist = createArtist(artistDTO);
 		} else {
 			artist = replaceArtist(id, artistDTO);
@@ -61,7 +65,7 @@ public class ArtistService {
 		return artist;
 	}
 
-	public ArtistDTO deleteArtist(long id) {
+	public ArtistDTO deleteArtist(Long id) {
 		Artist artist = repository.findById(id).orElseThrow();
 
 		ArtistDTO artistDTO = toDTO(artist);
@@ -70,7 +74,7 @@ public class ArtistService {
 	}
 
 
-	public boolean exist(long id) {
+	public boolean exist(Long id) {
 		return repository.existsById(id);
 	}
 

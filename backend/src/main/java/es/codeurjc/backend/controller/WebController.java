@@ -275,7 +275,7 @@ public class WebController {
 			ConcertDTO updateConcertDTO = new ConcertDTO(concertId,
 					oldconcert.concertName(), oldconcert.concertDetails(), oldconcert.concertDate(),
 					oldconcert.concertTime(), oldconcert.location(), oldconcert.stadiumPrice(),
-					oldconcert.trackPrice(), oldconcert.map(), oldconcert.concertImage(), null, oldconcert.artistIds(),
+					oldconcert.trackPrice(), oldconcert.map(), oldconcert.concertImage(), null, oldconcert.artists(),
 					tickets);
 
 			concertService.createOrReplaceConcert(concertId, updateConcertDTO);
@@ -398,9 +398,9 @@ public class WebController {
 	}
 
 	@PostMapping("/editArtist/{id}")
-	public String editArtistProcess(Model model, NewArtistRequestDTO newArtistRequestDTO, long artistId) throws IOException, SQLException {
+	public String editArtistProcess(Model model, NewArtistRequestDTO newArtistRequestDTO, Long id) throws IOException, SQLException {
 
-		createOrReplaceArtist(newArtistRequestDTO, artistId);
+		createOrReplaceArtist(newArtistRequestDTO, id);
 		
 		return "redirect:/";
 	}

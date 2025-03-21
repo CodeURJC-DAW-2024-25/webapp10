@@ -13,5 +13,5 @@ public record NewConcertDTO(
     Integer trackPrice,
     String map,
     List<Long> artistIds,
-    MultipartFile concertImage
+    MultipartFile imageFile
 ) {}

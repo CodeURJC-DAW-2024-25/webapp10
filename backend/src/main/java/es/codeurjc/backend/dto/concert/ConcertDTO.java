@@ -15,7 +15,7 @@ public record ConcertDTO(
     Integer stadiumPrice,
     Integer trackPrice,
     String map,
-    boolean concertImage,
+    Boolean concertImage,
     String color,
     List<ArtistDTO> artists,
     List<TicketDTO> ticketIds

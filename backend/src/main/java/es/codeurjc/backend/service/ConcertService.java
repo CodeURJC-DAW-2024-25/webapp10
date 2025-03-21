@@ -70,7 +70,7 @@ public class ConcertService {
 
 	public ConcertDTO createConcert(ConcertDTO concertDTO) {
 
-		if (concertDTO.id() != null) {
+		if (concertDTO == null ||concertDTO.id() != null) {
 			throw new IllegalArgumentException();
 		}
 

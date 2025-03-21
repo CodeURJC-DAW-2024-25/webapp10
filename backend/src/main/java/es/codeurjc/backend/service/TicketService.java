@@ -39,17 +39,17 @@ public class TicketService {
 		return TicketDTO;
 	}
 
-	public TicketDTO createTicket(TicketDTO TicketDTO) {
+	public TicketDTO createTicket(TicketDTO ticketDTO) {
 
-		if (TicketDTO.id() != null) {
+		if (ticketDTO == null ||ticketDTO.id() != null) {
 			throw new IllegalArgumentException();
 		}
 
-		Ticket Ticket = toDomain(TicketDTO);
+		Ticket ticket = toDomain(ticketDTO);
 
-		repository.save(Ticket);
+		repository.save(ticket);
 
-		return toDTO(Ticket);
+		return toDTO(ticket);
 	}
 
 	public TicketDTO replaceTicket(long id, TicketDTO updateTicketDTO) throws SQLException {

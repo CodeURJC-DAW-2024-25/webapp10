@@ -3,7 +3,7 @@ package es.codeurjc.backend.controller;
 import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
-
+import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -42,6 +42,8 @@ import es.codeurjc.backend.dto.concert.NewConcertDTO;
 import es.codeurjc.backend.dto.ticket.NewTicketDTO;
 import es.codeurjc.backend.dto.ticket.TicketDTO;
 import es.codeurjc.backend.dto.user.UserDTO;
+import es.codeurjc.backend.model.Artist;
+import es.codeurjc.backend.model.Concert;
 import es.codeurjc.backend.service.ArtistService;
 import es.codeurjc.backend.service.ConcertService;
 import es.codeurjc.backend.service.TicketService;
@@ -97,7 +99,7 @@ public class WebController {
 		if (principal != null) {
 			UserDTO userDTO = userService.getUserByUsername(principal.getName());
 
-			if (userDTO.favoriteGenre().equals("None")) {
+			if (!userDTO.favoriteGenre().equals("None")) {
 				uId = userDTO.id();
 			}
 		}
@@ -122,7 +124,7 @@ public class WebController {
 		if (principal != null) {
 			UserDTO userDTO = userService.getUserByUsername(principal.getName());
 
-			if (userDTO.favoriteGenre().equals("None")) {
+			if (!userDTO.favoriteGenre().equals("None")) {
 				uId = userDTO.id();
 			}
 		}
@@ -207,7 +209,25 @@ public class WebController {
 
 		TicketDTO ticketDTO = createOrReplaceTicket(newTicketDTO, null, concertDTO, userDTO);
 
-		addTickets(id, userDTO, ticketDTO);
+		List<TicketDTO> tickets = concertDTO.ticketIds();
+		tickets.add(ticketDTO);
+		ConcertDTO updatedConcert = new ConcertDTO(concertDTO.id(),
+				concertDTO.concertName(), concertDTO.concertDetails(), concertDTO.concertDate(),
+				concertDTO.concertTime(), concertDTO.location(), concertDTO.stadiumPrice(),
+				concertDTO.trackPrice(), concertDTO.map(), concertDTO.concertImage(), null, concertDTO.artists(),
+				tickets);
+		concertService.createOrReplaceConcert(concertDTO.id(), updatedConcert);
+
+		List<TicketDTO> ticketsUser = userDTO.tickets();
+		ticketsUser.add(ticketDTO);
+		Integer numTicketsBought = userDTO.numTicketsBought() + ticketDTO.numTickets();
+		UserDTO updatedUserDTO = new UserDTO(userDTO.id(),
+				userDTO.fullName(), userDTO.userName(), userDTO.phone(),
+				userDTO.email(), userDTO.password(), userDTO.age(),
+				numTicketsBought, userDTO.favoriteGenre(), userDTO.image(), ticketsUser,
+				userDTO.roles());
+
+		userService.createOrReplaceUser(userDTO.id(), updatedUserDTO);
 
 		redirectAttributes.addFlashAttribute("successMessage", "Your purchase has been completed successfully.");
 
@@ -256,53 +276,22 @@ public class WebController {
 
 		ConcertDTO newconcert = concertService.createOrReplaceConcert(concertId, concertDTO);
 
-		MultipartFile imageField = newConcertDTO.concertImage();
-		if (imageField!=null && !imageField.isEmpty()) {
+		MultipartFile imageField = newConcertDTO.imageFile();
+		if (imageField != null && !imageField.isEmpty()) {
 			concertService.createConcertImage(newconcert.id(), imageField.getInputStream(), imageField.getSize());
 		}
 
 		return newconcert;
 	}
 
-	private void addTickets(Long concertId, UserDTO userDTO, TicketDTO ticket) throws SQLException {
-
-		List<TicketDTO> tickets;
-
-		if (concertId != null) {
-			ConcertDTO oldconcert = concertService.getConcert(concertId);
-			tickets = oldconcert.ticketIds();
-			tickets.add(ticket);
-			ConcertDTO updateConcertDTO = new ConcertDTO(concertId,
-					oldconcert.concertName(), oldconcert.concertDetails(), oldconcert.concertDate(),
-					oldconcert.concertTime(), oldconcert.location(), oldconcert.stadiumPrice(),
-					oldconcert.trackPrice(), oldconcert.map(), oldconcert.concertImage(), null, oldconcert.artists(),
-					tickets);
-
-			concertService.createOrReplaceConcert(concertId, updateConcertDTO);
-
-		}
-		if (userDTO != null) {
-			tickets = userDTO.tickets();
-			tickets.add(ticket);
-			UserDTO updatedUserDTO = new UserDTO(userDTO.id(),
-					userDTO.fullName(), userDTO.userName(), userDTO.phone(),
-					userDTO.email(), userDTO.password(), userDTO.age(),
-					userDTO.numTicketsBought(), userDTO.favoriteGenre(), userDTO.image(), tickets,
-					userDTO.roles());
-
-			userService.createOrReplaceUser(userDTO.id(), updatedUserDTO);
-
-		}
-	}
-
 	@GetMapping("/concerts/{id}/image")
-	public ResponseEntity<Object> getConcertImage(@PathVariable long id) throws SQLException {
+	public ResponseEntity<Object> getConcertPoster(@PathVariable long id) throws SQLException {
 
-		Resource concertImage = concertService.getConcertImage(id);
+		Resource concertPoster = concertService.getConcertImage(id);
 
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
-				.body(concertImage);
+				.body(concertPoster);
 
 	}
 
@@ -379,13 +368,13 @@ public class WebController {
 	}
 
 	@PostMapping("/newartist")
-	public String newArtistProcess(Model model, NewArtistRequestDTO newArtistRequestDTO) throws IOException, SQLException {
+	public String newArtistProcess(Model model, NewArtistRequestDTO newArtistRequestDTO)
+			throws IOException, SQLException {
 
 		createOrReplaceArtist(newArtistRequestDTO, null);
 		return "redirect:/";
 	}
 
-	
 	@GetMapping("/editArtist/{id}")
 	public String editArtistForm(Model model, @PathVariable Long id) {
 		try {
@@ -398,28 +387,56 @@ public class WebController {
 	}
 
 	@PostMapping("/editArtist/{id}")
-	public String editArtistProcess(Model model, NewArtistRequestDTO newArtistRequestDTO, Long id) throws IOException, SQLException {
+	public String editArtistProcess(Model model, NewArtistRequestDTO newArtistRequestDTO, Long id)
+			throws IOException, SQLException {
 
 		createOrReplaceArtist(newArtistRequestDTO, id);
-		
+
 		return "redirect:/";
 	}
 
-	private ArtistDTO createOrReplaceArtist(NewArtistRequestDTO newArtistRequestDTO, Long artistId) throws SQLException, IOException {
+	private ArtistDTO createOrReplaceArtist(NewArtistRequestDTO newArtistRequestDTO, Long artistId)
+			throws SQLException, IOException {
 
-		ArtistDTO artistDTO = new ArtistDTO(artistId, newArtistRequestDTO.artistName(), newArtistRequestDTO.musicalStyle(), newArtistRequestDTO.artistInfo());
-		
+		ArtistDTO artistDTO = new ArtistDTO(artistId, newArtistRequestDTO.artistName(),
+				newArtistRequestDTO.musicalStyle(), newArtistRequestDTO.artistInfo());
+
 		ArtistDTO newArtistDTO = artistService.createOrReplaceArtist(artistId, artistDTO);
 		return newArtistDTO;
 	}
 
 	@GetMapping("/deleteArtist/{id}")
-	public String deleteArtist(Model model, @PathVariable Long id) {
+	public String deleteArtist(Model model, @PathVariable Long id, RedirectAttributes redirectAttributes)
+			throws SQLException {
 
 		try {
-			ArtistDTO artistDTO = artistService.deleteArtist(id);
-			model.addAttribute("artist", artistDTO);
 
+			ArtistDTO artistDTO = artistService.getArtist(id);
+			Collection<ConcertDTO> concerts = concertService.getAllConcert();
+
+			for (ConcertDTO concert : concerts) {
+				if (concert.artists().contains(artistDTO) && concert.artists().size() <= 1) {
+					redirectAttributes.addFlashAttribute("errorMessage",
+							"Cannot delete artist. Each concert must have at least one artist.");
+					return "redirect:/";
+				}
+			}
+
+			for (ConcertDTO concert : concerts) {
+				if (concert.artists().contains(artistDTO)) {
+					List<ArtistDTO> artists = concert.artists();
+					artists.remove(artistDTO);
+					ConcertDTO updatedConcert = new ConcertDTO(concert.id(),
+							concert.concertName(), concert.concertDetails(), concert.concertDate(),
+							concert.concertTime(), concert.location(), concert.stadiumPrice(),
+							concert.trackPrice(), concert.map(), concert.concertImage(), null, artists,
+							concert.ticketIds());
+					concertService.createOrReplaceConcert(concert.id(), updatedConcert);
+				}
+			}
+
+			artistService.deleteArtist(id);
+			redirectAttributes.addFlashAttribute("successMessage", "Concert deleted successfully.");
 			return "redirect:/";
 
 		} catch (NoSuchElementException e) {

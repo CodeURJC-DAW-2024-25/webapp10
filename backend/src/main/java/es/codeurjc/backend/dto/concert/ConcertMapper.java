@@ -26,8 +26,6 @@ public interface ConcertMapper {
     @Mapping(target = "ticketIds", source = "tickets")
     ConcertDTO toDTO(Concert concert);
 
-    List<ConcertDTO> toDTOs(Collection<Concert> concerts);
-
     @Mapping(target = "id", source = "id")
     @Mapping(target = "concertName", source = "concertName")
     @Mapping(target = "concertDetails", source = "concertDetails")
@@ -41,6 +39,7 @@ public interface ConcertMapper {
     @Mapping(target = "color", source = "color")
     @Mapping(target = "artists", source = "artists")
     @Mapping(target = "tickets", source = "ticketIds")
-    @Mapping(target = "imageFile", ignore = true)
     Concert toDomain(ConcertDTO concertDTO);
+
+    List<ConcertDTO> toDTOs(Collection<Concert> concerts);
 }

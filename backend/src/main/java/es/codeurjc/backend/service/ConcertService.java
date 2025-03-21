@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
-
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -35,20 +34,22 @@ public class ConcertService {
 	}
 
 	public Page<ConcertDTO> getConcerts(Long concertId, Pageable pageable) {
-        Page<Concert> concerts;
-        if (concertId == null) {
-            concerts = repository.findAll(pageable);
-        } else {
-            concerts = repository.findConcertsByUserPreference(concertId, pageable);
-        }
-        return concerts.map(this::toDTO);
-    }
+		Page<Concert> concerts;
+		if (concertId == null) {
+			concerts = repository.findAll(pageable);
+		} else {
+			concerts = repository.findConcertsByUserPreference(concertId, pageable);
+		}
+		return concerts.map(this::toDTO);
+	}
 
- /*    public Page<ConcertDTO> getConcertsPaginated(int page) {
-        int size = 10;
-        Pageable pageable = PageRequest.of(page, size);
-        return repository.findAll(pageable).map(this::toDTO);
-    } */
+	/*
+	 * public Page<ConcertDTO> getConcertsPaginated(int page) {
+	 * int size = 10;
+	 * Pageable pageable = PageRequest.of(page, size);
+	 * return repository.findAll(pageable).map(this::toDTO);
+	 * }
+	 */
 
 	public ConcertDTO getConcert(long id) {
 		return toDTO(repository.findById(id).orElseThrow());
@@ -70,7 +71,7 @@ public class ConcertService {
 
 	public ConcertDTO createConcert(ConcertDTO concertDTO) {
 
-		if (concertDTO == null ||concertDTO.id() != null) {
+		if (concertDTO == null || concertDTO.id() != null) {
 			throw new IllegalArgumentException();
 		}
 
@@ -84,7 +85,10 @@ public class ConcertService {
 	public ConcertDTO replaceConcert(long id, ConcertDTO updateConcertDTO) throws SQLException {
 
 		if (repository.existsById(id)) {
+			Concert existingConcert = repository.findById(id).orElseThrow();
 			Concert updatedConcert = toDomain(updateConcertDTO);
+			updatedConcert.setImageFile(existingConcert.getImageFile());
+			updatedConcert.setConcertImage(existingConcert.getConcertImage());
 			updatedConcert.setId(id);
 			repository.save(updatedConcert);
 			return toDTO(updatedConcert);
@@ -143,9 +147,9 @@ public class ConcertService {
 	}
 
 	public ConcertDTO createOrReplaceConcert(Long id, ConcertDTO concertDTO) throws SQLException {
-		
+
 		ConcertDTO concert;
-		if(id == null) {
+		if (id == null) {
 			concert = createConcert(concertDTO);
 		} else {
 			concert = replaceConcert(id, concertDTO);

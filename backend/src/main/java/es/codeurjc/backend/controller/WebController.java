@@ -429,18 +429,18 @@ public class WebController {
 					ConcertDTO updatedConcert = new ConcertDTO(concert.id(),
 							concert.concertName(), concert.concertDetails(), concert.concertDate(),
 							concert.concertTime(), concert.location(), concert.stadiumPrice(),
-							concert.trackPrice(), concert.map(), concert.concertImage(), null, artists,
+							concert.trackPrice(), concert.map(), concert.concertImage(), concert.color(), artists,
 							concert.ticketIds());
 					concertService.createOrReplaceConcert(concert.id(), updatedConcert);
 				}
 			}
 
 			artistService.deleteArtist(id);
-			redirectAttributes.addFlashAttribute("successMessage", "Concert deleted successfully.");
+			redirectAttributes.addFlashAttribute("successMessage", "Artist deleted successfully.");
 			return "redirect:/";
 
 		} catch (NoSuchElementException e) {
-			return "artistNotFound";
+			return "index";
 		}
 	}
 

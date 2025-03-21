@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import es.codeurjc.backend.dto.user.UserDTO;
 import es.codeurjc.backend.dto.user.UserMapper;
+import es.codeurjc.backend.model.Concert;
 import es.codeurjc.backend.model.User;
 import es.codeurjc.backend.repository.UserRepository;
 
@@ -66,6 +67,9 @@ public class UserService {
 
 		if (repository.existsById(id)) {
 			User updatedUser = toDomain(updateUserDTO);
+			User existingUser = repository.findById(id).orElseThrow();
+			updatedUser.setProfilePhoto(existingUser.getProfilePhoto());
+			updatedUser.setImage(existingUser.getImage());
 			updatedUser.setId(id);
 			repository.save(updatedUser);
 			return toDTO(updatedUser);

@@ -42,8 +42,6 @@ import es.codeurjc.backend.dto.concert.NewConcertDTO;
 import es.codeurjc.backend.dto.ticket.NewTicketDTO;
 import es.codeurjc.backend.dto.ticket.TicketDTO;
 import es.codeurjc.backend.dto.user.UserDTO;
-import es.codeurjc.backend.model.Artist;
-import es.codeurjc.backend.model.Concert;
 import es.codeurjc.backend.service.ArtistService;
 import es.codeurjc.backend.service.ConcertService;
 import es.codeurjc.backend.service.TicketService;
@@ -53,8 +51,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class WebController {
-
-	// private final CSRFHandlerConfiguration CSRFHandlerConfiguration;
 
 	@Autowired
 	private ConcertService concertService;
@@ -209,8 +205,9 @@ public class WebController {
 
 		TicketDTO ticketDTO = createOrReplaceTicket(newTicketDTO, null, concertDTO, userDTO);
 
-		List<TicketDTO> tickets = concertDTO.ticketIds();
+		List<TicketDTO> tickets = concertDTO.tickets();
 		tickets.add(ticketDTO);
+		;
 		ConcertDTO updatedConcert = new ConcertDTO(concertDTO.id(),
 				concertDTO.concertName(), concertDTO.concertDetails(), concertDTO.concertDate(),
 				concertDTO.concertTime(), concertDTO.location(), concertDTO.stadiumPrice(),
@@ -327,7 +324,6 @@ public class WebController {
 				int yPosition = 700;
 				for (TicketDTO ticket : tickets) {
 					ConcertDTO concertDTO = concertService.getConcert(ticket.concertId());
-
 					PDColor concertNameColor = new PDColor(new float[] { 84 / 255f, 26 / 255f, 113 / 255f },
 							PDDeviceRGB.INSTANCE);
 					contentStream.setNonStrokingColor(concertNameColor);
@@ -430,7 +426,7 @@ public class WebController {
 							concert.concertName(), concert.concertDetails(), concert.concertDate(),
 							concert.concertTime(), concert.location(), concert.stadiumPrice(),
 							concert.trackPrice(), concert.map(), concert.concertImage(), concert.color(), artists,
-							concert.ticketIds());
+							concert.tickets());
 					concertService.createOrReplaceConcert(concert.id(), updatedConcert);
 				}
 			}
@@ -464,7 +460,7 @@ public class WebController {
 			RedirectAttributes redirectAttributes) throws IOException, SQLException {
 
 		ConcertDTO concertDTO = concertService.getConcert(id);
-		createOrReplaceConcert(newConcertDTO, id, removeImage, concertDTO.ticketIds());
+		createOrReplaceConcert(newConcertDTO, id, removeImage, concertDTO.tickets());
 
 		redirectAttributes.addFlashAttribute("successMessage", "Concert creation success.");
 
@@ -498,11 +494,11 @@ public class WebController {
 		}
 
 		TicketDTO ticketDTO = new TicketDTO(ticketId,
-				newTicketDTO.ticketType(), prices, userDTO.id(), newTicketDTO.numTickets(), concertDTO.id());
+				newTicketDTO.ticketType(), prices*newTicketDTO.numTickets(), userDTO.id(), newTicketDTO.numTickets(), concertDTO.id());
 
-		ticketService.createOrReplaceTicket(ticketId, ticketDTO);
+		TicketDTO ticketDTOupdated = ticketService.createOrReplaceTicket(ticketId, ticketDTO);
 
-		return ticketDTO;
+		return ticketDTOupdated;
 	}
 
 }

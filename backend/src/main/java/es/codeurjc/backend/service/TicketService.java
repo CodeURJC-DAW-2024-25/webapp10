@@ -44,9 +44,7 @@ public class TicketService {
 		if (ticketDTO == null ||ticketDTO.id() != null) {
 			throw new IllegalArgumentException();
 		}
-
 		Ticket ticket = toDomain(ticketDTO);
-
 		repository.save(ticket);
 
 		return toDTO(ticket);
@@ -69,8 +67,8 @@ public class TicketService {
 		return mapper.toDTO(Ticket);
 	}
 
-	private Ticket toDomain(TicketDTO TicketDTO) {
-		return mapper.toDomain(TicketDTO);
+	private Ticket toDomain(TicketDTO ticketDTO) {
+		return mapper.toDomain(ticketDTO);
 	}
 
 	private Collection<TicketDTO> toDTOs(Collection<Ticket> Tickets) {

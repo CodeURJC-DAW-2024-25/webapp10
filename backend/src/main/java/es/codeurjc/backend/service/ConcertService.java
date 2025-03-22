@@ -11,7 +11,6 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
-//import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import es.codeurjc.backend.dto.concert.ConcertDTO;
@@ -42,14 +41,6 @@ public class ConcertService {
 		}
 		return concerts.map(this::toDTO);
 	}
-
-	/*
-	 * public Page<ConcertDTO> getConcertsPaginated(int page) {
-	 * int size = 10;
-	 * Pageable pageable = PageRequest.of(page, size);
-	 * return repository.findAll(pageable).map(this::toDTO);
-	 * }
-	 */
 
 	public ConcertDTO getConcert(long id) {
 		return toDTO(repository.findById(id).orElseThrow());
@@ -161,8 +152,8 @@ public class ConcertService {
 		return mapper.toDTO(concert);
 	}
 
-	private Concert toDomain(ConcertDTO ConcertDTO) {
-		return mapper.toDomain(ConcertDTO);
+	private Concert toDomain(ConcertDTO concertDTO) {
+		return mapper.toDomain(concertDTO);
 	}
 
 	private Collection<ConcertDTO> toDTOs(Collection<Concert> concerts) {

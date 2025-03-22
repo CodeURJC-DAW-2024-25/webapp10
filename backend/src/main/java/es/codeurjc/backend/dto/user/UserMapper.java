@@ -3,14 +3,15 @@ package es.codeurjc.backend.dto.user;
 import java.util.Collection;
 import java.util.List;
 
-import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
+import es.codeurjc.backend.dto.ticket.TicketMapper;
 import es.codeurjc.backend.model.User;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",uses = { TicketMapper.class}, 
+nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface UserMapper {
 
     @Mapping(target = "id", source = "id")

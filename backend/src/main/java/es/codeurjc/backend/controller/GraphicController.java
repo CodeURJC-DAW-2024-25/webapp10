@@ -30,11 +30,10 @@ public class GraphicController {
 
         ConcertDTO concert = concertService.getConcert(id);
         int rank018, rank1950, rank51110, age;
-
         rank018 = 0;
         rank1950 = 0;
         rank51110 = 0;
-        for (TicketDTO tickets : concert.ticketIds()) {
+        for (TicketDTO tickets : concert.tickets()) {
             UserDTO userDTO = userService.getUser(tickets.userOwnerId());
             age = userDTO.age();
             int numTickets = tickets.numTickets();
@@ -65,7 +64,7 @@ public class GraphicController {
 
         for (ConcertDTO concert : concerts) {
             concertNames.add(concert.concertName());
-            ticketCounts.add(concert.ticketIds().size());
+            ticketCounts.add(concert.tickets().size());
             colors.add(concert.color());
             concertIds.add(concert.id());
         }

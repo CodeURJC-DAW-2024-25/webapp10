@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import es.codeurjc.backend.dto.user.UserDTO;
 import es.codeurjc.backend.dto.user.UserMapper;
-import es.codeurjc.backend.model.Concert;
 import es.codeurjc.backend.model.User;
 import es.codeurjc.backend.repository.UserRepository;
 

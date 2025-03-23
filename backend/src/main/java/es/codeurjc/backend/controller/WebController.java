@@ -241,17 +241,24 @@ public class WebController {
 
 	@PostMapping("/newconcert")
 	public String newConcertProcess(
-			NewConcertDTO newConcertDTO,
+			@Valid NewConcertDTO newConcertDTO,
+			BindingResult bindingResult,
 			RedirectAttributes redirectAttributes,
 			Model model) throws IOException, SQLException {
 
-		try{
-			createOrReplaceConcert(newConcertDTO, null, null, null);
-			redirectAttributes.addFlashAttribute("successMessage", "Concert creation success.");
-		} cath (IllegalArgumentException e) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("errorMessage", bindingResult.getAllErrors());
+			model.addAttribute("artists", artistService.getArtists());
+			return "newConcert";
+		}
+
+		if (concertService.existsConcertName(newConcertDTO.concertName())) {
 			redirectAttributes.addFlashAttribute("errorMessage", "A concert with the same name already exists.");
 			return "redirect:/newconcert";
 		}
+
+		createOrReplaceConcert(newConcertDTO, null, null, null);
+		redirectAttributes.addFlashAttribute("successMessage", "Concert creation success.");
 		
 		return "redirect:/";
 	}

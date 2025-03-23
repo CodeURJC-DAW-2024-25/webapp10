@@ -3,6 +3,8 @@ package es.codeurjc.backend.dto.ticket;
 public record NewTicketDTO(
     Long ticketId,
     String ticketType,
-    Integer numTickets
+    Integer numTickets,
+    Long concertId
 
     ) {}
+    

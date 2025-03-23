@@ -368,9 +368,13 @@ public class WebController {
 	}
 
 	@PostMapping("/newartist")
-	public String newArtistProcess(Model model, NewArtistRequestDTO newArtistRequestDTO)
+	public String newArtistProcess(Model model, @Valid NewArtistRequestDTO newArtistRequestDTO, BindingRsult bindingResult)
 			throws IOException, SQLException {
 
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("errorMessage", bindingResult.getAllErrors());
+			return "newArtist";
+		}
 		createOrReplaceArtist(newArtistRequestDTO, null);
 		return "redirect:/";
 	}
@@ -387,11 +391,16 @@ public class WebController {
 	}
 
 	@PostMapping("/editArtist/{id}")
-	public String editArtistProcess(Model model, NewArtistRequestDTO newArtistRequestDTO, Long id)
+	public String editArtistProcess(Model model, @Valid NewArtistRequestDTO newArtistRequestDTO, BindingResult bindingResult, @PathVariable Long id)
 			throws IOException, SQLException {
+		
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("errorMessage", bindingResult.getAllErrors());
+			model.addAttribute("artist", artistService.getArtist(id));
+			return "editArtist";
+		}
 
 		createOrReplaceArtist(newArtistRequestDTO, id);
-
 		return "redirect:/";
 	}
 

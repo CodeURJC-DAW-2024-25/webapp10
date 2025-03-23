@@ -526,26 +526,23 @@ public class WebController {
 	}
 
 	@PostMapping("/editconcert/{id}")
-	public String editConcert(HttpServletRequest request, boolean removeImage, BindingResult bindingResult, Model model, @PathVariable long id,
+	public String editConcert(HttpServletRequest request, boolean removeImage, Model model, @PathVariable long id,
 			NewConcertDTO newConcertDTO,
 			RedirectAttributes redirectAttributes) throws IOException, SQLException {
 
-		if (bindingResult.hasErrors()) {
-			model.addAttribute("errorMessage", "Please check the fields and correct any errors.");
-			return "editconcert"; 
-		}
+		ConcertDTO concertDTO = concertService.getConcert(id);
 
 		if (removeImage) {
 			concertService.deleteConcertImage(id);
 		}
-
-		ConcertDTO concertDTO = concertService.getConcert(id);
+		
 		createOrReplaceConcert(newConcertDTO, id, removeImage, concertDTO.tickets());
 
-		redirectAttributes.addFlashAttribute("successMessage", "Concert edited successfully.");
-		return "redirect:/";
-	}
+		redirectAttributes.addFlashAttribute("successMessage", "Concert creation success.");
 
+		return "redirect:/";
+
+	}
 
 	@GetMapping("/concert/delete/{id}")
 	public String deleteConcert(Model model, @PathVariable Long id, RedirectAttributes redirectAttributes) {

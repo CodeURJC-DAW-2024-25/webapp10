@@ -137,8 +137,14 @@ public class ConcertService {
 		repository.save(concert);
 	}
 
-	public ConcertDTO createOrReplaceConcert(Long id, ConcertDTO concertDTO) throws SQLException {
+	public boolean existsConcertName(String concertName) {
+		return repository.findByConcertName(concertName).isPresent();
+	}
 
+	public ConcertDTO createOrReplaceConcert(Long id, ConcertDTO concertDTO) throws SQLException {
+		if (id == null && existConcertName(concertDTO.concertName())) {
+			throw new IllegalArgumentException("A concert with the same name already exists");
+		}
 		ConcertDTO concert;
 		if (id == null) {
 			concert = createConcert(concertDTO);

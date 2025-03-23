@@ -176,7 +176,7 @@ public class WebController {
 			model.addAttribute("concertId", id);
 
 		} catch (NoSuchElementException e) {
-			return "redirect:/";
+			return "error";
 		}
 		return "concertInfo";
 
@@ -245,10 +245,14 @@ public class WebController {
 			RedirectAttributes redirectAttributes,
 			Model model) throws IOException, SQLException {
 
-		createOrReplaceConcert(newConcertDTO, null, null, null);
-
-		redirectAttributes.addFlashAttribute("successMessage", "Concert creation success.");
-
+		try{
+			createOrReplaceConcert(newConcertDTO, null, null, null);
+			redirectAttributes.addFlashAttribute("successMessage", "Concert creation success.");
+		} cath (IllegalArgumentException e) {
+			redirectAttributes.addFlashAttribute("errorMessage", "A concert with the same name already exists.");
+			return "redirect:/newconcert";
+		}
+		
 		return "redirect:/";
 	}
 
@@ -378,7 +382,7 @@ public class WebController {
 			model.addAttribute("artist", artist);
 			return "editArtist";
 		} catch (NoSuchElementException e) {
-			return "redirect:/";
+			return "error";
 		}
 	}
 

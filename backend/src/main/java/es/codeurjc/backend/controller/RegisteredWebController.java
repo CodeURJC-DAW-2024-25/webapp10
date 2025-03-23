@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import es.codeurjc.backend.dto.ticket.TicketDTO;
 import es.codeurjc.backend.dto.user.NewUserDTO;
@@ -71,11 +72,16 @@ public class RegisteredWebController {
     }
 
     @PostMapping("/edituser/{id}")
-    public String editUser(@RequestParam(value = "removeImage", required = false) boolean removeImage, Model model, @PathVariable long id,
+    public String editUser(@RequestParam(value = "removeImage", required = false) boolean removeImage, Model model, @PathVariable long id, RedirectAttributes redirectAttributes,
             NewUserDTO newUserDTO) throws IOException, SQLException {
+
+        if (removeImage) {
+            userService.deleteUserImage(id);
+        }
 
        createOrReplaceUser(newUserDTO,id, removeImage);
 
+        redirectAttributes.addFlashAttribute("successMessage", "Your profile has been edited successfully.");
         return "redirect:/";
 
     }

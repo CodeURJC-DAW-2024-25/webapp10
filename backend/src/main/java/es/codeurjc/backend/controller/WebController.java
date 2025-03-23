@@ -526,62 +526,17 @@ public class WebController {
 	}
 
 	@PostMapping("/editconcert/{id}")
-	public String editConcertProcess(
+	public String editConcert(HttpServletRequest request, boolean removeImage, BindingResult bindingResult, Model model, @PathVariable long id,
 			NewConcertDTO newConcertDTO,
-			BindingResult bindingResult,
-			Model model,
-			@PathVariable long id,
-			boolean removeImage,
 			RedirectAttributes redirectAttributes) throws IOException, SQLException {
-
-		if (newConcertDTO.concertName() == null || newConcertDTO.concertName().trim().isEmpty()) {
-			bindingResult.rejectValue("concertName", "error.concertName", "Concert name cannot be empty");
-		}
-
-		if (newConcertDTO.concertDetails() == null || newConcertDTO.concertDetails().trim().isEmpty()) {
-			bindingResult.rejectValue("concertDetails", "error.concertDetails", "Concert details cannot be empty");
-		}
-
-		if (newConcertDTO.concertDate() == null || newConcertDTO.concertDate().trim().isEmpty()) {
-			bindingResult.rejectValue("concertDate", "error.concertDate", "Concert date cannot be empty");
-		}
-
-		if (newConcertDTO.concertTime() == null || newConcertDTO.concertTime().trim().isEmpty()) {
-			bindingResult.rejectValue("concertTime", "error.concertTime", "Concert time cannot be empty");
-		}
-
-		if (newConcertDTO.location() == null || newConcertDTO.location().trim().isEmpty()) {
-			bindingResult.rejectValue("location", "error.location", "Location cannot be empty");
-		}
-
-		if (newConcertDTO.map() == null || newConcertDTO.map().trim().isEmpty()) {
-			bindingResult.rejectValue("map", "error.map", "Map cannot be empty");
-		}
-
-		if (newConcertDTO.stadiumPrice() == null || newConcertDTO.stadiumPrice() <= 0) {
-			bindingResult.rejectValue("stadiumPrice", "error.stadiumPrice", "Stadium price must be greater than 0");
-		}
-
-		if (newConcertDTO.trackPrice() == null || newConcertDTO.trackPrice() <= 0) {
-			bindingResult.rejectValue("trackPrice", "error.trackPrice", "Track price must be greater than 0");
-		}
-
-		if (newConcertDTO.artistIds() == null || newConcertDTO.artistIds().isEmpty()) {
-			bindingResult.rejectValue("artistIds", "error.artistIds", "At least one artist must be selected");
-		}
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("errorMessage", "Please check the fields and correct any errors.");
-			model.addAttribute("concert", concertService.getConcert(id));
-			model.addAttribute("artists", artistService.getArtists()); 
 			return "editconcert"; 
 		}
 
-		if (concertService.existsConcertName(newConcertDTO.concertName())) {
-			model.addAttribute("errorMessage", "A concert with the same name already exists.");
-			model.addAttribute("concert", concertService.getConcert(id));
-			model.addAttribute("artists", artistService.getArtists());
-			return "editconcert";
+		if (removeImage) {
+			concertService.deleteConcertImage(id);
 		}
 
 		ConcertDTO concertDTO = concertService.getConcert(id);

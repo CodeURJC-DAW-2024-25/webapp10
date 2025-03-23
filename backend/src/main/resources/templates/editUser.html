@@ -41,32 +41,47 @@
                     <form role="form" class="w-100" method="post" action="/edituser/{{user.id}}"
                         enctype="multipart/form-data">
                         <input type="hidden" name="id" value="{{user.id}}" />
+                        
                         <div class="mb-3">
                             <label for="fullName">Full name:</label>
-                            <input name="fullName" type="text" class="form-control" value="{{user.fullName}}"
-                                id="fullName" placeholder="Enter Full name" required>
+                            <input name="fullName" type="text" class="form-control {{#errors.fullName}}is-invalid{{/errors.fullName}}"
+                                value="{{user.fullName}}" id="fullName" placeholder="Enter Full name" required>
+                            {{#errors.fullName}}
+                            <div class="invalid-feedback">{{errors.fullName}}</div>
+                            {{/errors.fullName}}
                         </div>
+                        
                         <div class="mb-3">
                             <label for="phone">Phone number of 9 digits:</label>
-                            <input type="tel" class="form-control" name="phone" id="phone"
+                            <input type="tel" class="form-control {{#errors.phone}}is-invalid{{/errors.phone}}" name="phone" id="phone"
                                 placeholder="Enter Phone number" value="{{user.phone}}" required pattern="^\d{9}$"
                                 inputmode="numeric">
+                            {{#errors.phone}}
+                            <div class="invalid-feedback">{{errors.phone}}</div>
+                            {{/errors.phone}}
                         </div>
 
                         <div class="mb-3">
                             <label for="email">Email:</label>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email"
+                            <input type="email" class="form-control {{#errors.email}}is-invalid{{/errors.email}}" name="email" id="email" placeholder="Enter Email"
                                 value="{{user.email}}" required>
+                            {{#errors.email}}
+                            <div class="invalid-feedback">{{errors.email}}</div>
+                            {{/errors.email}}
                         </div>
+
                         <div class="mb-3">
                             <label for="age">Age:</label>
-                            <input name="age" type="number" class="form-control" id="age" value="{{user.age}}"
+                            <input name="age" type="number" class="form-control {{#errors.age}}is-invalid{{/errors.age}}" id="age" value="{{user.age}}"
                                 placeholder="Enter the age" required>
+                            {{#errors.age}}
+                            <div class="invalid-feedback">{{errors.age}}</div>
+                            {{/errors.age}}
                         </div>
+
                         <div class="mb-3">
                             <label for="profilePhoto">User photo:</label>
                             {{#user.image}}
-
                             <div class="form-check">
                                 <input type="checkbox" name="removeImage" class="form-check-input" id="removeImage">
                                 <label class="form-check-label" for="removeImage">Remove Image (The user will appear
@@ -81,10 +96,15 @@
                                 <label for="uploadImage" class="form-label">Upload Image</label>
                             </div>
                             {{/user.image}}
-                            <input type="file" class="form-control" name="profilePhoto" id="profilePhoto"
+                            <input type="file" class="form-control {{#errors.profilePhoto}}is-invalid{{/errors.profilePhoto}}" name="profilePhoto" id="profilePhoto"
                                 accept=".jpg, .jpeg, .png">
+                            {{#errors.profilePhoto}}
+                            <div class="invalid-feedback">{{errors.profilePhoto}}</div>
+                            {{/errors.profilePhoto}}
                         </div>
+
                         <input type="hidden" name="_csrf" value="{{token}}" />
+                        
                         <div class="d-flex align-items-center justify-content-between">
                             <a href="/user/{{user.id}}">
                                 <button class="btn btn-primary" type="button">

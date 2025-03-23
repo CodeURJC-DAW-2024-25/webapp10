@@ -251,20 +251,20 @@ To clone the project using **VSCode**, follow these steps:
 
 - **César Valero Bueno**
   - *Task done descriptions*
-    - 
+    - Implemented API REST controllers, created the Postman collection, assisted creating the Dockerfile, and helped configure the docker-compose.yml file.
 
 | **Section**                               |                 | **Details**       |
 | ----------------------------------------  | --------------- | ----------------- |
-| **Most significant commits**              | **Commit 1**    | []()|
-|                                           | **Commit 2**    | []()|
-|                                           | **Commit 3**    | []()|
-|                                           | **Commit 4**    | []()|
-|                                           | **Commit 5**    | []()|
-| **Files that have participated the most** | **File 1**      | []()|
-|                                           | **File 2**      | []()|
-|                                           | **File 3**      | []()|
-|                                           | **File 4**      | []()|
-|                                           | **File 5**      | []()|
+| **Most significant commits**              | **Commit 1**    | [Add REST controllers for Artist, Ticket, and User](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/4959316df37d992a4b814cf24ad6b1c9548bc4e9)|
+|                                           | **Commit 2**    | [Add Docker configuration and update dependencies for Java 21](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/4fd4e090d37343f82a7732e79245d6d8c0550ae0)|
+|                                           | **Commit 3**    | [Fix Ticket and User REST Controllers](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/c676729e9acc10749b70cf102d9d9eaaf8f0e2e6)|
+|                                           | **Commit 4**    | [Implement graphic generation in API REST](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/441689ae92a074811ffa972239f078cb13f5d218)|
+|                                           | **Commit 5**    | [Add user and concert image management functionality in the API, updated the Postman collection and removed password from API answers](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/a5a7292c8f17c91246f2f8d293ccd5c0e511c7d5)|
+| **Files that have participated the most** | **File 1**      | [api.postman_collection.json](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/api.postman_collection.json)|
+|                                           | **File 2**      | [UserRestController.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/controller/UserRestController.java)|
+|                                           | **File 3**      | [GraphicRestController.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/controller/GraphicRestController.java)|
+|                                           | **File 4**      | [TicketRestController.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/controller/TicketRestController.java)|
+|                                           | **File 5**      | [ArtistRestController.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/controller/ArtistRestController.java)|
 
 - **Irene García López**
   - *Task done descriptions*

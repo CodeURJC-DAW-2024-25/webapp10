@@ -1,5 +1,5 @@
 package es.codeurjc.backend.dto.artist;
-import jackarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 public record NewArtistRequestDTO (
     @NotBlank(message = "Artist name cannot be empty")

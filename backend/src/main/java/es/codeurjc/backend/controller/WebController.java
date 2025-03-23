@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
-
 import java.util.stream.Collectors;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -16,9 +15,7 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColor;
 import org.apache.pdfbox.pdmodel.graphics.color.PDDeviceRGB;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,13 +23,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import es.codeurjc.backend.dto.artist.ArtistDTO;
@@ -48,6 +45,7 @@ import es.codeurjc.backend.service.TicketService;
 import es.codeurjc.backend.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 
 @Controller
 public class WebController {
@@ -241,7 +239,7 @@ public class WebController {
 
 	@PostMapping("/newconcert")
 	public String newConcertProcess(
-			@Valid NewConcertDTO newConcertDTO,
+		@ModelAttribute @Valid NewConcertDTO newConcertDTO,
 			BindingResult bindingResult,
 			RedirectAttributes redirectAttributes,
 			Model model) throws IOException, SQLException {
@@ -375,7 +373,7 @@ public class WebController {
 	}
 
 	@PostMapping("/newartist")
-	public String newArtistProcess(Model model, @Valid NewArtistRequestDTO newArtistRequestDTO, BindingRsult bindingResult)
+	public String newArtistProcess(Model model, @Valid NewArtistRequestDTO newArtistRequestDTO, BindingResult bindingResult)
 			throws IOException, SQLException {
 
 		if (bindingResult.hasErrors()) {

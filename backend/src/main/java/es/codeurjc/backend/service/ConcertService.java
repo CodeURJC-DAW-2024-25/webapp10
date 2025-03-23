@@ -142,7 +142,7 @@ public class ConcertService {
 	}
 
 	public ConcertDTO createOrReplaceConcert(Long id, ConcertDTO concertDTO) throws SQLException {
-		if (id == null && existConcertName(concertDTO.concertName())) {
+		if (id == null && existsConcertName(concertDTO.concertName())) {
 			throw new IllegalArgumentException("A concert with the same name already exists");
 		}
 		ConcertDTO concert;

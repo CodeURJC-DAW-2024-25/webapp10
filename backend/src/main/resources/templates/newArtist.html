@@ -27,26 +27,40 @@
 
                 <!-- Right side with the form -->
                 <div class="col-md-8 d-flex flex-column align-items-center justify-content-center p-4">
-                    {{#newArtistError}}
-                        <div class="alert alert-danger" role="alert">
-                            <strong>Error:</strong> {{newArtistError}}
-                        </div>
-                    {{/newArtistError}}
+                    {{#errorMessage}}
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Error:</strong> {{errorMessage}}
+                    </div>
+                    {{/errorMessage}}
+
                     <h4 class="text-center mb-3">TicketZone Fest New Artist Form</h4>
                     <form role="form" class="w-100" method="post" action="/newartist">
                         <div class="mb-3">
                             <label for="artistName">Artist name:</label>
-                            <input name="artistName" type="text" class="form-control" id="artistName" placeholder="Enter Artist name">
+                            <input name="artistName" type="text" class="form-control {{#errors.artistName}}is-invalid{{/errors.artistName}}" id="artistName" placeholder="Enter Artist name">
+                            {{#errors.artistName}}
+                                <div class="invalid-feedback">{{errors.artistName}}</div>
+                            {{/errors.artistName}}
                         </div>
+
                         <div class="mb-3">
                             <label for="musicalStyle">Musical Style:</label>
-                            <input name="musicalStyle" type="text" class="form-control" id="musicalStyle" placeholder="Enter Musical Style">
+                            <input name="musicalStyle" type="text" class="form-control {{#errors.musicalStyle}}is-invalid{{/errors.musicalStyle}}" id="musicalStyle" placeholder="Enter Musical Style">
+                            {{#errors.musicalStyle}}
+                                <div class="invalid-feedback">{{errors.musicalStyle}}</div>
+                            {{/errors.musicalStyle}}
                         </div>
+
                         <div class="mb-3">
                             <label for="artistInfo">Artist Information:</label>
-                            <input name="artistInfo" type="text" class="form-control" id="artistInfo" placeholder="Enter information about the artist">
+                            <input name="artistInfo" type="text" class="form-control {{#errors.artistInfo}}is-invalid{{/errors.artistInfo}}" id="artistInfo" placeholder="Enter information about the artist">
+                            {{#errors.artistInfo}}
+                                <div class="invalid-feedback">{{errors.artistInfo}}</div>
+                            {{/errors.artistInfo}}
                         </div>
+
                         <input type="hidden" name="_csrf" value="{{token}}" />
+                        
                         <div class="d-flex align-items-center justify-content-between">
                             <a href="/">
                                 <button class="btn btn-primary" type="button">
@@ -62,8 +76,9 @@
             </div>
         </div>
     </div>
-     <!--Footer-->
-     {{>footer}}
+
+    <!-- Footer -->
+    {{>footer}}
 </body>
 
 </html>

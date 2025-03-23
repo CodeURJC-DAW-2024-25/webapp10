@@ -43,11 +43,11 @@
                         <div class="mb-3">
                             <label for="concertName">Concert name:</label>
                             <input name="concertName" type="text" class="form-control" value="{{concert.concertName}}" id="concertName"
-                                placeholder="Enter Full name" required>
+                                placeholder="Enter Full name">
                         </div>
                         <div class="mb-3">
                             <label for="artistIds">Artists:</label>
-                            <select id="artistIds" name="artistIds" class="form-control" multiple required>
+                            <select id="artistIds" name="artistIds" class="form-control" multiple>
                                 <option value=0 class="text-muted" disabled selected>Select an artist</option>
                                 {{#artists}}
                                 <option value="{{id}}" class="text-muted">{{artistName}}</option>
@@ -57,37 +57,37 @@
                         <div class="mb-3">
                             <label for="concertDetails">Concert Details:</label>
                             <input name="concertDetails" type="text" class="form-control" id="concertDetails"
-                                value="{{concert.concertDetails}}" placeholder="Enter concert details" required>
+                                value="{{concert.concertDetails}}" placeholder="Enter concert details">
                         </div>
                         <div class="mb-3">
                             <label for="concertDate">Concert date:</label>
                             <input name="concertDate" type="date" class="form-control" id="concertDate"
-                                value="{{concert.concertDate}}" placeholder="Enter concert date" required>
+                                value="{{concert.concertDate}}" placeholder="Enter concert date">
                         </div>
                         <div class="mb-3">
                             <label for="concertTime">Concert time:</label>
                             <input name="concertTime" type="time" class="form-control" id="concertTime"
-                                value="{{concert.concertTime}}" placeholder="Enter concert time" required>
+                                value="{{concert.concertTime}}" placeholder="Enter concert time">
                         </div>
                         <div class="mb-3">
                             <label for="location">Location:</label>
                             <input name="location" type="text" class="form-control" id="location"
-                                value="{{concert.location}}" placeholder="Enter the location" required>
+                                value="{{concert.location}}" placeholder="Enter the location">
                         </div>
                         <div class="mb-3">
                             <label for="map">Map URL (Please insert an iframe from Google Maps):</label>
                             <input name="map" type="text" class="form-control" id="map" value="{{concert.map}}"
-                                placeholder="Enter the map URL" required>
+                                placeholder="Enter the map URL">
                         </div>
                         <div class="mb-3">
                             <label for="stadiumPrice">Stadium Price:</label>
                             <input name="stadiumPrice" type="number" class="form-control" id="stadiumPrice"
-                                value="{{concert.stadiumPrice}}" placeholder="Enter the stadium price" required>
+                                value="{{concert.stadiumPrice}}" placeholder="Enter the stadium price">
                         </div>
                         <div class="mb-3">
                             <label for="trackPrice">Track price:</label>
                             <input name="trackPrice" type="number" class="form-control" id="trackPrice"
-                                value="{{concert.trackPrice}}" placeholder="Enter the track price" required>
+                                value="{{concert.trackPrice}}" placeholder="Enter the track price">
                         </div>
                         <div class="mb-3">
                             <label for="imageFile">Concert Poster:</label>

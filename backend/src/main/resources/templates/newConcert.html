@@ -27,60 +27,100 @@
 
                 <!-- Right side with the form -->
                 <div class="col-md-8 d-flex flex-column align-items-center justify-content-center p-4">
-                    {{#newConcertError}}
-                        <div class="alert alert-danger" role="alert">
-                            <strong>Error:</strong> {{newConcertError}}
-                        </div>
-                    {{/newConcertError}}
-                    <h4 class="text-center mb-3">TicketZone Fest New Concert form</h4>
+                    {{#errorMessage}}
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Error:</strong> {{errorMessage}}
+                    </div>
+                    {{/errorMessage}}
+
+                    <h4 class="text-center mb-3">TicketZone Fest New Concert Form</h4>
                     <form role="form" class="w-100" method="post" action="/newconcert" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="concertName">Concert name:</label>
-                            <input name="concertName" type="text" class="form-control" id="concertName" placeholder="Enter Full name">
+                            <input name="concertName" type="text" class="form-control {{#errors.concertName}}is-invalid{{/errors.concertName}}" id="concertName" placeholder="Enter Full name">
+                            {{#errors.concertName}}
+                                <div class="invalid-feedback">{{errors.concertName}}</div>
+                            {{/errors.concertName}}
                         </div>
+
                         <div class="mb-3">
                             <label for="artistIds">Artists:</label>
-                            <select id="artistIds" name="artistIds" class="form-control" multiple>
+                            <select id="artistIds" name="artistIds" class="form-control {{#errors.artistIds}}is-invalid{{/errors.artistIds}}" multiple>
                                 {{#artists}}
                                     <option value="{{id}}" class="text-muted">{{artistName}}</option>
                                 {{/artists}}
                             </select>
+                            {{#errors.artistIds}}
+                                <div class="invalid-feedback">{{errors.artistIds}}</div>
+                            {{/errors.artistIds}}
                         </div>
-                        
+
                         <div class="mb-3">
                             <label for="concertDetails">Concert Details:</label>
-                            <input name="concertDetails" type="text" class="form-control" id="concertDetails" placeholder="Enter concert details">
+                            <input name="concertDetails" type="text" class="form-control {{#errors.concertDetails}}is-invalid{{/errors.concertDetails}}" id="concertDetails" placeholder="Enter concert details">
+                            {{#errors.concertDetails}}
+                                <div class="invalid-feedback">{{errors.concertDetails}}</div>
+                            {{/errors.concertDetails}}
                         </div>
+
                         <div class="mb-3">
                             <label for="concertDate">Concert date:</label>
-                            <input name="concertDate" type="date" class="form-control" id="concertDate" placeholder="Enter concert date">
+                            <input name="concertDate" type="date" class="form-control {{#errors.concertDate}}is-invalid{{/errors.concertDate}}" id="concertDate" placeholder="Enter concert date">
+                            {{#errors.concertDate}}
+                                <div class="invalid-feedback">{{errors.concertDate}}</div>
+                            {{/errors.concertDate}}
                         </div>
+
                         <div class="mb-3"> 
                             <label for="concertTime">Concert time:</label>
-                            <input name="concertTime" type="time" class="form-control" id="concertTime" placeholder="Enter concert time">
+                            <input name="concertTime" type="time" class="form-control {{#errors.concertTime}}is-invalid{{/errors.concertTime}}" id="concertTime" placeholder="Enter concert time">
+                            {{#errors.concertTime}}
+                                <div class="invalid-feedback">{{errors.concertTime}}</div>
+                            {{/errors.concertTime}}
                         </div>
+
                         <div class="mb-3">
                             <label for="location">Location:</label>
-                            <input name="location" type="text" class="form-control" id="location" placeholder="Enter the location">
+                            <input name="location" type="text" class="form-control {{#errors.location}}is-invalid{{/errors.location}}" id="location" placeholder="Enter the location">
+                            {{#errors.location}}
+                                <div class="invalid-feedback">{{errors.location}}</div>
+                            {{/errors.location}}
                         </div>
+
                         <div class="mb-3">
                             <label for="map">Map URL (Please insert an iframe from Google Maps):</label>
-                            <textarea name="map" class="form-control" id="map" rows="4" placeholder="Paste Google Maps iframe code here"></textarea>
+                            <textarea name="map" class="form-control {{#errors.map}}is-invalid{{/errors.map}}" id="map" rows="4" placeholder="Paste Google Maps iframe code here"></textarea>
+                            {{#errors.map}}
+                                <div class="invalid-feedback">{{errors.map}}</div>
+                            {{/errors.map}}
                         </div>
-                        
+
                         <div class="mb-3">
                             <label for="stadiumPrice">Stadium Price:</label>
-                            <input name="stadiumPrice" type="number" class="form-control" id="stadiumPrice" placeholder="Enter the stadium price">
+                            <input name="stadiumPrice" type="number" class="form-control {{#errors.stadiumPrice}}is-invalid{{/errors.stadiumPrice}}" id="stadiumPrice" placeholder="Enter the stadium price">
+                            {{#errors.stadiumPrice}}
+                                <div class="invalid-feedback">{{errors.stadiumPrice}}</div>
+                            {{/errors.stadiumPrice}}
                         </div>
+
                         <div class="mb-3">
                             <label for="trackPrice">Track price:</label>
-                            <input name="trackPrice" type="number" class="form-control" id="trackPrice" placeholder="Enter the track price">
+                            <input name="trackPrice" type="number" class="form-control {{#errors.trackPrice}}is-invalid{{/errors.trackPrice}}" id="trackPrice" placeholder="Enter the track price">
+                            {{#errors.trackPrice}}
+                                <div class="invalid-feedback">{{errors.trackPrice}}</div>
+                            {{/errors.trackPrice}}
                         </div>
+
                         <div class="mb-3">
                             <label for="imageFile">Concert Poster (MAX 1MB):</label>
-                            <input type="file" class="form-control" name="imageFile" id="imageFile" accept=".jpg, .jpeg, .png">
+                            <input type="file" class="form-control {{#errors.imageFile}}is-invalid{{/errors.imageFile}}" name="imageFile" id="imageFile" accept=".jpg, .jpeg, .png">
+                            {{#errors.imageFile}}
+                                <div class="invalid-feedback">{{errors.imageFile}}</div>
+                            {{/errors.imageFile}}
                         </div>
+
                         <input type="hidden" name="_csrf" value="{{token}}" />
+
                         <div class="d-flex align-items-center justify-content-between">
                             <a href="/">
                                 <button class="btn btn-primary" type="button">
@@ -97,8 +137,8 @@
         </div>
     </div>
 
-     <!--Footer-->
-     {{>footer}}
+    <!-- Footer -->
+    {{>footer}}
 </body>
 
 </html>

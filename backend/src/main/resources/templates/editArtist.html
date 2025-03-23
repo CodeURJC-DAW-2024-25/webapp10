@@ -25,23 +25,38 @@
 
                 <div class="col-md-8 d-flex flex-column align-items-center justify-content-center p-4">
                     <h4 class="text-center mb-3">TicketZone Fest - Edit Artist Form - {{artist.artistName}}</h4>
+
+                    {{#errorMessage}}
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Check fields:</strong> Fields cannot be empty, please fill in all required fields.
+                    </div>
+                    {{/errorMessage}}
                     
                     <form role="form" class="w-100" method="post" action="/editArtist/{{artist.id}}">
                         <input type="hidden" name="id" value="{{artist.id}}" />
 
                         <div class="mb-3">
                             <label for="artistName" class="form-label">Artist Name:</label>
-                            <input name="artistName" type="text" class="form-control" id="artistName" value="{{artist.artistName}}" required>
+                            <input name="artistName" type="text" class="form-control {{#errors.artistName}}is-invalid{{/errors.artistName}}" id="artistName" value="{{artist.artistName}}">
+                            {{#errors.artistName}}
+                                <div class="invalid-feedback">{{errors.artistName}}</div>
+                            {{/errors.artistName}}
                         </div>
 
                         <div class="mb-3">
                             <label for="musicalStyle" class="form-label">Musical Style:</label>
-                            <input name="musicalStyle" type="text" class="form-control" id="musicalStyle" value="{{artist.musicalStyle}}" required>
+                            <input name="musicalStyle" type="text" class="form-control {{#errors.musicalStyle}}is-invalid{{/errors.musicalStyle}}" id="musicalStyle" value="{{artist.musicalStyle}}">
+                            {{#errors.musicalStyle}}
+                                <div class="invalid-feedback">{{errors.musicalStyle}}</div>
+                            {{/errors.musicalStyle}}
                         </div>
 
                         <div class="mb-3">
                             <label for="artistInfo" class="form-label">Artist Information:</label>
-                            <textarea name="artistInfo" class="form-control" id="artistInfo" rows="4" required>{{artist.artistInfo}}</textarea>
+                            <textarea name="artistInfo" class="form-control {{#errors.artistInfo}}is-invalid{{/errors.artistInfo}}" id="artistInfo" rows="4">{{artist.artistInfo}}</textarea>
+                            {{#errors.artistInfo}}
+                                <div class="invalid-feedback">{{errors.artistInfo}}</div>
+                            {{/errors.artistInfo}}
                         </div>
 
                         <input type="hidden" name="_csrf" value="{{token}}" />

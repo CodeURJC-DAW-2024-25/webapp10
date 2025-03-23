@@ -176,7 +176,7 @@ public class WebController {
 			model.addAttribute("concertId", id);
 
 		} catch (NoSuchElementException e) {
-			return "bookNotFound";
+			return "redirect:/";
 		}
 		return "concertInfo";
 

@@ -1,4 +1,5 @@
 # webapp10
+# webapp10- Preparation
 ## Web name
 - TicketZone Fest
 ## Team members
@@ -34,6 +35,8 @@
 ## Algorithm
 - Each artist will be classified by its genre. When a registered user signs in, the concerts displayed first will be organized based on the genres of concerts the user has previously purchased tickets for.
 - The concerts that have sold the most tickets will appear first.
+
+# webapp10- Practice 1
 ## Screenshots
 ![indexScreenshot](https://github.com/user-attachments/assets/af78d42a-6cea-4a6b-9a13-7b85600316a3)
 - Description: main page that includes all the information about the different concerts and artists, in addition to allowing navigation to user registration, login and modification of artists and concerts if you are an administrator.
@@ -212,3 +215,105 @@ To clone the project using **VSCode**, follow these steps:
 |                                           | **File 3**      | [Concert](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/model/Concert.java)|
 |                                           | **File 4**      | [newArtist](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/resources/templates/newArtist.html)|
 |                                           | **File 5**      | [newConcert](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/resources/templates/newConcert.html)|
+
+# webapp10- Practice 2
+## API REST Documentation
+
+## Classes and templates diagram
+![updated_classesDiagram](https://github.com/user-attachments/assets/c49d41b6-10e7-44e1-bd49-553319b3a879)
+
+## 🚀 Docker app execution Instructions
+
+## Docker image construction Documentation
+
+## Deploy Virtual Machine Documentation
+
+## Deploy Virtual Machine URL
+
+## Members participation
+- **Alberto Manjón López**
+  - *Task done descriptions*
+    - Add edit user functionality, edit all the services in order to adapt to the DTOs and API Rest and secure the correct functionality of the web, add NoSuchElementExceptionCA, edit controllers (webController, graphicController, RegisteredWebController)and most of the DTOs with its mappers, to adapt all the changes to the application's functionalities and make it work with functionalities such as register user, images, newConcert, editConcert, deleteConcert, deleteArtist, purchaseTickets and pie graphic.
+
+| **Section**                               |                 | **Details**                                                               |
+| ----------------------------------------  | --------------- | ------------------------------------------------------------------------- |
+| **Most significant commits**              | **Commit 1**    | [Add edit user](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/a2ad0ec74ec021f9c39e22dd51c2019abbafb34a)|
+|                                           | **Commit 2**    | [edit services in order to apply the DTOs and API REST](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/f474ce4d7940693f9558d95615ecf3b96f4d5dd5)|
+|                                           | **Commit 3**    | [Modified concerts and user to adapt into DTOs, and correct errors in file in order to compile](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/e503578bd952fd7a8523cfc36ea53b6dcc22a088)|
+|                                           | **Commit 4**    | [Refactor user registration, edit user and user images in order to apply the services and UserDTO and NewUserDTO](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/b1fe5edc529b177a3df74ca36bf402174004c5a1)|
+|                                           | **Commit 5**    | [correct delete artist functionalities and other errors](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/033a96de4d444261fbdf96e55720b7513ecee0fa)|
+| **Files that have participated the most** | **File 1**      | [WebController](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/controller/WebController.java)|
+|                                           | **File 2**      | [UserService](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/service/UserService.java)|
+|                                           | **File 3**      | [ConcertService](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/service/ConcertService.java)|
+|                                           | **File 4**      | [editUser.html](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/resources/templates/editUser.html)|
+|                                           | **File 5**      | [RegisteredWebController](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/controller/RegisteredWebController.java)|
+
+
+- **César Valero Bueno**
+  - *Task done descriptions*
+    - 
+
+| **Section**                               |                 | **Details**       |
+| ----------------------------------------  | --------------- | ----------------- |
+| **Most significant commits**              | **Commit 1**    | []()|
+|                                           | **Commit 2**    | []()|
+|                                           | **Commit 3**    | []()|
+|                                           | **Commit 4**    | []()|
+|                                           | **Commit 5**    | []()|
+| **Files that have participated the most** | **File 1**      | []()|
+|                                           | **File 2**      | []()|
+|                                           | **File 3**      | []()|
+|                                           | **File 4**      | []()|
+|                                           | **File 5**      | []()|
+
+- **Irene García López**
+  - *Task done descriptions*
+    - 
+
+| **Section**                               |                 | **Details**       |
+| ----------------------------------------  | --------------- | ----------------- |
+| **Most significant commits**              | **Commit 1**    | []()|
+|                                           | **Commit 2**    | []()|
+|                                           | **Commit 3**    | []()|
+|                                           | **Commit 4**    | []()|
+|                                           | **Commit 5**    | []()|
+| **Files that have participated the most** | **File 1**      | []()|
+|                                           | **File 2**      | []()|
+|                                           | **File 3**      | []()|
+|                                           | **File 4**      | []()|
+|                                           | **File 5**      | []()|
+
+- **Andrea Garrobo Guzmán**
+  - *Task done descriptions*
+    - 
+
+| **Section**                               |                 | **Details**       |
+| ----------------------------------------  | --------------- | ----------------- |
+| **Most significant commits**              | **Commit 1**    | []()|
+|                                           | **Commit 2**    | []()|
+|                                           | **Commit 3**    | []()|
+|                                           | **Commit 4**    | []()|
+|                                           | **Commit 5**    | []()|
+| **Files that have participated the most** | **File 1**      | []()|
+|                                           | **File 2**      | []()|
+|                                           | **File 3**      | []()|
+|                                           | **File 4**      | []()|
+|                                           | **File 5**      | []()|
+
+
+- **Natalia Méndez Barrios**
+  - *Task done descriptions*
+    - 
+
+| **Section**                               |                 | **Details**                                                       |
+| ----------------------------------------  | --------------- | ----------------------------------------------------------------- |
+| **Most significant commits**              | **Commit 1**    | []()|
+|                                           | **Commit 2**    | []()|
+|                                           | **Commit 3**    | []()|
+|                                           | **Commit 4**    | []()|
+|                                           | **Commit 5**    | []()|
+| **Files that have participated the most** | **File 1**      | []()|
+|                                           | **File 2**      | []()|
+|                                           | **File 3**      | []()|
+|                                           | **File 4**      | []()|
+|                                           | **File 5**      | []()|

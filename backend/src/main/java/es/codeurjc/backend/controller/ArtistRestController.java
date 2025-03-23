@@ -19,7 +19,7 @@ import es.codeurjc.backend.service.ArtistService;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
-@RequestMapping("/api/artists")
+@RequestMapping("/api/v1/artists")
 public class ArtistRestController {
 
     @Autowired

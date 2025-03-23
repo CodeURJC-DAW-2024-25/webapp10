@@ -25,7 +25,7 @@ import es.codeurjc.backend.service.UserService;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1/users")
 public class UserRestController {
 	
 	@Autowired

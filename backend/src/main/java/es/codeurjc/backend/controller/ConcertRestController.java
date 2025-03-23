@@ -25,7 +25,7 @@ import es.codeurjc.backend.service.ConcertService;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
-@RequestMapping("/api/concerts")
+@RequestMapping("/api/v1/concerts")
 public class ConcertRestController {
 
 	@Autowired

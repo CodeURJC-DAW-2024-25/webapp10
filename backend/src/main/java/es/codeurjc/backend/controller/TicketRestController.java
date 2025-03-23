@@ -25,7 +25,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
-@RequestMapping("/api/tickets")
+@RequestMapping("/api/v1/tickets")
 public class TicketRestController {
 
     @Autowired

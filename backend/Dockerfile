@@ -23,6 +23,12 @@ RUN mvn package -o -DskipTests=true
 #################################################
 FROM openjdk:21-jdk-slim
 
+# Instala las dependencias necesarias para la gestión de fuentes
+RUN apt-get update && apt-get install -y \
+    libfreetype6 \
+    libfontconfig1 \
+    && rm -rf /var/lib/apt/lists/*
+
 # Define el directorio de trabajo donde se encuentra el JAR
 WORKDIR /usr/app/
 

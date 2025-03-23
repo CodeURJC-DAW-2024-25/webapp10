@@ -60,20 +60,20 @@ public class WebSecurityConfig {
 		http.authenticationProvider(authenticationProvider());
 
 		http
-				.securityMatcher("/api/**")
+				.securityMatcher("/api/v1/**")
 				.exceptionHandling(handling -> handling.authenticationEntryPoint(unauthorizedHandlerJwt));
 
 		http.authorizeHttpRequests(authorize -> authorize
 				// PRIVATE ENDPOINTS
-				.requestMatchers(HttpMethod.POST, "/api/artists").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.PUT, "/api/artists/**").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.DELETE, "/api/artists/**").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.POST, "/api/tickets").hasAnyRole("USER", "ADMIN")
-				.requestMatchers(HttpMethod.GET, "/api/users/me").hasAnyRole("USER", "ADMIN")
-				.requestMatchers(HttpMethod.PUT, "/api/users/me").hasAnyRole("USER", "ADMIN")
-				.requestMatchers(HttpMethod.POST, "/api/concerts").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.PUT, "/api/concerts/**").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.DELETE, "/api/concerts/**").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.POST, "/api/v1/artists").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.PUT, "/api/v1/artists/**").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.DELETE, "/api/v1/artists/**").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.POST, "/api/v1/tickets").hasRole("USER")
+				.requestMatchers(HttpMethod.GET, "/api/v1/users/me").hasAnyRole("USER", "ADMIN")
+				.requestMatchers(HttpMethod.PUT, "/api/v1/users/me").hasAnyRole("USER", "ADMIN")
+				.requestMatchers(HttpMethod.POST, "/api/v1/concerts").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.PUT, "/api/v1/concerts/**").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.DELETE, "/api/v1/concerts/**").hasRole("ADMIN")
 
 				// PUBLIC ENDPOINTS
 				.anyRequest().permitAll()

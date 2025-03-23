@@ -263,7 +263,7 @@ public class WebController {
 		if (newConcertDTO.location() == null || newConcertDTO.location().trim().isEmpty()) {
 			bindingResult.rejectValue("location", "error.location", "Location cannot be empty");
 		}
-
+	
 		if (newConcertDTO.map() == null || newConcertDTO.location().trim().isEmpty()) {
 			bindingResult.rejectValue("map", "error.map", "Map cannot be empty");
 		}
@@ -283,12 +283,12 @@ public class WebController {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("errorMessage", "Please check the fields and correct any errors.");
 			model.addAttribute("artists", artistService.getArtists());
-			return "newConcert";
+			return "newConcert";  
 		}
 	
 		if (concertService.existsConcertName(newConcertDTO.concertName())) {
 			redirectAttributes.addFlashAttribute("errorMessage", "A concert with the same name already exists.");
-			return "redirect:/newconcert";
+			return "redirect:/newconcert"; 
 		}
 	
 		createOrReplaceConcert(newConcertDTO, null, null, null);
@@ -410,7 +410,7 @@ public class WebController {
 	}
 
 	@PostMapping("/newartist")
-	public String newArtistProcess(Model model, @Valid NewArtistRequestDTO newArtistRequestDTO, BindingResult bindingResult)
+	public String newArtistProcess(Model model, @Valid NewArtistRequestDTO newArtistRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes)
 			throws IOException, SQLException {
 
 		if (bindingResult.hasErrors()) {
@@ -429,6 +429,7 @@ public class WebController {
 
 		createOrReplaceArtist(newArtistRequestDTO, null);
 		
+		redirectAttributes.addFlashAttribute("successMessage", "Artist created successfully.");
 		return "redirect:/";
 	}
 
@@ -445,7 +446,7 @@ public class WebController {
 	}
 
 	@PostMapping("/editArtist/{id}")
-	public String editArtistProcess(Model model, @Valid NewArtistRequestDTO newArtistRequestDTO, BindingResult bindingResult, @PathVariable Long id)
+	public String editArtistProcess(Model model, @Valid NewArtistRequestDTO newArtistRequestDTO, BindingResult bindingResult, @PathVariable Long id, RedirectAttributes redirectAttributes)
 			throws IOException, SQLException {
 
 		if (bindingResult.hasErrors()) {
@@ -456,6 +457,7 @@ public class WebController {
 
 		createOrReplaceArtist(newArtistRequestDTO, id);
 	
+		redirectAttributes.addFlashAttribute("successMessage", "Artist edited successfully.");
 		return "redirect:/"; 
 	}
 	
@@ -524,18 +526,71 @@ public class WebController {
 	}
 
 	@PostMapping("/editconcert/{id}")
-	public String editConcert(HttpServletRequest request, boolean removeImage, Model model, @PathVariable long id,
+	public String editConcertProcess(
 			NewConcertDTO newConcertDTO,
+			BindingResult bindingResult,
+			Model model,
+			@PathVariable long id,
+			boolean removeImage,
 			RedirectAttributes redirectAttributes) throws IOException, SQLException {
+
+		if (newConcertDTO.concertName() == null || newConcertDTO.concertName().trim().isEmpty()) {
+			bindingResult.rejectValue("concertName", "error.concertName", "Concert name cannot be empty");
+		}
+
+		if (newConcertDTO.concertDetails() == null || newConcertDTO.concertDetails().trim().isEmpty()) {
+			bindingResult.rejectValue("concertDetails", "error.concertDetails", "Concert details cannot be empty");
+		}
+
+		if (newConcertDTO.concertDate() == null || newConcertDTO.concertDate().trim().isEmpty()) {
+			bindingResult.rejectValue("concertDate", "error.concertDate", "Concert date cannot be empty");
+		}
+
+		if (newConcertDTO.concertTime() == null || newConcertDTO.concertTime().trim().isEmpty()) {
+			bindingResult.rejectValue("concertTime", "error.concertTime", "Concert time cannot be empty");
+		}
+
+		if (newConcertDTO.location() == null || newConcertDTO.location().trim().isEmpty()) {
+			bindingResult.rejectValue("location", "error.location", "Location cannot be empty");
+		}
+
+		if (newConcertDTO.map() == null || newConcertDTO.map().trim().isEmpty()) {
+			bindingResult.rejectValue("map", "error.map", "Map cannot be empty");
+		}
+
+		if (newConcertDTO.stadiumPrice() == null || newConcertDTO.stadiumPrice() <= 0) {
+			bindingResult.rejectValue("stadiumPrice", "error.stadiumPrice", "Stadium price must be greater than 0");
+		}
+
+		if (newConcertDTO.trackPrice() == null || newConcertDTO.trackPrice() <= 0) {
+			bindingResult.rejectValue("trackPrice", "error.trackPrice", "Track price must be greater than 0");
+		}
+
+		if (newConcertDTO.artistIds() == null || newConcertDTO.artistIds().isEmpty()) {
+			bindingResult.rejectValue("artistIds", "error.artistIds", "At least one artist must be selected");
+		}
+
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("errorMessage", "Please check the fields and correct any errors.");
+			model.addAttribute("concert", concertService.getConcert(id));
+			model.addAttribute("artists", artistService.getArtists()); 
+			return "editconcert"; 
+		}
+
+		if (concertService.existsConcertName(newConcertDTO.concertName())) {
+			model.addAttribute("errorMessage", "A concert with the same name already exists.");
+			model.addAttribute("concert", concertService.getConcert(id));
+			model.addAttribute("artists", artistService.getArtists());
+			return "editconcert";
+		}
 
 		ConcertDTO concertDTO = concertService.getConcert(id);
 		createOrReplaceConcert(newConcertDTO, id, removeImage, concertDTO.tickets());
 
-		redirectAttributes.addFlashAttribute("successMessage", "Concert creation success.");
-
+		redirectAttributes.addFlashAttribute("successMessage", "Concert edited successfully.");
 		return "redirect:/";
-
 	}
+
 
 	@GetMapping("/concert/delete/{id}")
 	public String deleteConcert(Model model, @PathVariable Long id, RedirectAttributes redirectAttributes) {

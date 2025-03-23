@@ -130,6 +130,33 @@ public class UserService {
 		}
 	}
 
+	public void replaceUserImage(long id, InputStream inputStream, long size) {
+
+		User user = repository.findById(id).orElseThrow();
+
+		if (!user.getImage()) {
+			throw new NoSuchElementException();
+		}
+
+		user.setProfilePhoto(BlobProxy.generateProxy(inputStream, size));
+
+		repository.save(user);
+	}
+
+	public void deleteUserImage(long id) {
+
+		User user = repository.findById(id).orElseThrow();
+
+		if (!user.getImage()) {
+			throw new NoSuchElementException();
+		}
+
+		user.setProfilePhoto(null);
+		user.setImage(false);
+
+		repository.save(user);
+	}
+
 	private UserDTO toDTO(User user) {
 		return mapper.toDTO(user);
 	}

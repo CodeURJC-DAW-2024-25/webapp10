@@ -78,12 +78,12 @@ public class ConcertRestController {
 	@GetMapping("/{id}/image")
 	public ResponseEntity<Object> getConcertImage(@PathVariable long id) throws SQLException, IOException {
 
-		Resource postImage = concertService.getConcertImage(id);
+		Resource image = concertService.getConcertImage(id);
 
 		return ResponseEntity
 				.ok()
 				.header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
-				.body(postImage);
+				.body(image);
 
 	}
 

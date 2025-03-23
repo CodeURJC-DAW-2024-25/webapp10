@@ -24,12 +24,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/api/auth/login",
+					"raw": "{{baseUrl}}/api/v1/auth/login",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"api",
+						"v1",
 						"auth",
 						"login"
 					]
@@ -55,12 +56,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/api/auth/login",
+					"raw": "{{baseUrl}}/api/v1/auth/login",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"api",
+						"v1",
 						"auth",
 						"login"
 					]
@@ -77,12 +79,13 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/api/auth/logout",
+					"raw": "{{baseUrl}}/api/v1/auth/logout",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"api",
+						"v1",
 						"auth",
 						"logout"
 					]
@@ -99,14 +102,20 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/api/concerts/",
+					"raw": "{{baseUrl}}/api/v1/concerts?page=1",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"api",
-						"concerts",
-						""
+						"v1",
+						"concerts"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						}
 					]
 				}
 			},
@@ -121,12 +130,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/api/concerts/1",
+					"raw": "{{baseUrl}}/api/v1/concerts/1",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"api",
+						"v1",
 						"concerts",
 						"1"
 					]
@@ -143,12 +153,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/api/users/me",
+					"raw": "{{baseUrl}}/api/v1/users/me",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"api",
+						"v1",
 						"users",
 						"me"
 					]
@@ -174,12 +185,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/api/concerts/",
+					"raw": "{{baseUrl}}/api/v1/concerts/",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"api",
+						"v1",
 						"concerts",
 						""
 					]
@@ -196,12 +208,13 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/api/concerts/1",
+					"raw": "{{baseUrl}}/api/v1/concerts/1",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"api",
+						"v1",
 						"concerts",
 						"1"
 					]
@@ -218,12 +231,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/api/artists/",
+					"raw": "{{baseUrl}}/api/v1/artists/",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"api",
+						"v1",
 						"artists",
 						""
 					]
@@ -249,12 +263,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/api/artists/",
+					"raw": "{{baseUrl}}/api/v1/artists/",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"api",
+						"v1",
 						"artists",
 						""
 					]
@@ -280,12 +295,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/api/concerts/1",
+					"raw": "{{baseUrl}}/api/v1/concerts/1",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"api",
+						"v1",
 						"concerts",
 						"1"
 					]
@@ -302,12 +318,13 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/api/artists/1",
+					"raw": "{{baseUrl}}/api/v1/artists/1",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"api",
+						"v1",
 						"artists",
 						"1"
 					]
@@ -333,12 +350,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/api/artists/1",
+					"raw": "{{baseUrl}}/api/v1/artists/1",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"api",
+						"v1",
 						"artists",
 						"1"
 					]
@@ -364,12 +382,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/api/users/",
+					"raw": "{{baseUrl}}/api/v1/users/",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"api",
+						"v1",
 						"users",
 						""
 					]
@@ -395,12 +414,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/api/users/me",
+					"raw": "{{baseUrl}}/api/v1/users/me",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"api",
+						"v1",
 						"users",
 						"me"
 					]
@@ -426,14 +446,294 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/api/tickets/",
+					"raw": "{{baseUrl}}/api/v1/tickets/",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"api",
+						"v1",
 						"tickets",
 						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pie Chart",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/graphics/piechart/1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"graphics",
+						"piechart",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Bar Graph",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/graphics/bargraph",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"graphics",
+						"bargraph"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User Image",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "imageFile",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/users/me/image",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"me",
+						"image"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Image",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/users/me/image",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"me",
+						"image"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User Image",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/users/me/image",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"me",
+						"image"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User Image",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "imageFile",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/users/me/image",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"me",
+						"image"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Concert Image",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/concerts/1/image",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"concerts",
+						"1",
+						"image"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Concert Image",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "imageFile",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/concerts/1/image",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"concerts",
+						"1",
+						"image"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Concert Image",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "imageFile",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/concerts/1/image",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"concerts",
+						"1",
+						"image"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Concert Image",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/concerts/1/image",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"concerts",
+						"1",
+						"image"
 					]
 				}
 			},

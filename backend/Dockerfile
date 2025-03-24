@@ -7,13 +7,13 @@ FROM maven:3.9.9-eclipse-temurin-21 AS builder
 WORKDIR /project
 
 # Copy project dependencies
-COPY ../backend/pom.xml ./
+COPY pom.xml /project/ 
 
 # Download project dependencies
 RUN mvn clean package
 
 # Copy project source code
-COPY ../backend/src ./src
+COPY /src /project/src
 
 # Compile project
 RUN mvn package -o -DskipTests=true

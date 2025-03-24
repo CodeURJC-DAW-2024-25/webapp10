@@ -7,10 +7,8 @@ TAG="latest"
 # Remove carriage return characters
 sed -i 's/\r//' "$0"
 
-cd "$(dirname "$0")/.."
-
 echo "Building Docker image..."
-docker build -t ${APP_NAME}:${TAG} -f  docker/Dockerfile . || {
+docker build -t ${APP_NAME}:${TAG} . || {
     echo "ERROR: Docker failed"
     exit 1
 }

@@ -319,7 +319,32 @@ docker-compose up --build
 ---
 
 ## Docker image construction Documentation
-
+## 📌 **Requirements**
+1. Have Docker installed.
+2. Have created a properly configured Dockerfile.
+3. Have the repository cloned.
+4. Have access to the terminal with sufficient permissions to be able to run Docker.
+### 1️⃣ **Check if we have Docker installed**  
+Check the version of Docker that we have installed with the following command:
+```sh
+docker --version
+```
+### 2️⃣ **Clone the repository**  
+```sh
+git clone https://github.com/CodeURJC-DAW-2024-25/webapp10.git
+```
+### 3️⃣ **Navigate to the directory containing create_image.sh:**  
+```sh
+cd webapp10/Backend/
+```
+### 4️⃣ **Give execution permission to the file named create_image.sh**
+```sh
+chmod +x create_image.sh
+```
+### 5 **Run the Script**
+```sh
+./create_image.sh
+```
 ## Deploy Virtual Machine Documentation
 
 ## Deploy Virtual Machine URL
@@ -379,20 +404,21 @@ docker-compose up --build
 
 - **Andrea Garrobo Guzmán**
   - *Task done descriptions*
-    - 
+    - In this lab, I was in charge of ensuring the security of the practice, as well as generating the documentation with OpenApi. I created the script that creates the image, although later for convenience we created a simpler one. I also created a script to clean up Docker, which we later decided to eliminate because we ultimately didn't need it. I created it so we wouldn't be constantly running cleanup commands to test the application. This is how I worked with my partner to validate the form fields.
+I didn't help much with the DTOs because the team agreed that three people would be in charge of that, as there were many conflicts, and we often all helped from the same computer to make it much easier.
 
 | **Section**                               |                 | **Details**       |
 | ----------------------------------------  | --------------- | ----------------- |
-| **Most significant commits**              | **Commit 1**    | []()|
-|                                           | **Commit 2**    | []()|
-|                                           | **Commit 3**    | []()|
-|                                           | **Commit 4**    | []()|
-|                                           | **Commit 5**    | []()|
-| **Files that have participated the most** | **File 1**      | []()|
-|                                           | **File 2**      | []()|
-|                                           | **File 3**      | []()|
-|                                           | **File 4**      | []()|
-|                                           | **File 5**      | []()|
+| **Most significant commits**              | **Commit 1**    | [Security in Spring](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/545dc5ec254f794c51c81df99cd7ad6625b0142c)|
+|                                           | **Commit 2**    | [Script to build the image](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/d2fc3364a4cf1cac62a1d62a8cd6cebc8043dfe6)|
+|                                           | **Commit 3**    | [OpenApi documentation](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/a02085b9f568244e1e9dd266a0bc52d2827c39d9)|
+|                                           | **Commit 4**    | [Finish putting it correctly](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/f84487b257f342798e54d25accdd0c2c07ed1e8a)|
+
+| **Files that have participated the most** | **File 1**      | [WebSecurityConfig.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/security/WebSecurityConfig.java)|
+|                                           | **File 2**      | [pom.xml](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/pom.xml)|
+|                                           | **File 3**      | [create_image.sh](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/create_image.sh)|
+|                                           | **File 4**      | [WebController.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/controller/WebController.java)|
+|                                           | **File 5**      | [LoginController.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/controller/auth/LoginController.java)|
 
 
 - **Natalia Méndez Barrios**

@@ -311,7 +311,7 @@ If the application does not start correctly, try the following steps:
 ```sh
 mvn clean
 docker-compose down
-docker-compose up
+docker-compose up --build
 ```
 
 ---
@@ -360,7 +360,7 @@ docker-compose up
 
 - **Irene García López**
    - *Task done descriptions*
-    - In this second practice, I have implemented all the initial DTOs and updated the web controller to support ticket-related functions. I have also developed the initial mappers to facilitate data conversion between entities and DTOs. Additionally, I implemented form validations and error handling to ensure proper user input validation. Furthermore, I enabled the correct functionality for removing images, ensuring that a default image is set when deleting a concert image or a user's profile picture during the editing process.
+    - In this second practice, I have implemented all the initial DTOs and updated the web controller to support ticket-related functions. I have also developed the initial mappers to facilitate data conversion between entities and DTOs. Additionally, I implemented form validations and error handling to ensure proper user input validation. Furthermore, I enabled the correct functionality for removing images, ensuring that a default image is set when deleting a concert image or a user's profile picture during the editing process. Additionally, I added Dockerized Application Execution Instructions.
 
 | **Section**                               |                 | **Details**       |
 | ----------------------------------------  | --------------- | ----------------- |

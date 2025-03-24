@@ -102,19 +102,24 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/api/v1/concerts?page=1",
+					"raw": "{{baseUrl}}/api/v1/concerts/?page=0&size=4",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"api",
 						"v1",
-						"concerts"
+						"concerts",
+						""
 					],
 					"query": [
 						{
 							"key": "page",
-							"value": "1"
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "4"
 						}
 					]
 				}
@@ -509,6 +514,18 @@
 		},
 		{
 			"name": "Create User Image",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -521,7 +538,7 @@
 						{
 							"key": "imageFile",
 							"type": "file",
-							"src": []
+							"src": "/C:/Users/cesar/Downloads/imagenGato.jpg"
 						}
 					]
 				},
@@ -603,7 +620,7 @@
 						{
 							"key": "imageFile",
 							"type": "file",
-							"src": []
+							"src": "/C:/Users/cesar/Downloads/imagenGato.jpg"
 						}
 					]
 				},
@@ -661,7 +678,7 @@
 						{
 							"key": "imageFile",
 							"type": "file",
-							"src": []
+							"src": "/C:/Users/cesar/Downloads/imagenGato.jpg"
 						}
 					]
 				},
@@ -695,7 +712,7 @@
 						{
 							"key": "imageFile",
 							"type": "file",
-							"src": []
+							"src": "/C:/Users/cesar/Downloads/imagenGato.jpg"
 						}
 					]
 				},

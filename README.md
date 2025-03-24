@@ -223,6 +223,98 @@ To clone the project using **VSCode**, follow these steps:
 ![updated_classesDiagram](https://github.com/user-attachments/assets/c49d41b6-10e7-44e1-bd49-553319b3a879)
 
 ## 🚀 Docker app execution Instructions
+ 
+---
+
+# 🚀 **Execution Instructions**  
+
+---
+
+## 📌 **Requirements**  
+- **Docker**: 27.5.1 
+- **Docker Compose**: v2.32.4
+- **Java**: JDK 21  
+- **Maven**: 4.0.0  
+- **Spring Boot**: 3.4.2  
+- **MySQL**: 8.0.33  
+- **Visual Studio Code** (or any other IDE)  
+
+---
+
+## 🔧 **Installation & Setup**  
+
+### 1️⃣ **Clone the repository**  
+To clone the project using VSCode, follow these steps:  
+- Open **VSCode**  
+- Go to **Source Control** (`Ctrl + Shift + G`)  
+- Click **Clone Repository** → **"Clone from GitHub"**  
+- Select your repository and choose a local folder  
+- Open the cloned project in VSCode  
+
+### 2️⃣ **Login to Docker**  
+Before running the application, you must log in to Docker:  
+```sh
+docker login
+```
+Enter your **Docker username** and **password** when prompted.  
+
+### 3️⃣ **Run the application**  
+Navigate to the project directory containing `docker-compose.yml` and execute:  
+```sh
+docker-compose up --build
+```
+This command will build and start all necessary containers, including the database and backend.  
+
+### 4️⃣ **Wait for the application to start**  
+Once all services are running, the application will be ready for use.  
+
+---
+
+## 🌐 **Access the Application**  
+- **Web Interface:** [https://localhost/](https://localhost/)  
+
+---
+
+## 💾 **Database Configuration (if needed)**  
+If the database is not set up correctly, follow these steps:  
+- Open **MySQL Workbench**  
+- Click on **Database → Connect to Database**  
+- Enter the credentials:  
+  - **User:** `root`  
+  - **Password:** `password`  
+- Click **OK** to establish the connection  
+- If the database does not exist, open a terminal and run:  
+  ```sql
+  CREATE DATABASE concerts;
+  ```  
+
+---
+
+## 🔑 **Test Credentials**  
+| Role              | Username | Password |  
+|-------------------|---------|----------|  
+| Registered User  | `user`  | `user`   |  
+| Administrator    | `admin` | `admin`  |  
+
+---
+
+## ⏹ **Stop the application**  
+To stop and remove the running containers:  
+```sh
+docker-compose down
+```
+
+---
+
+## 🛠 **Troubleshooting**  
+If the application does not start correctly, try the following steps:  
+```sh
+mvn clean
+docker-compose down
+docker-compose up
+```
+
+---
 
 ## Docker image construction Documentation
 

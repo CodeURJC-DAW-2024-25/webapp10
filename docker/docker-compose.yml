@@ -1,12 +1,12 @@
 version: "3.9"
 services: 
   web:
-    build: 
-      context: ../backend
-      dockerfile: ../docker/Dockerfile
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
     restart: always
     ports:
-      - 443:8443
+      - 441:8443
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/concerts
       - SPRING_DATASOURCE_USERNAME=root

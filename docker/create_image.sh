@@ -1,12 +1,18 @@
 #!/bin/bash
 
-# Var
+# Variables
 APP_NAME="webapp_10"
+TAG="latest"
 
+# Remove carriage return characters
 sed -i 's/\r//' "$0"
 
-echo "Building image docker..."
-docker build -t $APP_NAME .
+cd "$(dirname "$0")/.."
 
-echo "Image built success: $IMAGE_NAME"
+echo "Building Docker image..."
+docker build -t ${APP_NAME}:${TAG} -f  docker/Dockerfile . || {
+    echo "ERROR: Docker failed"
+    exit 1
+}
 
+echo "Image built successfully: $APP_NAME"

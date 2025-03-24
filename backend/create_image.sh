@@ -1,11 +1,24 @@
-#Image and Dockerhub user data
-DOCKER_USERNAME="garrobo0"
-DOCKER_PASSWORD="DockerDAW@2025"
-DOCKER_REPO="$DOCKER_USERNAME/pruebadocker"
-DOCKER_TAG="latest"
+#!/bin/bash
 
-#Build and push project image
-docker build -t $DOCKER_REPO:$DOCKER_TAG .
-echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-docker push $DOCKER_REPO:$DOCKER_TAG
-docker logout
+if ! command -v docker &> /dev/null; then
+    echo "Error: Docker not downloaded."
+    exit 1
+fi
+
+DOCKER_USER=${1:-$DOCKER_USER}
+if [ -z "$DOCKER_USER" ]; then
+    echo "Error: Not docker user."
+    echo "Uso: ./create_image.sh <usuario_docker> [nombre_imagen] [tag]"
+    exit 1
+fi
+
+IMAGE_NAME=${2:-"mi_aplicacion"}
+
+TAG=${3:-"latest"}
+
+FULL_IMAGE_NAME="$DOCKER_USER/$IMAGE_NAME:$TAG"
+
+echo "Building image Docker..."
+docker build -t "$FULL_IMAGE_NAME" .
+
+echo "Image built: $FULL_IMAGE_NAME"

@@ -267,8 +267,8 @@ To clone the project using **VSCode**, follow these steps:
 |                                           | **File 5**      | [ArtistRestController.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/controller/ArtistRestController.java)|
 
 - **Irene García López**
-  - In this second practice, I have implemented all the initial DTOs and updated the web controller to support ticket-related functions. I have also developed the initial mappers to facilitate data conversion between entities and DTOs. Additionally, I implemented form validations and error handling to ensure proper user input validation. Furthermore, I enabled the correct functionality for removing images, ensuring that a default image is set when deleting a concert image or a user's profile picture during the editing process.
-    - 
+   - *Task done descriptions*
+    - In this second practice, I have implemented all the initial DTOs and updated the web controller to support ticket-related functions. I have also developed the initial mappers to facilitate data conversion between entities and DTOs. Additionally, I implemented form validations and error handling to ensure proper user input validation. Furthermore, I enabled the correct functionality for removing images, ensuring that a default image is set when deleting a concert image or a user's profile picture during the editing process.
 
 | **Section**                               |                 | **Details**       |
 | ----------------------------------------  | --------------- | ----------------- |

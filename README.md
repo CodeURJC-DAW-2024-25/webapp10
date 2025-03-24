@@ -218,6 +218,8 @@ To clone the project using **VSCode**, follow these steps:
 
 # webapp10- Practice 2
 ## API REST Documentation
+- **Open API Specification (api-docs.yaml)**: (https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/api-docs/api-docs.yaml)
+- **HTML API Documentation**: (https://raw.githack.com/CodeURJC-DAW-2024-25/webapp10/main/backend/api-docs/api-docs.html)
 
 ## Classes and templates diagram
 ![updated_classesDiagram](https://github.com/user-attachments/assets/c49d41b6-10e7-44e1-bd49-553319b3a879)

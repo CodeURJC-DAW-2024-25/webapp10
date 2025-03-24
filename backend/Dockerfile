@@ -10,7 +10,7 @@ WORKDIR /project
 COPY pom.xml /project/
 
 # Descarga las dependencias del proyecto
-RUN mvn clean verify
+RUN mvn clean package
 
 # Copia el código del proyecto
 COPY /src /project/src

@@ -34,3 +34,6 @@ build/
 
 # MySQL database
 mysql/
+
+# OpenAPI Generator
+api-docs/

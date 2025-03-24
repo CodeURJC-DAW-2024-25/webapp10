@@ -82,7 +82,7 @@ public class WebSecurityConfig {
 				.requestMatchers(HttpMethod.PUT, "/api/v1/users/me/image").hasAnyRole("ADMIN", "USER")
 				.requestMatchers(HttpMethod.DELETE, "/api/v1/users/me/image").hasAnyRole("ADMIN", "USER")
 
-				.requestMatchers("/v3/api-docs.yaml", "/swagger-ui/*", "/swagger-ui.html").permitAll()
+				.requestMatchers("/v3/api-docs.yaml", "/v3/api-docs.html", "/swagger-ui/*", "/swagger-ui.html").permitAll()
 
 				// PUBLIC ENDPOINTS
 				.anyRequest().permitAll()
@@ -129,7 +129,7 @@ public class WebSecurityConfig {
 				.requestMatchers("/download/tickets/**").permitAll()
 				.requestMatchers("/infoGraphic/**").permitAll()
 				.requestMatchers("/ticketsByConcert").permitAll()
-				.requestMatchers("/v3/api-docs.yaml", "/v3/api-docs*", "/swagger-ui/*", "/swagger-ui.html").permitAll()
+				.requestMatchers("/v3/api-docs.yaml", "/v3/api-docs.html", "/v3/api-docs*", "/swagger-ui/*", "/swagger-ui.html").permitAll()
 
 				// PRIVATE PAGES
 				.requestMatchers("/editconcert/**").hasRole("ADMIN")

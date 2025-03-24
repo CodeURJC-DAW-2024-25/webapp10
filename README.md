@@ -412,8 +412,7 @@ I didn't help much with the DTOs because the team agreed that three people would
 | **Most significant commits**              | **Commit 1**    | [Security in Spring](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/545dc5ec254f794c51c81df99cd7ad6625b0142c)|
 |                                           | **Commit 2**    | [Script to build the image](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/d2fc3364a4cf1cac62a1d62a8cd6cebc8043dfe6)|
 |                                           | **Commit 3**    | [OpenApi documentation](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/a02085b9f568244e1e9dd266a0bc52d2827c39d9)|
-|                                           | **Commit 4**    | [Finish putting it correctly](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/f84487b257f342798e54d25accdd0c2c07ed1e8a)|
-
+|                                           | **Commit 4**    | [Finish putting it correctly](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/f84487b257f342798e54d25accdd0c2c07ed1e8a)|                    
 | **Files that have participated the most** | **File 1**      | [WebSecurityConfig.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/security/WebSecurityConfig.java)|
 |                                           | **File 2**      | [pom.xml](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/pom.xml)|
 |                                           | **File 3**      | [create_image.sh](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/create_image.sh)|

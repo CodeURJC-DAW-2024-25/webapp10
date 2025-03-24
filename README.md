@@ -267,21 +267,21 @@ To clone the project using **VSCode**, follow these steps:
 |                                           | **File 5**      | [ArtistRestController.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/controller/ArtistRestController.java)|
 
 - **Irene García López**
-  - *Task done descriptions*
+  - In this second practice, I have implemented all the initial DTOs and updated the web controller to support ticket-related functions. I have also developed the initial mappers to facilitate data conversion between entities and DTOs. Additionally, I implemented form validations and error handling to ensure proper user input validation. Furthermore, I enabled the correct functionality for removing images, ensuring that a default image is set when deleting a concert image or a user's profile picture during the editing process.
     - 
 
 | **Section**                               |                 | **Details**       |
 | ----------------------------------------  | --------------- | ----------------- |
-| **Most significant commits**              | **Commit 1**    | []()|
-|                                           | **Commit 2**    | []()|
-|                                           | **Commit 3**    | []()|
-|                                           | **Commit 4**    | []()|
-|                                           | **Commit 5**    | []()|
-| **Files that have participated the most** | **File 1**      | []()|
-|                                           | **File 2**      | []()|
-|                                           | **File 3**      | []()|
-|                                           | **File 4**      | []()|
-|                                           | **File 5**      | []()|
+| **Most significant commits**              | **Commit 1**    | [Add DTO and Mapper classes, update Artist model and add MapStruct dependencies](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/256c2f1ee0b49f8d33cfd0a09ccf4b44b416fbb6)|
+|                                           | **Commit 2**    | [Form validation and error handling for new artist, edit artist and new concert](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/93b8ed93107f1c4af25796a1c8bce3613157e456)|
+|                                           | **Commit 3**    | [Error handling for edit concert, form validation and fix other problems](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/3fb3e7004e8d5e42191f368fccfa905f10e87ee9)|
+|                                           | **Commit 4**    | [Implement NewTicketDTO, related methods and fix TicketDTO problems](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/479337023fd44ed5f1ae2d3ea159619a828f8ce0)|
+|                                           | **Commit 5**    | [Remove image correctly, form validation of edit user and error handling](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/145fa0d11892a58e950acd9e6e06504ee04b13e3)|
+| **Files that have participated the most** | **File 1**      | [WebController.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/a7dd9abb972c8c284db9c3ff74d14dbb2034357a/backend/src/main/java/es/codeurjc/backend/controller/WebController.java)|
+|                                           | **File 2**      | [editArtist.html](https://github.com/CodeURJC-DAW-2024-25/webapp10/blame/a7dd9abb972c8c284db9c3ff74d14dbb2034357a/backend/src/main/resources/templates/editArtist.html)|
+|                                           | **File 3**      | [ConcertDTO.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blame/a7dd9abb972c8c284db9c3ff74d14dbb2034357a/backend/src/main/java/es/codeurjc/backend/dto/concert/ConcertDTO.java)|
+|                                           | **File 4**      | [WebSecurityConfig.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blame/a7dd9abb972c8c284db9c3ff74d14dbb2034357a/backend/src/main/java/es/codeurjc/backend/security/WebSecurityConfig.java)|
+|                                           | **File 5**      | [editConcert.html](https://github.com/CodeURJC-DAW-2024-25/webapp10/blame/a7dd9abb972c8c284db9c3ff74d14dbb2034357a/backend/src/main/resources/templates/editConcert.html)|
 
 - **Andrea Garrobo Guzmán**
   - *Task done descriptions*

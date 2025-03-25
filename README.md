@@ -222,11 +222,7 @@ To clone the project using **VSCode**, follow these steps:
 - **HTML API Documentation**: (https://raw.githack.com/CodeURJC-DAW-2024-25/webapp10/main/backend/api-docs/api-docs.html)
 
 ## Classes and templates diagram
-![updated_classesDiagram](https://github.com/user-attachments/assets/c49d41b6-10e7-44e1-bd49-553319b3a879)
-
-## 🚀 Docker app execution Instructions
- 
----
+![updated_classesDiagram](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/imagesReadme/Classes&Templates_diagram.png)
 
 # 🚀 **Execution Instructions**  
 
@@ -247,11 +243,8 @@ To clone the project using **VSCode**, follow these steps:
 
 ### 1️⃣ **Clone the repository**  
 To clone the project using VSCode, follow these steps:  
-- Open **VSCode**  
-- Go to **Source Control** (`Ctrl + Shift + G`)  
-- Click **Clone Repository** → **"Clone from GitHub"**  
-- Select your repository and choose a local folder  
-- Open the cloned project in VSCode  
+```sh
+git clone https://github.com/CodeURJC-DAW-2024-25/webapp10  
 
 ### 2️⃣ **Login to Docker**  
 Before running the application, you must log in to Docker:  
@@ -274,21 +267,6 @@ Once all services are running, the application will be ready for use.
 
 ## 🌐 **Access the Application**  
 - **Web Interface:** [https://localhost/](https://localhost/)  
-
----
-
-## 💾 **Database Configuration (if needed)**  
-If the database is not set up correctly, follow these steps:  
-- Open **MySQL Workbench**  
-- Click on **Database → Connect to Database**  
-- Enter the credentials:  
-  - **User:** `root`  
-  - **Password:** `password`  
-- Click **OK** to establish the connection  
-- If the database does not exist, open a terminal and run:  
-  ```sql
-  CREATE DATABASE concerts;
-  ```  
 
 ---
 
@@ -345,9 +323,37 @@ chmod +x create_image.sh
 ```sh
 ./create_image.sh
 ```
+
+---
+
+
 ## Deploy Virtual Machine Documentation
+- Download the private key (appWeb10.key) to your local machine. 
+- To access the virtual machine, ensure you are connected to the university's network, either directly or through MyApps. 
+
+### 1️⃣ **Connect to the Virtual Machine** 
+- Open a terminal in the directory where the `appWeb10.key` file is downloaded and use the following command to connect:  
+```sh
+ssh -i ssh-keys/appWeb10.key vmuser@10.100.139.103
+```
+- or you can also use this command:
+```sh
+ssh -i ssh-keys/appWeb10.key vmuser@appWeb10.dawgis.etsii.urjc.es
+```
+### 2️⃣ **Clone the repository in the virtual machine**
+### 3️⃣ **Deploying the Application with Docker Compose**
+```sh
+docker-compose up --build
+```
+### 4️⃣ **Stop the deployment**
+```sh
+docker-compose down
+```
 
 ## Deploy Virtual Machine URL
+- URL to access the deployed application: (https://appweb10.dawgis.etsii.urjc.es/)
+
+---
 
 ## Members participation
 - **Alberto Manjón López**
@@ -422,17 +428,17 @@ I didn't help much with the DTOs because the team agreed that three people would
 
 - **Natalia Méndez Barrios**
   - *Task done descriptions*
-    - 
+    - In this project, I refactored parts of the WebController to work with DTOs and updated the ArtistService to handle DTOs, transforming them into domain objects before saving them in the database. Additionally, I contributed to the ConcertRestController and modified DTOs and the WebController to ensure empty fields are not allowed when creating a concert or an artist.
 
 | **Section**                               |                 | **Details**                                                       |
 | ----------------------------------------  | --------------- | ----------------------------------------------------------------- |
-| **Most significant commits**              | **Commit 1**    | []()|
-|                                           | **Commit 2**    | []()|
-|                                           | **Commit 3**    | []()|
-|                                           | **Commit 4**    | []()|
-|                                           | **Commit 5**    | []()|
-| **Files that have participated the most** | **File 1**      | []()|
-|                                           | **File 2**      | []()|
-|                                           | **File 3**      | []()|
-|                                           | **File 4**      | []()|
-|                                           | **File 5**      | []()|
+| **Most significant commits**              | **Commit 1**    | [API REST for concerts](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/cd4715aaf59d8bd5f15ab62c4fce4270668ddbdd)|
+|                                           | **Commit 2**    | [DTO, Service and Controller for artists](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/065fce04e64a093e3ef80111dd785fc4c6006f79)|
+|                                           | **Commit 3**    | [Handle cocert creation](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/ec8833741324b138e18d064d6aee031ff33eaaa4)|
+|                                           | **Commit 4**    | [Validation for concert creation](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/eecb919ef74542627be24598935e70937a0b1408)|
+|                                           | **Commit 5**    | [Validation for new artist and edit artist](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/06c4a83c8362ab2cd864d83eb5dcf5b074e20413)|
+| **Files that have participated the most** | **File 1**      | [ConcertRestController.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/controller/ConcertRestController.java)|
+|                                           | **File 2**      | [WebController.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/controller/WebController.java)|
+|                                           | **File 3**      | [NewArtistRequestDTO.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/dto/artist/NewArtistRequestDTO.java)|
+|                                           | **File 4**      | [ArtistService.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/service/ArtistService.java)|
+|                                           | **File 5**      | [ConcertService.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/service/ConcertService.java)|

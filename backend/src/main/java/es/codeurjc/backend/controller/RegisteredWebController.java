@@ -2,7 +2,6 @@ package es.codeurjc.backend.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import es.codeurjc.backend.dto.ticket.TicketDTO;
 import es.codeurjc.backend.dto.user.NewUserDTO;
 import es.codeurjc.backend.dto.user.UserDTO;
 import es.codeurjc.backend.service.UserService;
@@ -86,46 +83,7 @@ public class RegisteredWebController {
 
     }
 
-private UserDTO createOrReplaceUser(NewUserDTO newUserDTO, Long userId, Boolean removeImage)
-			throws SQLException, IOException {
-
-		boolean image = false;
-        String userName= newUserDTO.userName();
-        String password= null;
-        Integer numTicketsBought = 0;
-        String favoriteGenre= "None";
-        List<TicketDTO>tickets=null;
-        List<String> roles= List.of("USER");
-
-        if (newUserDTO.password() != null && !newUserDTO.password().isEmpty()) {
-            password = passwordEncoder.encode(newUserDTO.password());
-        }
-        
-		if (userId != null) {
-			UserDTO olduser = userService.getUser(userId);
-			image = removeImage ? false : olduser.image();
-            userName= olduser.userName();
-            password= olduser.password();
-            numTicketsBought= olduser.numTicketsBought();
-            favoriteGenre= olduser.favoriteGenre();
-            tickets= olduser.tickets();
-            roles= olduser.roles();
-		}
-
-       
-
-		UserDTO userDTO = new UserDTO(userId,
-				newUserDTO.fullName(), userName, newUserDTO.phone(),
-				newUserDTO.email(), password, newUserDTO.age(),
-				numTicketsBought, favoriteGenre, image, tickets, roles);
-
-		UserDTO newUser = userService.createOrReplaceUser(userId, userDTO);
-
-		MultipartFile imageField = newUserDTO.profilePhoto();
-		if (!imageField.isEmpty()) {
-			userService.createUserImage(newUser.id(), imageField.getInputStream(), imageField.getSize());
-		} 
-
-		return newUser;
-	}
+    private UserDTO createOrReplaceUser(NewUserDTO newUserDTO, Long userId, Boolean removeImage) throws SQLException, IOException {
+        return userService.UserCreationReplacement(userId, newUserDTO, removeImage, passwordEncoder);
+    }
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.codeurjc.backend.dto.concert.ConcertDTO;
 import es.codeurjc.backend.dto.ticket.NewTicketDTO;
 import es.codeurjc.backend.dto.ticket.TicketDTO;
 import es.codeurjc.backend.service.ConcertService;
@@ -56,12 +57,8 @@ public class TicketRestController {
 
         if(principal != null) {
 			
-            int price = 0;
-            if ("stadiumStand".equals(newTicketDTO.ticketType())) {
-                price = concertService.getConcert(newTicketDTO.concertId()).stadiumPrice();
-            } else if ("concertTrack".equals(newTicketDTO.ticketType())) {
-                price = concertService.getConcert(newTicketDTO.concertId()).trackPrice();
-            }
+            ConcertDTO concertDTO = concertService.getConcert(newTicketDTO.concertId());
+            Integer price = ticketService.calculateTicketPrice(newTicketDTO.ticketType(), concertDTO);
 
             TicketDTO ticketDTO = new TicketDTO(null, newTicketDTO.ticketType(), price, userService.getUserByUsername(principal.getName()).id(), newTicketDTO.numTickets(), newTicketDTO.concertId());
 

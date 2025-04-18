@@ -1,20 +1,18 @@
 package es.codeurjc.backend.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.codeurjc.backend.dto.concert.ConcertDTO;
-import es.codeurjc.backend.dto.ticket.TicketDTO;
-import es.codeurjc.backend.dto.user.UserDTO;
 import es.codeurjc.backend.service.ConcertService;
 import es.codeurjc.backend.service.UserService;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
 
 @RestController
 public class GraphicController {
@@ -29,34 +27,18 @@ public class GraphicController {
     public Map<String, Object> obtainData(@PathVariable Long id) {
 
         ConcertDTO concert = concertService.getConcert(id);
-        int rank018, rank1950, rank51110, age;
-        rank018 = 0;
-        rank1950 = 0;
-        rank51110 = 0;
-        for (TicketDTO tickets : concert.tickets()) {
-            UserDTO userDTO = userService.getUser(tickets.userOwnerId());
-            age = userDTO.age();
-            int numTickets = tickets.numTickets();
-            if (age <= 18) {
-                rank018 += numTickets;
-            } else if (age >= 19 && age <= 50) {
-                rank1950 += numTickets;
-            } else if (age >= 51 && age <= 110) {
-                rank51110 += numTickets;
-            }
-        }
-        Map<String, Object> datos = Map.of(
-                "labels", new String[] { "0-18", "19-50", "51-110" },
-                "data", new int[] { rank018, rank1950, rank51110 },
-                "backgroundColor", new String[] { "red", "blue", "green" });
-        return datos;
-
+        Map<String, Integer> ageDistribution = userService.calculateAgeDistribution(concert.tickets());
+        return Map.of(
+            "labels", new String[]{"0-18", "19-50", "51-110"},
+            "data", new int[]{ageDistribution.get("0-18"), ageDistribution.get("19-50"), ageDistribution.get("51-110")},
+            "backgroundColor", new String[]{"red", "blue", "green"}
+        );
     }
 
     @GetMapping("/ticketsByConcert")
     public Map<String, Object> getTicketsByConcert() {
+       
         List<ConcertDTO> concerts = new ArrayList<>(concertService.getAllConcert());
-
         List<String> concertNames = new ArrayList<>();
         List<Integer> ticketCounts = new ArrayList<>();
         List<String> colors = new ArrayList<>();

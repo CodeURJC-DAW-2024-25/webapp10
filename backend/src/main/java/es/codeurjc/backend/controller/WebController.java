@@ -88,7 +88,13 @@ public class WebController {
 		Principal principal = request.getUserPrincipal();
 
 		Pageable pageable = Pageable.ofSize(10).withPage(0);
+		Page<ConcertDTO> concerts = getConcertsForUser(principal, pageable);
 
+		model.addAttribute("concerts", concerts);
+		return "index";
+	}
+
+	private Page<ConcertDTO> getConcertsForUser(Principal principal, Pageable pageable) {
 		Long uId = null;
 
 		if (principal != null) {
@@ -99,10 +105,7 @@ public class WebController {
 			}
 		}
 
-		Page<ConcertDTO> concerts = concertService.getConcerts(uId, pageable);
-
-		model.addAttribute("concerts", concerts);
-		return "index";
+		return concertService.getConcerts(uId, pageable);
 	}
 
 	@GetMapping("/moreConcerts")
@@ -113,18 +116,7 @@ public class WebController {
 		Pageable pageable = Pageable.ofSize(10).withPage(page);
 
 		Page<ConcertDTO> concerts = null;
-
-		Long uId = null;
-
-		if (principal != null) {
-			UserDTO userDTO = userService.getUserByUsername(principal.getName());
-
-			if (!userDTO.favoriteGenre().equals("None")) {
-				uId = userDTO.id();
-			}
-		}
-
-		concerts = concertService.getConcerts(uId, pageable);
+		concerts= getConcertsForUser(principal, pageable);
 
 		boolean hasMore = page < concerts.getTotalPages() - 1;
 
@@ -192,42 +184,69 @@ public class WebController {
 		return "purchasePage";
 
 	}
-
 	@PostMapping("/concert/purchasePage/{id}")
 	public String purchase(HttpServletRequest request, Model model, @PathVariable long id,
 			NewTicketDTO newTicketDTO,
 			RedirectAttributes redirectAttributes) throws IOException, SQLException {
 
-		ConcertDTO concertDTO = concertService.getConcert(id);
 		Principal principal = request.getUserPrincipal();
 		UserDTO userDTO = userService.getUserByUsername(principal.getName());
+		ConcertDTO concertDTO = concertService.getConcert(id);
 
 		TicketDTO ticketDTO = createOrReplaceTicket(newTicketDTO, null, concertDTO, userDTO);
 
-		List<TicketDTO> tickets = concertDTO.tickets();
-		tickets.add(ticketDTO);
-		;
-		ConcertDTO updatedConcert = new ConcertDTO(concertDTO.id(),
-				concertDTO.concertName(), concertDTO.concertDetails(), concertDTO.concertDate(),
-				concertDTO.concertTime(), concertDTO.location(), concertDTO.stadiumPrice(),
-				concertDTO.trackPrice(), concertDTO.map(), concertDTO.concertImage(), null, concertDTO.artists(),
-				tickets);
-		concertService.createOrReplaceConcert(concertDTO.id(), updatedConcert);
-
-		List<TicketDTO> ticketsUser = userDTO.tickets();
-		ticketsUser.add(ticketDTO);
-		Integer numTicketsBought = userDTO.numTicketsBought() + ticketDTO.numTickets();
-		UserDTO updatedUserDTO = new UserDTO(userDTO.id(),
-				userDTO.fullName(), userDTO.userName(), userDTO.phone(),
-				userDTO.email(), userDTO.password(), userDTO.age(),
-				numTicketsBought, userDTO.favoriteGenre(), userDTO.image(), ticketsUser,
-				userDTO.roles());
-
-		userService.createOrReplaceUser(userDTO.id(), updatedUserDTO);
+		updateConcertWithNewTicket(concertDTO, ticketDTO);
+		updateUserWithNewTicket(userDTO, ticketDTO);
 
 		redirectAttributes.addFlashAttribute("successMessage", "Your purchase has been completed successfully.");
-
 		return "redirect:/";
+	}
+
+	private void updateConcertWithNewTicket(ConcertDTO concertDTO, TicketDTO ticketDTO) throws SQLException, IOException {
+		List<TicketDTO> tickets = concertDTO.tickets();
+		tickets.add(ticketDTO);
+
+		ConcertDTO updatedConcert = new ConcertDTO(
+				concertDTO.id(),
+				concertDTO.concertName(),
+				concertDTO.concertDetails(),
+				concertDTO.concertDate(),
+				concertDTO.concertTime(),
+				concertDTO.location(),
+				concertDTO.stadiumPrice(),
+				concertDTO.trackPrice(),
+				concertDTO.map(),
+				concertDTO.concertImage(),
+				null,
+				concertDTO.artists(),
+				tickets
+		);
+
+		concertService.createOrReplaceConcert(concertDTO.id(), updatedConcert);
+	}
+
+	private void updateUserWithNewTicket(UserDTO userDTO, TicketDTO ticketDTO) throws SQLException, IOException {
+		List<TicketDTO> ticketsUser = userDTO.tickets();
+		ticketsUser.add(ticketDTO);
+
+		Integer numTicketsBought = userDTO.numTicketsBought() + ticketDTO.numTickets();
+
+		UserDTO updatedUserDTO = new UserDTO(
+				userDTO.id(),
+				userDTO.fullName(),
+				userDTO.userName(),
+				userDTO.phone(),
+				userDTO.email(),
+				userDTO.password(),
+				userDTO.age(),
+				numTicketsBought,
+				userDTO.favoriteGenre(),
+				userDTO.image(),
+				ticketsUser,
+				userDTO.roles()
+		);
+
+		userService.createOrReplaceUser(userDTO.id(), updatedUserDTO);
 	}
 
 	@GetMapping("/newconcert")
@@ -562,15 +581,10 @@ public class WebController {
 			UserDTO userDTO)
 			throws SQLException, IOException {
 
-		Integer prices = 0;
-		if ("stadiumStand".equals(newTicketDTO.ticketType())) {
-			prices = concertDTO.stadiumPrice();
-		} else if ("concertTrack".equals(newTicketDTO.ticketType())) {
-			prices = concertDTO.trackPrice();
-		}
+		Integer price = ticketService.calculateTicketPrice(newTicketDTO.ticketType(), concertDTO);
 
 		TicketDTO ticketDTO = new TicketDTO(ticketId,
-				newTicketDTO.ticketType(), prices*newTicketDTO.numTickets(), userDTO.id(), newTicketDTO.numTickets(), concertDTO.id());
+				newTicketDTO.ticketType(), price*newTicketDTO.numTickets(), userDTO.id(), newTicketDTO.numTickets(), concertDTO.id());
 
 		TicketDTO ticketDTOupdated = ticketService.createOrReplaceTicket(ticketId, ticketDTO);
 

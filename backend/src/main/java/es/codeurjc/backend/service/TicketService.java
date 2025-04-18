@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import es.codeurjc.backend.model.Ticket;
+import es.codeurjc.backend.dto.concert.ConcertDTO;
 import es.codeurjc.backend.dto.ticket.TicketDTO;
 import es.codeurjc.backend.dto.ticket.TicketMapper;
 import es.codeurjc.backend.repository.TicketRepository;
@@ -84,6 +85,15 @@ public class TicketService {
 			ticket = replaceTicket(id, ticketDTO);
 		}
 		return ticket;
+	}
+
+	public Integer calculateTicketPrice(String ticketType, ConcertDTO concertDTO) {
+    if ("stadiumStand".equals(ticketType)) {
+        return concertDTO.stadiumPrice();
+    } else if ("concertTrack".equals(ticketType)) {
+        return concertDTO.trackPrice();
+    }
+    return 0;
 	}
 
 }

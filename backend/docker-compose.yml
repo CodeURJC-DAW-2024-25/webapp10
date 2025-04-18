@@ -1,7 +1,7 @@
 version: "3.9"
 services: 
   web:
-    build: albertoml199904/webapp_10:latest
+    image: albertoml199904/webapp_10:latest
     restart: always
     ports:
       - 443:8443

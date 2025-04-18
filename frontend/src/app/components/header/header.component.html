@@ -1,0 +1,46 @@
+<header class="header">
+    <div class="logo">
+        <a routerLink="/">
+            <img src="assets/images/whiteHorizontalLogo.png" alt="TICKETZONE FEST Logo">
+        </a>
+    </div>
+
+    <h1 id="title">TICKETZONE FEST</h1>
+
+    <div class="navButtons d-flex justify-content-between align-items-center">
+        <ng-container *ngIf="logged; else guest">
+            <form action="/logout" method="post" class="d-inline">
+                <button class="btn btn-dark btn-nowrap" type="submit">Log Out</button>
+                <input type="hidden" name="_csrf" value="{{ token }}" />
+            </form>
+            <ng-container *ngIf="admin">
+                <button (click)="navigateTo('/newconcert')" type="button" class="btn btn-dark">New Concert</button>
+                <button (click)="navigateTo('/newartist')" type="button" class="btn btn-dark">New Artist</button>
+            </ng-container>
+            <div class="navButtons">
+                <ng-container *ngIf="user.image; else noImage">
+                    <div class="profile-container text-center">
+                        <a [routerLink]="'/user/' + id">
+                            <img src="/user/{{ user.id }}/photo" class="profilephoto" alt="{{ user.userName }}">
+                        </a>
+                        <div class="username">{{ userName }}</div>
+                    </div>
+                </ng-container>
+                <ng-template #noImage>
+                    <div class="profile-container text-center">
+                        <a [routerLink]="'/user/' + id">
+                            <img src="assets/images/noprofilephoto.png" class="profilephoto" alt="No Image Available">
+                        </a>
+                        <div class="username">{{ userName }}</div>
+                    </div>
+                </ng-template>
+            </div>
+        </ng-container>
+        <ng-template #guest>
+            <div class="navButtons">
+                <button (click)="navigateTo('/register')" type="button" class="btn btn-dark">Register</button>
+                <button (click)="navigateTo('/login')" type="button" class="btn btn-dark">Login</button>
+            </div>
+        </ng-template>
+    </div>
+</header>

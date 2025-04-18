@@ -32,12 +32,12 @@ public class ConcertService {
 		return repository.existsById(id);
 	}
 
-	public Page<ConcertDTO> getConcerts(Long concertId, Pageable pageable) {
+	public Page<ConcertDTO> getConcerts(Long userId, Pageable pageable) {
 		Page<Concert> concerts;
-		if (concertId == null) {
+		if (userId == null) {
 			concerts = repository.findAll(pageable);
 		} else {
-			concerts = repository.findConcertsByUserPreference(concertId, pageable);
+			concerts = repository.findConcertsByUserPreference(userId, pageable);
 		}
 		return concerts.map(this::toDTO);
 	}

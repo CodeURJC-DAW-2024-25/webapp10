@@ -1,0 +1,39 @@
+<div class="container mt-3">
+    <ngb-alert *ngIf="successMessage" type="success" [dismissible]="true" (close)="successMessage = null">
+        <strong>Success!</strong> {{ successMessage }}
+    </ngb-alert>
+
+    <ngb-alert *ngIf="errorMessage" type="danger" [dismissible]="true" (close)="errorMessage = null">
+        <strong>Error:</strong> {{ errorMessage }}
+    </ngb-alert>
+</div>
+
+<main class="container mt-4">
+    <section class="row">
+        <div class="title-container">
+            <h1 class="title">Find your concert</h1>
+        </div>
+    </section>
+
+    <div id="allConcerts" class="concert-grid">
+        <article class="concert-card" *ngFor="let concert of concerts">
+            <h4>{{ concert.concertName }}</h4>
+            <a [routerLink]="'/concert/' + concert.id" class="link">
+                <img *ngIf="concert.concertImage; else noImage" [src]="'/concerts/' + concert.id + '/image'" [alt]="concert.concertName" [title]="concert.concertName">
+                <ng-template #noImage>
+                    <img src="assets/images/Concerts/noImage.jpg" alt="No image available" [title]="concert.concertName">
+                </ng-template>
+            </a>
+        </article>
+    </div>
+
+    <div *ngIf="loading" class="text-center mt-4">
+        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <div class="load-more-container">
+        <button type="button" class="btn btn-primary" (click)="loadMore()">Load More</button>
+    </div>
+</main>

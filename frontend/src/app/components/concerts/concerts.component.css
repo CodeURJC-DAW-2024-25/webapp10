@@ -1,0 +1,69 @@
+.title {
+    color: white;
+    background-color: #230667;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+    text-transform: uppercase;
+  }
+  
+  .concert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .concert-card {
+    background-color: rgb(28, 27, 27);
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .concert-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgb(147, 144, 144);
+  }
+  
+  .concert-card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+  }
+  
+  .load-more-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .load-more-btn {
+    background: #800080;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+  
+  .load-more-btn:hover {
+    background: #4B0082;
+  }
+  
+  .spinner-border {
+    display: block;
+    margin: 20px auto;
+  }
+
+  :host {
+    display: block;
+    margin-top: 100px; /* ajusta según altura real del header */
+  }

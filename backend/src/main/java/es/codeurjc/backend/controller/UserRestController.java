@@ -25,11 +25,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import es.codeurjc.backend.dto.ticket.TicketDTO;
 import es.codeurjc.backend.dto.user.NewUserDTO;
 import es.codeurjc.backend.dto.user.UserAnswerDTO;
 import es.codeurjc.backend.dto.user.UserDTO;
-import es.codeurjc.backend.model.User;
 import es.codeurjc.backend.service.UserService;
+import es.codeurjc.backend.service.TicketService;
 
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
@@ -39,6 +40,7 @@ public class UserRestController {
 	
 	@Autowired
 	private UserService userService;
+	private TicketService ticketService;
 	
     @Autowired
 	private PasswordEncoder passwordEncoder;
@@ -101,6 +103,42 @@ public class UserRestController {
 				userDTO.age(), userDTO.numTicketsBought(), userDTO.favoriteGenre(), userDTO.image(), userDTO.tickets(), userDTO.roles());
 		} else {
 			throw new NoSuchElementException();
+		}
+	}
+
+	@GetMapping("/me/tickets")
+	public ResponseEntity<List<TicketDTO>> getUserTickets(HttpServletRequest request) {
+		Principal principal = request.getUserPrincipal();
+
+		if (principal != null) {
+			Long userId = userService.getUserByUsername(principal.getName()).id();
+
+			List<TicketDTO> userTickets = ticketService.getTickets().stream()
+				.filter(ticket -> ticket.userOwnerId().equals(userId))
+				.toList();
+
+			return ResponseEntity.ok(userTickets);
+		} else {
+			throw new NoSuchElementException("User not logged in");
+		}
+	}
+
+	@GetMapping("/me/tickets/{ticketId}")
+	public ResponseEntity<TicketDTO> getUserTicketById(HttpServletRequest request, @PathVariable Long ticketId) {
+		Principal principal = request.getUserPrincipal();
+
+		if (principal != null) {
+			Long userId = userService.getUserByUsername(principal.getName()).id();
+
+			TicketDTO ticket = ticketService.getTicket(ticketId);
+
+			if (ticket.userOwnerId().equals(userId)) {
+				return ResponseEntity.ok(ticket);
+			} else {
+				return ResponseEntity.status(403).body(null); // Forbidden
+			}
+		} else {
+			throw new NoSuchElementException("User not logged in");
 		}
 	}
 

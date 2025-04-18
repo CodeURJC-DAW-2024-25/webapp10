@@ -18,6 +18,5 @@ public record ConcertDTO(
     Boolean concertImage,
     String color,
     List<ArtistDTO> artists,
-    List<TicketDTO> tickets
-    
+    List<TicketDTO> tickets 
     ) {}

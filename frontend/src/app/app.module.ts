@@ -8,19 +8,23 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ConcertsComponent } from './components/concerts/concerts.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { EditUserComponent } from './components/user/edituser.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    ConcertsComponent
+    ConcertsComponent,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

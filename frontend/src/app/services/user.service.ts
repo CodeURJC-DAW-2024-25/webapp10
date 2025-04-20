@@ -4,46 +4,63 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { UserDTO } from '../dtos/user.dto';
 
-@Injectable({
-  providedIn: 'root'
-})
+const BASE_URL = "/api/v1/users/";
+
+@Injectable({ providedIn: 'root'})
 export class UserService {
-  private baseUrl = 'http://localhost:8080/api/v1/users';
 
   constructor(private httpClient: HttpClient) {}
 
-  getUser(userId: number | string): Observable<UserDTO> {
-    return this.httpClient.get<UserDTO>(`${this.baseUrl}/${userId}`).pipe(
-      catchError(error => {
-        console.error(`Error fetching user with ID ${userId}:`, error);
-        return throwError(error);
-      })
-    );
+  getUser(): Observable<UserDTO> {
+    return this.httpClient
+	  .get<UserDTO>(BASE_URL + 'me')
+	  .pipe(catchError((error) => this.handleError(error)));
   }
 
-  addOrUpdateUser(user: UserDTO) {
-		if (!user.id) {
-			return this.addUser(user);
-		} else {
-			return this.updateUser(user);
-		}
-	}
+  public createOrReplaceUser(user: UserDTO): Observable<UserDTO> {
+    if (!user.id) {
+      return this.httpClient
+        .post<UserDTO>(BASE_URL, user)
+        .pipe(
+          catchError((error) => this.handleError(error))
+        ) as Observable<UserDTO>;
+    } else {
+      return this.httpClient
+        .put<UserDTO>(BASE_URL + 'me', user)
+        .pipe(
+          catchError((error) => this.handleError(error))
+        ) as Observable<UserDTO>;
+    }
+  }
 
-  private addUser(user: UserDTO) {
-		return this.httpClient.post(`${this.baseUrl}`, user).pipe(
-			catchError(error => this.handleError(error))
-		);
-	}
 
-	private updateUser(user: UserDTO) {
-		return this.httpClient.put(`${this.baseUrl}/${user.id}`, user).pipe(
-			catchError(error => this.handleError(error))
-		);
-	}
+  public createOrReplaceUserImage(user: UserDTO, formData: FormData): Observable<UserDTO> {
+    if (user.image) {
+      return this.httpClient
+        .put<UserDTO>(BASE_URL + "me/image", formData)
+        .pipe(
+          catchError((error) => this.handleError(error))
+        );
+    } else {
+      return this.httpClient
+        .post<UserDTO>(BASE_URL + "me/image", formData)
+        .pipe(
+          catchError((error) => this.handleError(error))
+        );
+    }
+  }
+  
+  public deleteUserImage(user: UserDTO): Observable<UserDTO> {
+    return this.httpClient
+      .delete<UserDTO>(BASE_URL +  "me/image")
+      .pipe(
+        catchError((error) => this.handleError(error))
+      );
+  }
+  
 
-	private handleError(error: any) {
-		console.error(error);
-		return throwError("Server error (" + error.status + "): " + error.text())
-	}
-
+  private handleError(error: any): Observable<never> {
+    console.error('Error:', error);
+    return throwError(() => new Error('Server error (' + error.status + '): ' + error.message || error));
+  }
 }

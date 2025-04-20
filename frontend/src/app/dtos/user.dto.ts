@@ -8,7 +8,7 @@ export interface UserDTO {
     email: string,
     password: string,
     age: number,
-    numTicketsBpught: number,
+    numTicketsBought: number,
     favoriteGenre: string,
     image: boolean,
     roles: string[],

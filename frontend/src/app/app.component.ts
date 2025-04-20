@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
         email: "user@example.com",
         password: "user", 
         age: 20,
-        numTicketsBpught: 0,
+        numTicketsBought: 0,
         favoriteGenre: "",
         image: false,
         roles: ["USER"],
@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
         email: "admin@example.com",
         password: "admin", 
         age: 70,
-        numTicketsBpught: 0,
+        numTicketsBought: 0,
         favoriteGenre: "",
         image: false,
         roles: ["USER", "ADMIN"],
@@ -47,12 +47,12 @@ export class AppComponent implements OnInit {
     ];
 
     initialUsers.forEach(user => {
-      this.userService.addOrUpdateUser(user).subscribe(
+      this.userService.createOrReplaceUser(user).subscribe(
         (response) => {
-          console.log('Usuario creado:', response);
+          console.log('User created:', response);
         },
         (error) => {
-          console.error('Error al crear el usuario:', error);
+          console.error('Error:', error);
         }
       );
     });

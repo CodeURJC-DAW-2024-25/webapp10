@@ -33,7 +33,7 @@ build/
 .vscode/
 
 # MySQL database
-mysql/
+docker/mysql/
 
 # OpenAPI Generator
 api-docs/

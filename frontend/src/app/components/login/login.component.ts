@@ -36,7 +36,7 @@ export class LoginComponent {
       },
       error: (err: HttpErrorResponse) => {
         console.error(err);
-        this.error = 'Login failed: ' + (err.error?.message || 'Unknown error');
+        this.router.navigate(['/error/login']);  
       },
     });
   }

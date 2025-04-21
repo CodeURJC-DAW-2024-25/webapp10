@@ -35,5 +35,7 @@ build/
 # MySQL database
 docker/mysql/
 
+
+
 # OpenAPI Generator
 api-docs/

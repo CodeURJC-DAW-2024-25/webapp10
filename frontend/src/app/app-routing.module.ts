@@ -11,9 +11,10 @@ const appRoutes: Routes = [
   { path: '', component: ConcertsComponent },
   { path: 'edit-user/:id', component: EditUserComponent},
   { path: 'error/:type', component: ErrorComponent },
-  { path: '**', redirectTo: 'error/404' },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent }
+  { path: 'register', component: RegisterComponent },
+  { path: '**', redirectTo: 'error/404' }   //This route has to go last because if it doesn't find any similar to the previous ones
+
 ];
 
 @NgModule({

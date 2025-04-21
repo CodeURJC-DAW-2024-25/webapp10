@@ -3,12 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ConcertsComponent } from './components/concerts/concerts.component';
 import { EditUserComponent } from './components/user/edituser.component';
+import { ErrorComponent } from './components/error/error.component';
+
 
 const appRoutes: Routes = [
   { path: '', component: ConcertsComponent },
   { path: 'edit-user/:id', component: EditUserComponent},
-  { path: '', redirectTo: '/', pathMatch: 'full' },
-  { path: '**', redirectTo: 'concerts' }
+  { path: 'error/:type', component: ErrorComponent },
+  { path: '**', redirectTo: 'error/404' }
 ];
 
 @NgModule({

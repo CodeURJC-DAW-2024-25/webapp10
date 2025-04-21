@@ -10,6 +10,8 @@ import { ConcertsComponent } from './components/concerts/concerts.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditUserComponent } from './components/user/edituser.component';
 import { FormsModule } from '@angular/forms';
+import { ErrorComponent } from './components/error/error.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -17,14 +19,16 @@ import { FormsModule } from '@angular/forms';
     HeaderComponent,
     FooterComponent,
     ConcertsComponent,
-    EditUserComponent
+    EditUserComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

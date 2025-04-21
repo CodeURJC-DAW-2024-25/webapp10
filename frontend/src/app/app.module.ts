@@ -8,7 +8,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ConcertsComponent } from './components/concerts/concerts.component';
 import { EditUserComponent } from './components/user/edituser.component';
 import { ErrorComponent } from './components/error/error.component';
-import { RegisterComponent } from './register/register.component';
+import { RegisterComponent } from './components/register/register.component';
 
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';

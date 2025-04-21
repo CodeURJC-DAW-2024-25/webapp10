@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -16,6 +16,8 @@ export class RegisterComponent {
   confirmPassword = '';
   age = 0;
   profilePhoto: File | null = null;
+  error: string = '';
+  token: string = '';
 
   constructor(private auth: AuthService, private router: Router) {}
 
@@ -32,7 +34,8 @@ export class RegisterComponent {
       email: this.email,
       password: this.password,
       age: this.age,
-      profilePhoto: this.profilePhoto
+      profilePhoto: this.profilePhoto,
+      token: this.token
     };
 
     this.auth.register(registerData).subscribe({

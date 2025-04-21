@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ConcertsComponent } from './components/concerts/concerts.component';
 import { EditUserComponent } from './components/user/edituser.component';
 import { ErrorComponent } from './components/error/error.component';
-import { RegisterComponent } from './register/register.component';
+import { RegisterComponent } from './components/register/register.component';
 
 const appRoutes: Routes = [
   { path: '', component: ConcertsComponent },

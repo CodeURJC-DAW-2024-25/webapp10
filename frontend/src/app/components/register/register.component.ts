@@ -1,29 +1,37 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service'; 
 import { HttpErrorResponse } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  fullName = '';     
-  username = '';     
-  phone = '';         
-  email = '';         
-  password = '';         
+  fullName = '';
+  username = '';
+  phone = '';
+  email = '';
+  password = '';
   confirmPassword = '';
   age = 0;
   profilePhoto: File | null = null;
   error: string = '';
   token: string = '';
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(
+    private auth: AuthService, 
+    private router: Router,
+    activatedRoute: ActivatedRoute) {
+      const id = activatedRoute.snapshot.params["id"];
+    }
 
   register() {
     if (this.password !== this.confirmPassword) {
-      alert('Passwords do not match');
+      this.error = 'Passwords do not match'; 
       return;
     }
 
@@ -34,18 +42,17 @@ export class RegisterComponent {
       email: this.email,
       password: this.password,
       age: this.age,
-      profilePhoto: this.profilePhoto,
-      token: this.token
+      profilePhoto: this.profilePhoto
     };
 
     this.auth.register(registerData).subscribe({
-      next: () => {
+      next: (response) => {
         alert('Registration successful');
-        this.router.navigate(['/login']);
+        this.router.navigate(['/login']); 
       },
       error: (err: HttpErrorResponse) => {
         console.error(err);
-        alert('Registration failed: ' + (err.error?.message || 'unknown error'));
+        this.error = 'Registration failed: ' + (err.error?.message || 'Unknown error');
       },
     });
   }
@@ -55,3 +62,5 @@ export class RegisterComponent {
     this.profilePhoto = file ? file : null;
   }
 }
+
+

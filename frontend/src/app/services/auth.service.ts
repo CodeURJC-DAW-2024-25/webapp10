@@ -25,11 +25,24 @@ export class AuthService {
   }
 
   login(credentials: { username: string; password: string }): Observable<any> {
-    return this.http.post('/api/v1/auth/login', credentials, { withCredentials: true });
+    return this.http.post(`${this.baseUrl}/login`, credentials, { withCredentials: true });
   }
 
   logout(): Observable<any> {
-    return this.http.post('/api/v1/auth/logout', {}, { withCredentials: true });
+    return this.http.post(`${this.baseUrl}/logout`, {}, { withCredentials: true });
+  }
+
+  saveToken(token: string): void {
+    localStorage.setItem('auth_token', token);
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('auth_token');
+  }
+
+  clearToken(): void {
+    localStorage.removeItem('auth_token');
   }
 }
+
 

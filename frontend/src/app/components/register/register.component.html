@@ -1,0 +1,75 @@
+<div id="container-registerPage">
+  <div class="content-registerPage d-flex align-items-center justify-content-center">
+    <div class="row g-0 align-items-center h-100 w-75">
+      
+      <!-- Left side with the image -->
+      <div class="col-md-4 d-flex flex-column align-items-center justify-content-center p-4">
+        <img src="/assets/images/TicketZone_Fest_poster.jpg" class="img-fluid rounded concertimage" alt="Festival">
+        <h2 class="mt-3 text-center">Register Form</h2>
+        <p class="text-center">Create your account by completing the corresponding information.</p>
+      </div>
+
+      <!-- Right side with the form -->
+      <div class="col-md-8 d-flex flex-column align-items-center justify-content-center p-4 registerForm">
+        <h4 class="text-center mb-3">TicketZone Fest Registration Form</h4>
+        
+        <h5 class="error text-danger" *ngIf="error">{{error}}</h5>
+
+        <form (ngSubmit)="register()" #registerForm="ngForm" novalidate enctype="multipart/form-data">
+          
+          <div class="mb-3">
+            <label for="fullName">Full name (only accepts lowercase, uppercase characters, and spaces):</label>
+            <input type="text" class="form-control" name="fullName" id="fullName" placeholder="Enter Full name" [(ngModel)]="fullName" required pattern="^[a-zA-Z ]+$">
+          </div>
+
+          <div class="mb-3">
+            <label for="userName">Username (only accepts lowercase, uppercase characters, and spaces):</label>
+            <input type="text" class="form-control" name="userName" id="userName" placeholder="Enter Username" [(ngModel)]="username" required pattern="^[a-zA-Z0-9 ]+$">
+          </div>
+
+          <div class="mb-3">
+            <label for="phone">Phone number of 9 digits:</label>
+            <input type="tel" class="form-control" name="phone" id="phone" placeholder="Enter Phone number" [(ngModel)]="phone" required pattern="^\d{9}$" inputmode="numeric">
+          </div>
+
+          <div class="mb-3">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email" [(ngModel)]="email" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="password">Password (minimum 4 characters):</label>
+            <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password" [(ngModel)]="password" required minlength="4">
+          </div>
+
+          <div class="mb-3">
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" [(ngModel)]="confirmPassword" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="age">Age:</label>
+            <input type="number" class="form-control" name="age" id="age" placeholder="Enter Age" [(ngModel)]="age" min="1" max="110" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="profilePhoto">Optional Profile Photo (MAX 1MB):</label>
+            <input type="file" class="form-control" name="profilePhoto" id="profilePhoto" (change)="onFileChange($event)" accept=".jpg, .jpeg, .png">
+          </div>
+
+          <input type="hidden" name="token" [(ngModel)]="token" />
+          
+          <div class="d-flex align-items-center justify-content-between">
+            <a routerLink="/" class="btn btn-primary">
+              <i class="bi bi-reply-all-fill"></i> Go Back
+            </a>
+            <button class="btn btn-success" type="submit" [disabled]="!registerForm.form.valid">
+              <i class="bi bi-check-lg"></i> Register
+            </button>
+          </div>
+        </form>
+        
+      </div>
+    </div>
+  </div>
+</div>

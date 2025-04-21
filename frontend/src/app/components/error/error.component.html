@@ -1,22 +1,26 @@
 
 <div class="container mt-4 mb-5">
-<div *ngIf="errorType === 'general'" class="alert alert-danger" role="alert">
-    <strong>¡Ups!</strong> Lo sentimos, ha ocurrido un error general.
-</div>
+    <div *ngIf="errorType === 'general'" class="alert alert-danger" role="alert">
+        <strong>¡Ups!</strong> Sorry, a general error occurred.
+    </div>
 
-<div *ngIf="errorType === '404'" class="alert alert-warning" role="alert">
-    <strong>Error 404:</strong> La página que buscas no existe.
-</div>
-
-<div *ngIf="errorType === 'login'" class="alert alert-danger" role="alert">
-    <strong>Error de inicio de sesión:</strong> Usuario o contraseña incorrectos.
-</div>
-
-
-
-<div class="mt-4">
-    <a routerLink="/" class="btn btn-primary">Volver al inicio</a>
-</div>
+    <div *ngIf="errorType === '404'"  role="alert">
+        <div class="alert alert-warning" role="alert">
+            <strong>Error 404:</strong> Page not found.
+        </div>
+        <div class="mt-4">
+            <a routerLink="/" class="btn">Go to Index</a>
+        </div> 
+    </div>
+    
+    <div *ngIf="errorType === 'login'"  role="alert">
+        <div class="alert alert-warning" role="alert">
+            <strong>Error login:</strong> Invalid credentials.
+        </div>
+        <div class="mt-4">
+            <a routerLink="/" class="btn">Try again</a> <!--Cambiar para que vuelva a la página de Login-->    
+        </div> 
+    </div> 
 </div>
   
   

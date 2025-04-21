@@ -2,6 +2,7 @@ package es.codeurjc.backend.security.jwt;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,8 +11,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import es.codeurjc.backend.dto.user.NewUserDTO;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -30,6 +33,13 @@ public class UserLoginService {
 		this.userDetailsService = userDetailsService;
 		this.jwtTokenProvider = jwtTokenProvider;
 	}
+
+	@Autowired
+	private es.codeurjc.backend.service.UserService userService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 
 	public ResponseEntity<AuthResponse> login(HttpServletResponse response, LoginRequest loginRequest) {
 
@@ -96,4 +106,37 @@ public class UserLoginService {
 		cookie.setPath("/");
 		return cookie;
 	}
+
+	public ResponseEntity<AuthResponse> register(HttpServletResponse response, LoginRequest registerRequest) {
+    try {
+        if (registerRequest.getUsername() == null || registerRequest.getPassword() == null) {
+            return ResponseEntity.badRequest()
+                .body(new AuthResponse(AuthResponse.Status.ERROR, "Missing username or password"));
+        }
+
+        if (userService.userExists(registerRequest.getUsername())) {
+            return ResponseEntity.badRequest()
+                .body(new AuthResponse(AuthResponse.Status.ERROR, "User already exists"));
+        }
+
+        NewUserDTO newUserDTO = new NewUserDTO(
+            null,
+            registerRequest.getUsername(),
+            null,
+            null,
+            registerRequest.getPassword(),
+            0,
+            null
+        );
+
+        userService.UserCreationReplacement(null, newUserDTO, false, passwordEncoder);
+
+        return ResponseEntity.ok(new AuthResponse(AuthResponse.Status.SUCCESS, "User registered successfully"));
+
+    } catch (Exception e) {
+        return ResponseEntity.internalServerError()
+            .body(new AuthResponse(AuthResponse.Status.ERROR, "Error during registration: " + e.getMessage()));
+    }
+}
+
 }

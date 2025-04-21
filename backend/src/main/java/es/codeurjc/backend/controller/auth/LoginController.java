@@ -40,4 +40,12 @@ public class LoginController {
     public ResponseEntity<AuthResponse> logOut(HttpServletResponse response) {
         return ResponseEntity.ok(new AuthResponse(Status.SUCCESS, userService.logout(response)));
     }
+
+    @PostMapping("/register")
+    public ResponseEntity<AuthResponse> register(
+            @RequestBody LoginRequest registerRequest,
+            HttpServletResponse response) {
+        return userService.register(response, registerRequest);
+    }
+
 }

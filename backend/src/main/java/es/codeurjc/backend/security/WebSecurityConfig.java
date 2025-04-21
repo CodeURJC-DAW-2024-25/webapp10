@@ -65,13 +65,13 @@ public class WebSecurityConfig {
 
 		http.authorizeHttpRequests(authorize -> authorize
 				// PRIVATE ENDPOINTS
-				.requestMatchers(HttpMethod.POST, "/api/v1/artists").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.POST, "/api/v1/artists/").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.PUT, "/api/v1/artists/**").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.DELETE, "/api/v1/artists/**").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.POST, "/api/v1/tickets").hasRole("USER")
 				.requestMatchers(HttpMethod.GET, "/api/v1/users/me").hasAnyRole("USER", "ADMIN")
 				.requestMatchers(HttpMethod.PUT, "/api/v1/users/me").hasAnyRole("USER", "ADMIN")
-				.requestMatchers(HttpMethod.POST, "/api/v1/concerts").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.POST, "/api/v1/concerts/").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.PUT, "/api/v1/concerts/**").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.DELETE, "/api/v1/concerts/**").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.POST, "/api/v1/concerts/*/image").hasRole("ADMIN")

@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
+
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 import es.codeurjc.backend.dto.ticket.TicketDTO;
@@ -34,103 +37,96 @@ import jakarta.servlet.http.HttpServletRequest;
 @RequestMapping("/api/v1/users")
 public class UserRestController {
 
-	@Autowired
-	private UserService userService;
-	private TicketService ticketService;
+    @Autowired
+    private UserService userService;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+    @Autowired
+    private TicketService ticketService;
 
-	@GetMapping("/me")
-	public UserAnswerDTO me(HttpServletRequest request) {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-		UserDTO userDTO = userService.getAuthenticatedUser(request);
-		return toUserAnswerDTO(userDTO);
-	}
+    @GetMapping("/{id}")
+    public UserAnswerDTO getUser(@PathVariable Long id, HttpServletRequest request) {
+        validateAuthenticatedUser(id, request);
+        UserDTO userDTO = userService.getUser(id);
+        return toUserAnswerDTO(userDTO);
+    }
 
-	@PostMapping("/")
-	public ResponseEntity<UserAnswerDTO> createUser(@RequestBody NewUserDTO newUserDTO) throws SQLException, IOException {
-		UserDTO userDTO = userService.UserCreationReplacement(null, newUserDTO, null, passwordEncoder);
+    @PutMapping("/{id}")
+    public UserAnswerDTO replaceUser(@PathVariable Long id, @RequestBody NewUserDTO newUserDTO, HttpServletRequest request) throws SQLException, IOException {
+        validateAuthenticatedUser(id, request);
+        UserDTO userDTO = userService.UserCreationReplacement(id, newUserDTO, null, passwordEncoder);
+        return toUserAnswerDTO(userDTO);
+    }
 
-		UserAnswerDTO userAnswerDTO = toUserAnswerDTO(userDTO);
+    @GetMapping("/{id}/tickets")
+    public ResponseEntity<List<TicketDTO>> getUserTickets(@PathVariable Long id, HttpServletRequest request) {
+        validateAuthenticatedUser(id, request);
 
-		URI location = fromCurrentRequest().path("/{id}").buildAndExpand(userAnswerDTO.id()).toUri();
-		return ResponseEntity.created(location).body(userAnswerDTO);
-	}
+        List<TicketDTO> userTickets = ticketService.getTickets().stream()
+            .filter(ticket -> ticket.userOwnerId().equals(id))
+            .toList();
 
-	@PutMapping("/me")
-	public UserAnswerDTO replaceUser(HttpServletRequest request, @RequestBody NewUserDTO newUserDTO) throws SQLException, IOException {
-		Long userId = userService.getAuthenticatedUser(request).id();
-		UserDTO userDTO = userService.UserCreationReplacement(userId, newUserDTO, null, passwordEncoder);
+        return ResponseEntity.ok(userTickets);
+    }
 
-		return toUserAnswerDTO(userDTO);
-	}
+    @GetMapping("/{id}/tickets/{ticketId}")
+    public ResponseEntity<TicketDTO> getUserTicketById(@PathVariable Long id, @PathVariable Long ticketId, HttpServletRequest request) {
+        validateAuthenticatedUser(id, request);
 
-	@GetMapping("/me/tickets")
-	public ResponseEntity<List<TicketDTO>> getUserTickets(HttpServletRequest request) {
+        TicketDTO ticket = ticketService.getTicket(ticketId);
 
-		Long userId = userService.getAuthenticatedUser(request).id();
+        if (ticket.userOwnerId().equals(id)) {
+            return ResponseEntity.ok(ticket);
+        } else {
+            return ResponseEntity.status(403).body(null);
+        }
+    }
 
-		List<TicketDTO> userTickets = ticketService.getTickets().stream()
-			.filter(ticket -> ticket.userOwnerId().equals(userId))
-			.toList();
+    @PostMapping("/{id}/image")
+    public ResponseEntity<Object> createUserImage(@PathVariable Long id, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException {
+        validateAuthenticatedUser(id, request);
+        userService.createUserImage(id, imageFile.getInputStream(), imageFile.getSize());
 
-		return ResponseEntity.ok(userTickets);
-	}
+        URI location = fromCurrentRequest().build().toUri();
+        return ResponseEntity.created(location).build();
+    }
 
-	@GetMapping("/me/tickets/{ticketId}")
-	public ResponseEntity<TicketDTO> getUserTicketById(HttpServletRequest request, @PathVariable Long ticketId) {
-		
+    @GetMapping("/{id}/image")
+    public ResponseEntity<Object> getUserImage(@PathVariable Long id, HttpServletRequest request) throws SQLException, IOException {
+        validateAuthenticatedUser(id, request);
+        Resource image = userService.getUserImage(id);
 
-		Long userId = userService.getAuthenticatedUser(request).id();
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").body(image);
+    }
 
-		TicketDTO ticket = ticketService.getTicket(ticketId);
+    @PutMapping("/{id}/image")
+    public ResponseEntity<Object> replaceUserImage(@PathVariable Long id, @RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException {
+        validateAuthenticatedUser(id, request);
+        userService.replaceUserImage(id, imageFile.getInputStream(), imageFile.getSize());
 
-		if (ticket.userOwnerId().equals(userId)) {
-			return ResponseEntity.ok(ticket);
-		} else {
-			return ResponseEntity.status(403).body(null); 
-		}
-	}
+        return ResponseEntity.noContent().build();
+    }
 
-	@PostMapping("/me/image")
-	public ResponseEntity<Object> createUserImage(HttpServletRequest request, @RequestParam MultipartFile imageFile)
-			throws IOException {
-		UserDTO currentUser = userService.getAuthenticatedUser(request);
-		userService.createUserImage(currentUser.id(), imageFile.getInputStream(), imageFile.getSize());
+    @DeleteMapping("/{id}/image")
+    public ResponseEntity<Object> deleteUserImage(@PathVariable Long id, HttpServletRequest request) throws IOException {
+        validateAuthenticatedUser(id, request);
+        userService.deleteUserImage(id);
 
-		URI location = fromCurrentRequest().build().toUri();
-		return ResponseEntity.created(location).build();
-	}
+        return ResponseEntity.noContent().build();
+    }
 
-	@GetMapping("/me/image")
-	public ResponseEntity<Object> getUserImage(HttpServletRequest request) throws SQLException, IOException {
-		UserDTO currentUser = userService.getAuthenticatedUser(request);
-		Resource image = userService.getUserImage(currentUser.id());
+    private void validateAuthenticatedUser(Long id, HttpServletRequest request) {
+        UserDTO authenticatedUser = userService.getAuthenticatedUser(request);
+        if (!authenticatedUser.id().equals(id)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource.");
+        }
+    }
 
-		return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").body(image);
-	}
-
-	@PutMapping("/me/image")
-	public ResponseEntity<Object> replaceUserImage(HttpServletRequest request, @RequestParam MultipartFile imageFile)
-			throws IOException {
-		UserDTO currentUser = userService.getAuthenticatedUser(request);
-		userService.replaceUserImage(currentUser.id(), imageFile.getInputStream(), imageFile.getSize());
-
-		return ResponseEntity.noContent().build();
-	}
-
-	@DeleteMapping("/me/image")
-	public ResponseEntity<Object> deleteUserImage(HttpServletRequest request) throws IOException {
-		UserDTO currentUser = userService.getAuthenticatedUser(request);
-		userService.deleteUserImage(currentUser.id());
-
-		return ResponseEntity.noContent().build();
-	}
-
-	private UserAnswerDTO toUserAnswerDTO(UserDTO userDTO) {
-		return new UserAnswerDTO(userDTO.id(), userDTO.fullName(), userDTO.userName(), userDTO.phone(),
-				userDTO.email(), userDTO.age(), userDTO.numTicketsBought(), userDTO.favoriteGenre(),
-				userDTO.image(), userDTO.tickets(), userDTO.roles());
-	}
+    private UserAnswerDTO toUserAnswerDTO(UserDTO userDTO) {
+        return new UserAnswerDTO(userDTO.id(), userDTO.fullName(), userDTO.userName(), userDTO.phone(),
+                userDTO.email(), userDTO.age(), userDTO.numTicketsBought(), userDTO.favoriteGenre(),
+                userDTO.image(), userDTO.tickets(), userDTO.roles());
+    }
 }

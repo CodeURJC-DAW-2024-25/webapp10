@@ -1,37 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from "@angular/router";
+import { ConcertService } from "./../../services/concert.service";
+import { ConcertDTO } from "../../dtos/concert.dto";
 
 @Component({
   selector: 'app-concerts',
   templateUrl: './concerts.component.html',
-  styleUrls: ['./concerts.component.css']
+  styleUrls: ['./concerts.component.css'],
+  providers: [ConcertService]
 })
 export class ConcertsComponent implements OnInit {
-  concerts: any[] = [];
+  concerts: ConcertDTO[] = [];
   page: number = 0;
   size: number = 10;
   loading: boolean = false;
   successMessage: string | null = null;
   errorMessage: string | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private concertService: ConcertService
+  ) {}
 
-  ngOnInit(): void {
-    this.loadMore();
-  }
-
-  loadMore(): void {
-    this.loading = true;
-    this.http.get<any[]>(`/api/v1/concerts?page=${this.page}&size=${this.size}`).subscribe({
-      next: (data) => {
-        this.concerts = [...this.concerts, ...data];
-        this.page += 1;
-        this.loading = false;
-      },
-      error: (err) => {
-        this.errorMessage = 'Failed to load concerts.';
-        this.loading = false;
-      }
-    });
+  public ngOnInit() {
+    this.concertService.getConcerts().subscribe(
+      (concerts) => (this.concerts = concerts),
+      (error) => console.log(error)
+    );
   }
 }

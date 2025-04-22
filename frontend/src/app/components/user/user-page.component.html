@@ -1,0 +1,96 @@
+<div id="container-userPage">
+    <div class="content-userPage">
+      <div class="row g-0 align-items-center h-100">
+        <div *ngIf="user" class="col-md-4 d-flex flex-column align-items-center justify-content-center p-4">
+          <img *ngIf="user.image; else noImage" [src]="'/user/' + user.id + '/photo'" class="img-fluid rounded concertimage" alt="{{user.userName}}">
+          <ng-template #noImage>
+            <img src="/assets/images/noprofilephoto.png" class="profilephoto" alt="No Image Available">
+          </ng-template>
+  
+          <h2 class="mt-3 text-center">Welcome to your TicketZone Fest</h2>
+          <p class="text-center">Here you will find all your information.</p>
+        </div>
+  
+        <div *ngIf="user" class="col-md-4 d-flex align-items-center justify-content-center">
+          <div class="p-4 bg-white shadow rounded w-75">
+            <h2 class="text-muted text-center mb-3">{{user.fullName}}'s Profile</h2>
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <td class="fw-bold">Full Name:</td>
+                  <td>{{user.fullName}}</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold">Username:</td>
+                  <td>{{user.userName}}</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold">Phone number:</td>
+                  <td>{{user.phone}}</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold">Email:</td>
+                  <td>{{user.email}}</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold">Age:</td>
+                  <td>{{user.age}}</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold">Favorite Music Genre:</td>
+                  <td>{{user.favoriteGenre}}</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold">Tickets Bought:</td>
+                  <td>{{user.numTicketsBought}}</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold">User Type:</td>
+                  <td>
+                    <span *ngFor="let role of user.roles">
+                      ({{ role }})
+                    </span>
+                    <span *ngIf="user.roles.length === 0">No user type</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="d-flex align-items-center justify-content-center">
+              <button class="btn btn-primary" (click)="goBack()">
+                <i class="bi bi-reply-all-fill"></i> Go Back
+              </button>
+              <a [routerLink]="'/edit-user/' + user.id" class="btn btn-warning">
+                <i class="bi bi-pencil-square"></i> Edit User
+              </a>
+            </div>
+          </div>
+        </div>
+  
+        <div *ngIf="user" class="col-md-4 d-flex align-items-center justify-content-center">
+          <div class="p-4 bg-white shadow rounded w-75 purchase-history">
+            <h2 class="text-muted text-center mb-3">Purchase History</h2>
+            <div *ngIf="user.tickets.length > 0">
+              <table class="table table-bordered">
+                <tbody>
+                  <tr *ngFor="let ticket of user.tickets">
+                    <td class="fw-bold">{{ticket.concertName}} - {{ticket.location}}</td>
+                    <td>{{ticket.concertDate}}</td>
+                    <td>{{ticket.numTickets}} Tickets</td>
+                    <td>{{ticket.ticketType}}</td>
+                    <td>{{ticket.totalPrice}} €</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p *ngIf="user.tickets.length === 0" class="text-muted text-center mb-3">No tickets yet</p>
+            <div class="text-center mt-3">
+              <a href="/download/tickets" class="btn btn-success">
+                <i class="bi bi-file-earmark-arrow-down"></i> Download Tickets PDF
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

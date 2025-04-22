@@ -6,10 +6,12 @@ import { EditUserComponent } from './components/user/edituser.component';
 import { ErrorComponent } from './components/error/error.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import { UserPageComponent } from './components/user/user-page.component';
 
 const appRoutes: Routes = [
   { path: '', component: ConcertsComponent },
   { path: 'edit-user/:id', component: EditUserComponent},
+  { path: 'user-page/:id', component: UserPageComponent},
   { path: 'error/:type', component: ErrorComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },

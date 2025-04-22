@@ -33,7 +33,7 @@ export class EditUserComponent{
     const id = activatedRoute.snapshot.params["id"];
 
     if (id) {
-      this.usersService.getUser().subscribe(
+      this.usersService.getUser('me').subscribe(
         (user) => {
           this.user = user;
         },

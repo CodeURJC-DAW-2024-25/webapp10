@@ -4,5 +4,9 @@ export interface TicketDTO {
     prices: number,
     userOwnerId: number,
     numTickets: number,
-    concertId: number
+    concertId: number,
+    totalPrice: number,
+    concertName: string,
+    concertDate: string,
+    location: string
 }

@@ -14,6 +14,8 @@ import { LoginComponent } from './components/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { UserPageComponent } from './components/user/user-page.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -24,14 +26,16 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     EditUserComponent,
     ErrorComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    UserPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule, 
     HttpClientModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

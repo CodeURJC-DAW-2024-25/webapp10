@@ -11,10 +11,10 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getUser(): Observable<UserDTO> {
+  getUser(userId: string): Observable<UserDTO> {
     return this.httpClient
-	  .get<UserDTO>(BASE_URL + 'me')
-	  .pipe(catchError((error) => this.handleError(error)));
+      .get<UserDTO>(BASE_URL + userId) 
+      .pipe(catchError((error) => this.handleError(error)));
   }
 
   public createOrReplaceUser(user: UserDTO): Observable<UserDTO> {
@@ -23,16 +23,15 @@ export class UserService {
         .post<UserDTO>(BASE_URL, user)
         .pipe(
           catchError((error) => this.handleError(error))
-        ) as Observable<UserDTO>;
+        );
     } else {
       return this.httpClient
         .put<UserDTO>(BASE_URL + 'me', user)
         .pipe(
           catchError((error) => this.handleError(error))
-        ) as Observable<UserDTO>;
+        );
     }
   }
-
 
   public createOrReplaceUserImage(user: UserDTO, formData: FormData): Observable<UserDTO> {
     if (user.image) {
@@ -49,15 +48,13 @@ export class UserService {
         );
     }
   }
-  
   public deleteUserImage(user: UserDTO): Observable<UserDTO> {
     return this.httpClient
-      .delete<UserDTO>(BASE_URL +  "me/image")
+      .delete<UserDTO>(BASE_URL + "me/image")
       .pipe(
         catchError((error) => this.handleError(error))
       );
   }
-  
 
   private handleError(error: any): Observable<never> {
     console.error('Error:', error);

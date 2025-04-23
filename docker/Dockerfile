@@ -17,7 +17,7 @@ RUN npm install
 COPY frontend/src /code/src
 
 # Compile project using already downloaded libraries configurating the base href
-RUN npm run build -- --configuration production --base-href=/new/
+RUN npm run build -- --configuration production --base-href=/spa/
 
 #################################################
 # Base image for the build container
@@ -35,7 +35,7 @@ RUN mvn clean package
 
 # Copy project source code
 COPY backend/src /project/src
-COPY --from=angular /code/dist/project-frontend/browser/ /project/src/main/resources/static/new
+COPY --from=angular /code/dist/frontend/browser/ /project/src/main/resources/static/spa
 
 # Compile project
 RUN mvn package -o -DskipTests=true

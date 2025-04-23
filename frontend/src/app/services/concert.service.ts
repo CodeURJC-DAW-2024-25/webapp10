@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { ConcertDTO } from "../dtos/concert.dto";
+import { map } from 'rxjs/operators';
 
 const BASE_URL = "/api/v1/concerts/";
 
@@ -10,13 +11,11 @@ const BASE_URL = "/api/v1/concerts/";
 export class ConcertService {
     constructor(private httpClient: HttpClient) {}
 
-    public getConcerts(): Observable<ConcertDTO[]> {
-        return this.httpClient
-            .get<ConcertDTO[]>(BASE_URL)
-            .pipe(catchError((error) => this.handleError(error))) as Observable<
-            ConcertDTO[]
-        >;
-    }
+    public getConcerts(page = 0, size = 10): Observable<ConcertDTO[]> {
+        return this.httpClient.get<any>(`/api/v1/concerts/?page=${page}&size=${size}`).pipe(
+          map(response => response.content)
+        );
+      }
 
     public getConcert(id: number | string): Observable<ConcertDTO> {
         return this.httpClient

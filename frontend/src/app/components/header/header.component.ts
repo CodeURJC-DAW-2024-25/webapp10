@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
   }
 
   checkUserStatus(): void {
-    this.http.get<any>('/api/v1/users/me', { withCredentials: true }).subscribe({
+    this.http.get<any>('/api/v1/users/'+ this.id, { withCredentials: true }).subscribe({
       next: (data) => {
         this.logged = true;
         this.userName = data.userName;

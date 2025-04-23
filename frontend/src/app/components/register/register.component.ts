@@ -29,32 +29,34 @@ export class RegisterComponent {
       const id = activatedRoute.snapshot.params["id"];
     }
 
-  register() {
-    if (this.password !== this.confirmPassword) {
-      this.error = 'Passwords do not match'; 
-      return;
+    register() {
+      if (this.password !== this.confirmPassword) {
+        this.error = 'Passwords do not match'; 
+        return;
+      }
+    
+      const formData = new FormData();
+      formData.append('fullName', this.fullName);
+      formData.append('username', this.username);
+      formData.append('phone', this.phone);
+      formData.append('email', this.email);
+      formData.append('password', this.password);
+      formData.append('age', this.age.toString());
+      if (this.profilePhoto) {
+        formData.append('profilePhoto', this.profilePhoto, this.profilePhoto.name);
+      }
+    
+      this.auth.register(formData).subscribe({
+        next: () => this.router.navigate(['/login']),
+
+        error: (err) => {
+          console.error(err);
+          this.error = 'Registration failed: ' + (err.error?.message || 'Unknown error');
+        },
+      });
     }
-
-    const registerData = {
-      fullName: this.fullName,
-      username: this.username,
-      phone: this.phone,
-      email: this.email,
-      password: this.password,
-      age: this.age,
-      profilePhoto: this.profilePhoto
-    };
-
-    this.auth.register(registerData).subscribe({
-      next: (response) => {
-        this.router.navigate(['/login']); 
-      },
-      error: (err: HttpErrorResponse) => {
-        console.error(err);
-        this.error = 'Registration failed: ' + (err.error?.message || 'Unknown error');
-      },
-    });
-  }
+    
+    
 
   onFileChange(event: any) {
     const file = event.target.files[0];

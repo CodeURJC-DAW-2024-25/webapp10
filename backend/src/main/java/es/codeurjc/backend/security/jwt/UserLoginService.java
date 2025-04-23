@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.backend.dto.user.NewUserDTO;
 import jakarta.servlet.http.Cookie;
@@ -138,5 +139,35 @@ public class UserLoginService {
             .body(new AuthResponse(AuthResponse.Status.ERROR, "Error during registration: " + e.getMessage()));
     }
 }
+
+public ResponseEntity<AuthResponse> register(HttpServletResponse response,
+                                             String username,
+                                             String fullName,
+                                             String email,
+                                             String password,
+                                             String phone,
+                                             int age,
+                                             MultipartFile profilePhoto) {
+    try {
+        NewUserDTO dto = new NewUserDTO(
+            fullName,
+            username,
+            Integer.parseInt(phone),
+            password,
+            email,
+            age,
+            profilePhoto
+        );
+
+        userService.UserCreationReplacement(null, dto, false, passwordEncoder);
+
+        return ResponseEntity.ok(new AuthResponse(AuthResponse.Status.SUCCESS, "User registered"));
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        return ResponseEntity.status(500).body(new AuthResponse(AuthResponse.Status.ERROR, "Registration failed"));
+    }
+}
+
 
 }

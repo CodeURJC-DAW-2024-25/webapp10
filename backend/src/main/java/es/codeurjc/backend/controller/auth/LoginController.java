@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.backend.security.jwt.AuthResponse;
 import es.codeurjc.backend.security.jwt.AuthResponse.Status;
@@ -43,9 +45,17 @@ public class LoginController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(
-            @RequestBody LoginRequest registerRequest,
+            @RequestParam("username") String username,
+            @RequestParam("fullName") String fullName,
+            @RequestParam("email") String email,
+            @RequestParam("password") String password,
+            @RequestParam("phone") String phone,
+            @RequestParam("age") int age,
+            @RequestParam(value = "profilePhoto", required = false) MultipartFile profilePhoto,
             HttpServletResponse response) {
-        return userService.register(response, registerRequest);
+    
+        return userService.register(response, username, fullName, email, password, phone, age, profilePhoto);
     }
+    
 
 }

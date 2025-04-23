@@ -8,20 +8,8 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  register(data: { fullName: string, username: string, phone: string, email: string, password: string, age: number, profilePhoto: File | null }): Observable<any> {
-    const formData = new FormData();
-    formData.append('fullName', data.fullName);
-    formData.append('username', data.username);
-    formData.append('phone', data.phone);
-    formData.append('email', data.email);
-    formData.append('password', data.password);
-    formData.append('age', data.age?.toString() || '');
-
-    if (data.profilePhoto) {
-      formData.append('profilePhoto', data.profilePhoto, data.profilePhoto.name);
-    }
-
-    return this.http.post(`${this.baseUrl}/register`, formData);
+  register(data: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/register`, data);
   }
 
   login(credentials: { username: string; password: string }): Observable<any> {

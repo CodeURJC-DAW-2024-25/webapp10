@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service'; 
 import { UserDTO } from '../../dtos/user.dto';
 
 @Component({
@@ -17,13 +18,19 @@ export class UserPageComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService 
   ) { }
 
   ngOnInit(): void {
+    if (!this.authService.isAuthenticated()) {
+      this.router.navigate(['/login']);  
+      return;
+    }
+
     this.userId = this.activatedRoute.snapshot.paramMap.get('id');
     if (this.userId) {
-      this.getUserInfo(this.userId);
+      this.getUserInfo(this.userId); 
     }
   }
 

@@ -36,7 +36,7 @@ export class LoginComponent {
       },
       error: (err: HttpErrorResponse) => {
         console.error(err);
-        this.router.navigate(['/error/login']);  
+        this.router.navigate(['/error/login']);
       },
     });
   }

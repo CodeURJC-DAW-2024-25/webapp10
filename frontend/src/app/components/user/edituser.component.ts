@@ -2,6 +2,7 @@ import { Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service'; 
 import { UserDTO } from '../../dtos/user.dto';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -28,8 +29,15 @@ export class EditUserComponent{
     private router: Router,
     activatedRoute: ActivatedRoute,
     private usersService: UserService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private authService: AuthService
   ) {
+
+    if (!this.authService.isAuthenticated()) {
+      this.router.navigate(['/login']); 
+      return;
+    }
+
     const id = activatedRoute.snapshot.params["id"];
 
     if (id) {

@@ -43,6 +43,8 @@ export class AuthService {
   clearToken(): void {
     localStorage.removeItem('auth_token');
   }
+
+  isAuthenticated(): boolean {
+    return !!this.getToken();  
+  }
 }
-
-

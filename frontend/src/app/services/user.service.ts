@@ -11,7 +11,8 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getUser(userId: string): Observable<UserDTO> {
+  getUser(id: string | number): Observable<UserDTO> {
+    const userId = Number(id);
     return this.httpClient
       .get<UserDTO>(BASE_URL + userId) 
       .pipe(catchError((error) => this.handleError(error)));
@@ -20,13 +21,13 @@ export class UserService {
   public createOrReplaceUser(user: UserDTO): Observable<UserDTO> {
     if (!user.id) {
       return this.httpClient
-        .post<UserDTO>(BASE_URL, user)
+        .post<UserDTO>(BASE_URL + user.id, user)
         .pipe(
           catchError((error) => this.handleError(error))
         );
     } else {
       return this.httpClient
-        .put<UserDTO>(BASE_URL + 'me', user)
+        .put<UserDTO>(BASE_URL + user.id, user)
         .pipe(
           catchError((error) => this.handleError(error))
         );
@@ -36,13 +37,13 @@ export class UserService {
   public createOrReplaceUserImage(user: UserDTO, formData: FormData): Observable<UserDTO> {
     if (user.image) {
       return this.httpClient
-        .put<UserDTO>(BASE_URL + "me/image", formData)
+        .put<UserDTO>(BASE_URL + user.id+"/image", formData)
         .pipe(
           catchError((error) => this.handleError(error))
         );
     } else {
       return this.httpClient
-        .post<UserDTO>(BASE_URL + "me/image", formData)
+        .post<UserDTO>(BASE_URL + user.id+ "/image", formData)
         .pipe(
           catchError((error) => this.handleError(error))
         );
@@ -50,7 +51,7 @@ export class UserService {
   }
   public deleteUserImage(user: UserDTO): Observable<UserDTO> {
     return this.httpClient
-      .delete<UserDTO>(BASE_URL + "me/image")
+      .delete<UserDTO>(BASE_URL + user.id+"/image")
       .pipe(
         catchError((error) => this.handleError(error))
       );

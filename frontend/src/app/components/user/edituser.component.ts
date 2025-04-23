@@ -41,12 +41,12 @@ export class EditUserComponent{
     const id = activatedRoute.snapshot.params["id"];
 
     if (id) {
-      this.usersService.getUser(id).subscribe(
-        (user) => {
+      this.usersService.getUser(id).subscribe({
+        next: (user) => {
           this.user = user;
         },
-        (error) => console.error(error)
-      );
+        error: (error) => console.error(error)
+      });
 
     } else {
       this.user = { 
@@ -72,13 +72,13 @@ export class EditUserComponent{
 
   save() {
 
-    this.usersService.createOrReplaceUser(this.user).subscribe(
-      (user: UserDTO) => this.uploadImage(user),
-      (error) => {
+    this.usersService.createOrReplaceUser(this.user).subscribe({
+      next: (user: UserDTO) => this.uploadImage(user),
+      error: (error) => {
         this.messageError = "Error creating new user: " + error;
         this.modalService.open(this.messageErrorModal, { centered: true });
       }
-    );
+    });
   }
 
   uploadImage(user: UserDTO): void {
@@ -90,34 +90,34 @@ export class EditUserComponent{
       let formData = new FormData();
       formData.append("imageFile", image);
 
-      this.usersService.createOrReplaceUserImage(user, formData).subscribe(
-        (_) => this.afterUploadImage(user),
-        (error) => {
+      this.usersService.createOrReplaceUserImage(user, formData).subscribe({
+        next: (_) => this.afterUploadImage(user),
+        error: (error) => {
           this.messageError = "Error uploading user image: " + error;
           this.modalService.open(this.messageErrorModal, { centered: true });
         }
-      );
+      });
     } else if (this.removeImage) {
-      this.usersService.deleteUserImage(user).subscribe(
-        (_) => this.afterUploadImage(user),
-        (error) => {
+      this.usersService.deleteUserImage(user).subscribe({
+        next: () => this.afterUploadImage(user),
+        error: (error) => {
           this.messageError = "Error uploading user image: " + error;
           this.modalService.open(this.messageErrorModal, { centered: true });
         }
-      );
+      });
     } else {
       this.afterUploadImage(user);
     }
   }
 
   private afterUploadImage(user: UserDTO) {
-    this.router.navigate(["/users/", user.id]);
+    this.router.navigate(["/"]);
   }
 
   userImage() {
     return this.user.image
-      ? "/api/v1/users/me/image"
-      : "/assets/images/no_image.png";
+      ? "/api/v1/users/"+this.user.id+"/image"
+      : "/assets/images/noprofilephoto.png";
   }
 
 }

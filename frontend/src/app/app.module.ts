@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module'; 
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { HeaderComponent } from './components/header/header.component';
@@ -10,6 +10,7 @@ import { EditUserComponent } from './components/user/edituser.component';
 import { ErrorComponent } from './components/error/error.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import { ConcertFormComponent } from './components/concerts/concert-form.component';
 
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -27,7 +28,8 @@ import { RouterModule } from '@angular/router';
     ErrorComponent,
     RegisterComponent,
     LoginComponent,
-    UserPageComponent
+    UserPageComponent,
+    ConcertFormComponent
   ],
   imports: [
     BrowserModule,

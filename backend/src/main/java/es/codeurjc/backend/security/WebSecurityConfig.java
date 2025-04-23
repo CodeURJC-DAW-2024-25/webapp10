@@ -16,8 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import es.codeurjc.backend.security.jwt.UnauthorizedHandlerJwt;
 import es.codeurjc.backend.security.jwt.JwtRequestFilter;
+import es.codeurjc.backend.security.jwt.UnauthorizedHandlerJwt;
 
 @Configuration
 @EnableWebSecurity
@@ -81,8 +81,11 @@ public class WebSecurityConfig {
 				.requestMatchers(HttpMethod.GET, "/api/v1/users/me/image").hasAnyRole("ADMIN", "USER")
 				.requestMatchers(HttpMethod.PUT, "/api/v1/users/me/image").hasAnyRole("ADMIN", "USER")
 				.requestMatchers(HttpMethod.DELETE, "/api/v1/users/me/image").hasAnyRole("ADMIN", "USER")
+				
 
 				.requestMatchers("/v3/api-docs.yaml", "/v3/api-docs.html", "/swagger-ui/*", "/swagger-ui.html").permitAll()
+
+				.requestMatchers("/spa/**").permitAll()
 
 				// PUBLIC ENDPOINTS
 				.anyRequest().permitAll()
@@ -142,6 +145,8 @@ public class WebSecurityConfig {
 				.requestMatchers("/edituser/**").hasAnyRole("USER", "ADMIN")
 				.requestMatchers("/newartist").hasAnyRole("ADMIN")
 				.requestMatchers("/newconcert").hasAnyRole("ADMIN")
+
+				.requestMatchers("/spa/**").permitAll()
 
 		)
 

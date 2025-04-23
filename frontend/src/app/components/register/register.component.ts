@@ -47,7 +47,6 @@ export class RegisterComponent {
 
     this.auth.register(registerData).subscribe({
       next: (response) => {
-        alert('Registration successful');
         this.router.navigate(['/login']); 
       },
       error: (err: HttpErrorResponse) => {

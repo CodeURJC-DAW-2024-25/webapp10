@@ -25,7 +25,7 @@ export class UserService {
   public createOrReplaceUser(user: UserDTO): Observable<UserDTO> {
     if (!user.id) {
       return this.httpClient
-        .post<UserDTO>(BASE_URL + user.id, user)
+        .post<UserDTO>(BASE_URL, user)
         .pipe(
           catchError((error) => this.handleError(error))
         );

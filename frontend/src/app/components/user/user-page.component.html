@@ -48,7 +48,7 @@
                   <td class="fw-bold">User Type:</td>
                   <td>
                     <span *ngFor="let role of user.roles">
-                      ({{ role }})
+                      <td class="text-dark">({{ role }})</td>
                     </span>
                     <span *ngIf="user.roles.length === 0">No user type</span>
                   </td>
@@ -73,14 +73,13 @@
               <table class="table table-bordered">
                 <tbody>
                   <tr *ngFor="let ticket of user.tickets">
-                    <td class="fw-bold">{{ticket.concertName}} - {{ticket.location}}</td>
-                    <td>{{ticket.concertDate}}</td>
+          
                     <td>{{ticket.numTickets}} Tickets</td>
                     <td>{{ticket.ticketType}}</td>
-                    <td>{{ticket.totalPrice}} €</td>
+                    <td>{{ticket.prices}} €</td>
                   </tr>
                 </tbody>
-              </table>
+              </table> 
             </div>
             <p *ngIf="user.tickets.length === 0" class="text-muted text-center mb-3">No tickets yet</p>
             <div class="text-center mt-3">

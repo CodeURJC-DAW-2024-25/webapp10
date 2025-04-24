@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { UserPageComponent } from './components/user/user-page.component';
 import { ConcertFormComponent } from './components/concerts/concert-form.component';
 import { ArtistFormComponent } from './components/artists/artist-form.component';
+import { PurchaseComponent } from './components/concerts/purchase.component';
 
 const appRoutes: Routes = [
   { path: '', component: ConcertsComponent },
@@ -21,6 +22,7 @@ const appRoutes: Routes = [
   { path: 'error/:type', component: ErrorComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'concert/:id/purchase', component: PurchaseComponent },
   { path: '**', redirectTo: 'error/404' }   //This route has to go last because if it doesn't find any similar to the previous ones
 
 ];

@@ -18,6 +18,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserPageComponent } from './components/user/user-page.component';
 import { RouterModule } from '@angular/router';
 import { ArtistFormComponent } from './components/artists/artist-form.component';
+import { PurchaseComponent } from './components/concerts/purchase.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ArtistFormComponent } from './components/artists/artist-form.component'
     LoginComponent,
     UserPageComponent,
     ConcertFormComponent,
-    ArtistFormComponent
+    ArtistFormComponent,
+    PurchaseComponent
   ],
   imports: [
     BrowserModule,

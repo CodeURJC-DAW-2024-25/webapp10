@@ -17,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserPageComponent } from './components/user/user-page.component';
 import { RouterModule } from '@angular/router';
+import { ArtistFormComponent } from './components/artists/artist-form.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { RouterModule } from '@angular/router';
     RegisterComponent,
     LoginComponent,
     UserPageComponent,
-    ConcertFormComponent
+    ConcertFormComponent,
+    ArtistFormComponent
   ],
   imports: [
     BrowserModule,

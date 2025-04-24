@@ -15,7 +15,7 @@
             </form>
             <ng-container *ngIf="admin">
                 <button (click)="navigateTo('/new-concert')" type="button" class="btn btn-dark">New Concert</button>
-                <button (click)="navigateTo('/newartist')" type="button" class="btn btn-dark">New Artist</button>
+                <button (click)="navigateTo('/new-artist')" type="button" class="btn btn-dark">New Artist</button>
             </ng-container>
             <div class="navButtons">
                 <ng-container *ngIf="user.image; else noImage">

@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private baseUrl: string = '/api/v1/auth';
+  private loginStatusSubject = new Subject<boolean>();
 
   constructor(private http: HttpClient) {}
 
@@ -35,4 +36,14 @@ export class AuthService {
   isAuthenticated(): boolean {
     return !!this.getToken();  
   }
+
+  emitLoginStatus(logged: boolean): void {
+    this.loginStatusSubject.next(logged);
+  }
+
+  getLoginStatus(): Observable<boolean> {
+    return this.loginStatusSubject.asObservable();
+  }
+
+  
 }

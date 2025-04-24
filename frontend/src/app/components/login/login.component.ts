@@ -22,23 +22,19 @@ export class LoginComponent {
       const id = activatedRoute.snapshot.params["id"];
     }
 
-  login() {
-    const loginData = {
-      username: this.username,
-      password: this.password
-    };
-
-    this.auth.login(loginData).subscribe({
-      next: (response) => {
-        localStorage.setItem('auth_token', response.token);
-        this.router.navigate(['/']);
-      },
-      error: (err: HttpErrorResponse) => {
-        console.error(err);
-        this.router.navigate(['/error/login']);
-      },
-    });
-  }
+    login(): void {
+      this.auth.login({ username: this.username, password: this.password }).subscribe({
+        next: (response) => {
+          this.auth.saveToken(response.token); 
+          this.auth.emitLoginStatus(true); 
+          this.router.navigate(['/']); 
+        },
+        error: (error) => {
+          console.error('Login failed:', error);
+          this.router.navigate(['/error/login']);
+        }
+      });
+    }
 }
 
 

@@ -18,6 +18,10 @@ export class UserService {
       .pipe(catchError((error) => this.handleError(error)));
   }
 
+  getCurrentUser(): Observable<UserDTO> {
+    return this.httpClient.get<UserDTO>(BASE_URL+'currentUser', { withCredentials: true });
+  }
+
   public createOrReplaceUser(user: UserDTO): Observable<UserDTO> {
     if (!user.id) {
       return this.httpClient

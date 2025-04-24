@@ -2,6 +2,7 @@ package es.codeurjc.backend.controller;
 
 import java.io.IOException;
 import java.net.URI;
+import java.security.Principal;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
-
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 import es.codeurjc.backend.dto.ticket.TicketDTO;
@@ -45,6 +45,16 @@ public class UserRestController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @GetMapping("/currentUser")
+public ResponseEntity<UserDTO> getCurrentUser(Principal principal) {
+    if (principal != null) {
+        UserDTO userDTO = userService.getUserByUsername(principal.getName());
+        return ResponseEntity.ok(userDTO);
+    } else {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+}
 
     @GetMapping("/{id}")
     public UserAnswerDTO getUser(@PathVariable Long id, HttpServletRequest request) {

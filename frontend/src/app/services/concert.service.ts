@@ -17,7 +17,8 @@ export class ConcertService {
         );
       }
 
-    public getConcert(id: number | string): Observable<ConcertDTO> {
+    public getConcert(concertId: number | string): Observable<ConcertDTO> {
+        const id = Number(concertId);
         return this.httpClient
             .get<ConcertDTO>(BASE_URL + id)
             .pipe(catchError((error) => this.handleError(error))) as Observable<ConcertDTO>;

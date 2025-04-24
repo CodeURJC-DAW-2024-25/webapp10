@@ -20,7 +20,7 @@
             <div class="navButtons">
                 <ng-container *ngIf="user.image; else noImage">
                     <div class="profile-container text-center">
-                        <a [routerLink]="'/concert/2/purchase'">
+                        <a [routerLink]="'/user-page/' + id">
                             <img src="/user/{{ user.id }}/photo" class="profilephoto" alt="{{ user.userName }}">
                         </a>
                         <div class="username">{{ userName }}</div>
@@ -29,7 +29,7 @@
                 </ng-container>
                 <ng-template #noImage>
                     <div class="profile-container text-center">
-                        <a [routerLink]="'/concert/2/purchase'">
+                        <a [routerLink]="'/user-page/' + id">
                             <img src="assets/images/noprofilephoto.png" class="profilephoto" alt="No Image Available">
                         </a>
                         <div class="username">{{ userName }}</div>

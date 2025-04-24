@@ -5,6 +5,7 @@ import { ConcertService } from '../../services/concert.service';
 import { ConcertDTO } from '../../dtos/concert.dto';
 import { ArtistDTO } from '../../dtos/artist.dto';
 import { ArtistService } from '../../services/artist.service';
+import { getConcertImage } from '../../utils/concert-utils';
 
 @Component({
   selector: 'app-concert-form',
@@ -119,8 +120,6 @@ export class ConcertFormComponent {
   }
 
   public concertImage(): string {
-    return this.concert.concertImage
-      ? `/api/v1/concerts/${this.concert.id}/image`
-      : '/assets/images/no_image.png';
+    return getConcertImage(this.concert);
   }
 }

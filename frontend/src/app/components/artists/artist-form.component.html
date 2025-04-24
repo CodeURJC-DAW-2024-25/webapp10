@@ -1,0 +1,82 @@
+<div *ngIf="artist" class="container mt-4 mb-5">
+    <form #artistForm="ngForm" (ngSubmit)="save()" novalidate>
+      <h2 *ngIf="newArtist" class="mb-4">New Artist</h2>
+      <h2 *ngIf="!newArtist">Edit Artist "{{ artist.artistName }}"</h2>
+  
+      <!-- Artist Name -->
+      <div class="mb-3">
+        <label for="artistName" class="form-label">Artist Name</label>
+        <input
+          [(ngModel)]="artist.artistName"
+          #artistName="ngModel"
+          type="text"
+          class="form-control"
+          id="artistName"
+          placeholder="Artist Name"
+          name="artistName"
+          required
+        />
+        <div *ngIf="artistName.invalid && artistName.touched" class="text-danger">
+          Artist Name is required
+        </div>
+      </div>
+  
+      <!-- Musical Style -->
+      <div class="mb-3">
+        <label for="musicalStyle" class="form-label">Musical Style</label>
+        <input
+          [(ngModel)]="artist.musicalStyle"
+          #musicalStyle="ngModel"
+          type="text"
+          class="form-control"
+          id="musicalStyle"
+          placeholder="Musical Style"
+          name="musicalStyle"
+          required
+        />
+        <div *ngIf="musicalStyle.invalid && musicalStyle.touched" class="text-danger">
+          Musical Style is required
+        </div>
+      </div>
+  
+      <!-- Artist Information -->
+      <div class="mb-3">
+        <label for="artistInfo" class="form-label">Artist Information</label>
+        <textarea
+          [(ngModel)]="artist.artistInfo"
+          #artistInfo="ngModel"
+          class="form-control"
+          id="artistInfo"
+          placeholder="Artist Information"
+          rows="4"
+          name="artistInfo"
+          required
+        ></textarea>
+        <div *ngIf="artistInfo.invalid && artistInfo.touched" class="text-danger">
+          Artist Information is required
+        </div>
+      </div>
+  
+      <!-- Buttons -->
+      <div class="mb-3">
+        <button type="button" (click)="cancel()" class="btn btn-secondary me-2">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="artistForm.invalid">
+          {{ newArtist ? 'Create Artist' : 'Save Changes' }}
+        </button>
+      </div>
+    </form>
+  </div>
+  
+  <!-- Message Error Modal -->
+  <ng-template #messageErrorModal let-modal>
+    <div class="modal-header bg-danger text-white">
+      <h4 class="modal-title">Message Error</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+      <p>{{ messageError }}</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="modal.close()">Close</button>
+    </div>
+  </ng-template>

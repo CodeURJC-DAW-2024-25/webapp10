@@ -86,7 +86,7 @@ export class PurchaseComponent implements OnInit {
       next: (ticket: TicketDTO) =>{ this.ticket = ticket
         
         this.user.tickets.push(ticket)
-        this.user.numTicketsBought=this.ticket.numTickets
+        this.user.numTicketsBought=ticket.numTickets
  
         this.userService.createOrReplaceUser(this.user).subscribe({
           next: (updatedUser: UserDTO) => {

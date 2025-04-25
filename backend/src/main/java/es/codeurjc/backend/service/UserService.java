@@ -230,7 +230,7 @@ public class UserService {
 			image = removeImage != null && removeImage ? false : oldUser.image();
 			userName = oldUser.userName();
 			password = oldUser.password();
-			numTicketsBought = oldUser.numTicketsBought();
+			numTicketsBought = oldUser.tickets() != null ? oldUser.tickets().stream().mapToInt(TicketDTO::numTickets).sum() : 0;
 			favoriteGenre = oldUser.favoriteGenre();
 			tickets = oldUser.tickets();
 			roles = oldUser.roles();

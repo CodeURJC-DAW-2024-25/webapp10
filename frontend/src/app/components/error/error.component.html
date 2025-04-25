@@ -21,6 +21,16 @@
             <a routerLink="/login" class="btn">Try again</a> 
         </div> 
     </div> 
+
+    <div *ngIf="errorType === 'unauthorized'" role="alert">
+        <div class="alert alert-warning" role="alert">
+            <strong>Unauthorized Access:</strong> You do not have permission to view this page.
+        </div>
+        <div class="mt-4">
+            <a routerLink="/" class="btn">Go to Index</a>
+        </div>
+    </div>
+    
 </div>
   
   

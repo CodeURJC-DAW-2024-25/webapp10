@@ -7,7 +7,6 @@ import { ConcertDTO } from "../../dtos/concert.dto";
 @Component({
   selector: 'app-concerts',
   templateUrl: './concerts.component.html',
-  styleUrls: ['./concerts.component.css'],
   providers: [ConcertService]
 })
 export class ConcertsComponent implements OnInit {
@@ -34,16 +33,16 @@ export class ConcertsComponent implements OnInit {
     this.concertService.getConcerts(this.page, this.size).subscribe(
       (concerts) => {
         if (concerts.length > 0) {
-          this.concerts = this.concerts.concat(concerts); // Añadir los nuevos conciertos
-          this.page++; // Incrementar la página para la siguiente carga
+          this.concerts = this.concerts.concat(concerts); 
+          this.page++; 
         } else {
-          this.hasMore = false; // No hay más conciertos para cargar
+          this.hasMore = false;
         }
         this.loading = false;
       },
       (error) => {
         console.log(error);
-        this.errorMessage = "Error al cargar conciertos.";
+        this.errorMessage = "Error loading concerts.";
         this.loading = false;
       }
     );
@@ -51,7 +50,7 @@ export class ConcertsComponent implements OnInit {
 
   loadMore() {
     if (this.hasMore) {
-      this.loadConcerts(); // Cargar más conciertos
+      this.loadConcerts();
     }
 }
 }

@@ -9,8 +9,8 @@ const BASE_URL = "/api/v1/users/";
 @Injectable({ providedIn: 'root'})
 export class UserService {
 
-  private currentUserSubject = new BehaviorSubject<UserDTO | null>(null);  // Crear BehaviorSubject
-  currentUser$ = this.currentUserSubject.asObservable();  // Hacerlo observable
+  private currentUserSubject = new BehaviorSubject<UserDTO | null>(null);  
+  currentUser$ = this.currentUserSubject.asObservable(); 
 
   constructor(private httpClient: HttpClient) {}
 
@@ -47,7 +47,6 @@ export class UserService {
         .put<UserDTO>(BASE_URL + user.id+"/image", formData)
         .pipe(
           catchError((error) => this.handleError(error)),
-          // Actualizar el currentUserSubject después de la carga exitosa
           tap(updatedUser => this.updateCurrentUser(updatedUser))
         );
     } else {
@@ -55,7 +54,7 @@ export class UserService {
         .post<UserDTO>(BASE_URL + user.id+ "/image", formData)
         .pipe(
           catchError((error) => this.handleError(error)),
-          tap(updatedUser => this.updateCurrentUser(updatedUser)) // Actualizar aquí también
+          tap(updatedUser => this.updateCurrentUser(updatedUser)) 
         );
     }
   }
@@ -67,7 +66,6 @@ export class UserService {
       );
   }
 
-    // Método para actualizar el usuario en el BehaviorSubject
     updateCurrentUser(user: UserDTO): void {
       this.currentUserSubject.next(user);
     }

@@ -5,13 +5,13 @@ import { ArtistService } from '../../services/artist.service';
 import { ArtistDTO } from '../../dtos/artist.dto';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-artist-form',
   templateUrl: './artist-form.component.html',
 })
 export class ArtistFormComponent {
-  //users info
   logged: boolean = false;
   admin: boolean = false;
   userName: string = '';
@@ -19,7 +19,6 @@ export class ArtistFormComponent {
   user: any = {};
   token: string = '';
 
-  //artist info
   public newArtist: boolean = false;
   public artist!: ArtistDTO;
   public messageError: string = '';
@@ -31,83 +30,61 @@ export class ArtistFormComponent {
     private http: HttpClient,
     private artistService: ArtistService,
     private modalService: NgbModal,
-    private authService: AuthService
-  ) {
- 
-    if (!this.authService.isAuthenticated()) {
-      this.router.navigate(['/login']); 
-      return;
-    }
-    const id = activatedRoute.snapshot.params['id'];
-
-    if (id) {
-      this.artistService.getArtist(id).subscribe(
-        (artist) => {
-          this.artist = artist;
-        },
-        (error) => console.error(error)
-      );
-      this.newArtist = false;
-    } else {
-      this.artist = {
-        artistName: '',
-        musicalStyle: '',
-        artistInfo: '',
-      };
-      this.newArtist = true;
-    }
-  }
+    private authService: AuthService,
+    private userService: UserService
+    
+  ) {}
 
   ngOnInit(): void {
-    this.authService.getLoginStatus().subscribe((loggedIn) => {
-      if (loggedIn) {
-        this.checkUserStatus();
-      } else {
-        this.logged = false;
-        this.userName = '';
-        this.id = null;
-        this.user = {};
-      }
-    });
-  }
+    if (!this.authService.isAuthenticated()) {
+      this.router.navigate(['/login']);
+      return;
+    }
 
-  checkUserStatus(): void {
-    this.http.get<any>('/api/v1/users/currentUser', { withCredentials: true }).subscribe({
-      next: (data) => {
-        this.logged = true;
-        this.userName = data.userName;
-        this.id = data.id;
-        this.user = data;
-        this.admin = data.roles.includes('ADMIN');
-        this.token = data.csrfToken;
+    this.userService.getCurrentUser().subscribe({
+      next: (loggedUser) => {
+        if (!loggedUser.roles.includes('ADMIN')) {
+          this.router.navigate(['/error/unauthorized']);
+          return;
+        }
+
+        const id = this.activatedRoute.snapshot.paramMap.get('id');
+
+        if (id) {
+          this.artistService.getArtist(id).subscribe(
+            (artist) => {
+              this.artist = artist;
+              this.newArtist = false;
+            },
+            (error) => console.error(error)
+          );
+        } else {
+          this.artist = {
+            artistName: '',
+            musicalStyle: '',
+            artistInfo: '',
+          };
+          this.newArtist = true;
+        }
       },
       error: () => {
-        this.logged = false;
-        this.admin = false;
-        this.userName = '';
-        this.id = null;
-        this.user = {};
+        this.router.navigate(['/login']);
       }
     });
   }
 
   public cancel(): void {
-      this.router.navigate(['/']);
+    this.router.navigate(['/']);
   }
 
   public save(): void {
-    if (this.logged && this.admin) {
-      this.artistService.createOrReplaceArtist(this.artist).subscribe(
+    this.artistService.createOrReplaceArtist(this.artist).subscribe(
       (artist: ArtistDTO) => this.afterSave(artist),
       (error) => {
         this.messageError = 'Error saving artist: ' + error;
         this.modalService.open(this.messageErrorModal, { centered: true });
       }
     );
-    } else {
-      this.messageError = 'You do not have permission to perform this action.';
-      this.modalService.open(this.messageErrorModal, { centered: true });
-    }  
   }
 
   private afterSave(artist: ArtistDTO): void {

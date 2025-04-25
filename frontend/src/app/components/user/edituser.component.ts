@@ -8,44 +8,54 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-user',
-  templateUrl: './edituser.component.html' ,
-  styleUrls: ['./edituser.component.css'] 
+  templateUrl: './edituser.component.html'
 })
-export class EditUserComponent{
+export class EditUserComponent {
 
   public user!: UserDTO;
   public users!: UserDTO[];
 
-  @ViewChild("file")
-  public file!: ElementRef;
-
-  @ViewChild("messageErrorModal")
-  public messageErrorModal!: TemplateRef<void>;
+  @ViewChild("file") public file!: ElementRef;
+  @ViewChild("messageErrorModal") public messageErrorModal!: TemplateRef<void>;
 
   public removeImage!: boolean;
   public messageError!: string;
 
   constructor(
     private router: Router,
-    activatedRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private usersService: UserService,
     private modalService: NgbModal,
     private authService: AuthService
-  ) {
+  ) {}
 
+  ngOnInit(): void {
     if (!this.authService.isAuthenticated()) {
-      this.router.navigate(['/login']); 
+      this.router.navigate(['/login']);
       return;
     }
 
-    const id = activatedRoute.snapshot.params["id"];
+    const id = this.activatedRoute.snapshot.paramMap.get("id");
 
     if (id) {
-      this.usersService.getUser(id).subscribe({
-        next: (user) => {
-          this.user = user;
+      this.usersService.getCurrentUser().subscribe({
+        next: (loggedUser) => {
+          if (loggedUser.id !== Number(id)) {
+            this.router.navigate(['/error/unauthorized']);
+            return;
+          }
+
+          this.usersService.getUser(id).subscribe({
+            next: (user) => {
+              this.user = user;
+            },
+            error: (error) => console.error(error)
+          });
         },
-        error: (error) => console.error(error)
+        error: (error) => {
+          console.error(error);
+          this.router.navigate(['/login']);
+        }
       });
 
     } else {
@@ -60,18 +70,16 @@ export class EditUserComponent{
         favoriteGenre: '', 
         image: false, 
         roles: [], 
-        tickets: [] };
-      
+        tickets: []
+      };
     }
-
   }
 
   public goBack() {
-    this.router.navigate(["/"]); 
+    this.router.navigate(["/"]);
   }
 
   save() {
-
     this.usersService.createOrReplaceUser(this.user).subscribe({
       next: (user: UserDTO) => this.uploadImage(user),
       error: (error) => {
@@ -117,7 +125,7 @@ export class EditUserComponent{
 
   userImage() {
     return this.user.image
-      ? "/api/v1/users/"+this.user.id+"/image"
+      ? "/api/v1/users/" + this.user.id + "/image"
       : "/assets/images/noprofilephoto.png";
   }
 

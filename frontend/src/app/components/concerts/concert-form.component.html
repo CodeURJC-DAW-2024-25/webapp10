@@ -1,185 +1,164 @@
-<div *ngIf="concert" class="container mt-4 mb-5">
-  <form #concertForm="ngForm" (ngSubmit)="save()" novalidate>
-    <h2 *ngIf="newConcert" class="mb-4">New Concert</h2>
-    <h2 *ngIf="!newConcert">Edit Concert "{{concert.concertName}}"</h2>
+<div id="container-userPage">
+  <div class="content-userPage d-flex align-items-center justify-content-center">
+    <div class="row g-0 align-items-center h-100 w-75">
 
-    <!-- Concert Name -->
-    <div class="mb-3">
-      <label for="concertName" class="form-label">Concert Name</label>
-      <input
-        [(ngModel)]="concert.concertName"
-        #concertName="ngModel"
-        type="text"
-        class="form-control"
-        id="concertName"
-        placeholder="Concert Name"
-        name="concertName"
-        required
-      />
-      <div *ngIf="concertName.invalid && concertName.touched" class="text-danger">
-        Concert Name is required
+      <!-- Left side with photo and description -->
+      <div class="col-md-4 d-flex flex-column align-items-center justify-content-center p-4">
+        <img src="/assets/images/TicketZone_Fest_poster.jpg" class="img-fluid rounded" alt="Festival Poster">
+        <h2 class="mt-3 text-center">{{ newConcert ? 'Add New Concert' : 'Edit Concert' }}</h2>
+        <p class="text-center">
+          {{ newConcert ? 'Add a new concert by completing the information.' : 'Edit the concert details.' }}
+        </p>
+      </div>
+
+      <!-- Right side with form -->
+      <div class="col-md-8 d-flex flex-column align-items-center justify-content-center p-4">
+        
+        <h4 class="text-center mb-4">TicketZone Fest Concert Form</h4>
+
+        <form #concertForm="ngForm" (ngSubmit)="save()" class="w-100" novalidate>
+
+          <div class="mb-3">
+            <label for="concertName" class="form-label">Concert name:</label>
+            <input
+              [(ngModel)]="concert.concertName"
+              name="concertName"
+              id="concertName"
+              type="text"
+              class="form-control"
+              placeholder="Enter concert name"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="artistIds" class="form-label">Artists:</label>
+            <select
+              [(ngModel)]="selectedArtists"
+              name="artistIds"
+              id="artistIds"
+              class="form-control"
+              multiple
+              required
+            >
+              <option *ngFor="let artist of artists" [value]="artist.id">
+                {{ artist.artistName }}
+              </option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="concertDetails" class="form-label">Concert details:</label>
+            <input
+              [(ngModel)]="concert.concertDetails"
+              name="concertDetails"
+              id="concertDetails"
+              type="text"
+              class="form-control"
+              placeholder="Enter concert details"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="concertDate" class="form-label">Concert date:</label>
+            <input
+              [(ngModel)]="concert.concertDate"
+              name="concertDate"
+              id="concertDate"
+              type="date"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="concertTime" class="form-label">Concert time:</label>
+            <input
+              [(ngModel)]="concert.concertTime"
+              name="concertTime"
+              id="concertTime"
+              type="time"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="location" class="form-label">Location:</label>
+            <input
+              [(ngModel)]="concert.location"
+              name="location"
+              id="location"
+              type="text"
+              class="form-control"
+              placeholder="Enter location"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="map" class="form-label">Map URL (Google Maps iframe):</label>
+            <textarea
+              [(ngModel)]="concert.map"
+              name="map"
+              id="map"
+              class="form-control"
+              rows="3"
+              placeholder="Paste Google Maps iframe"
+              required
+            ></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="stadiumPrice" class="form-label">Stadium Price:</label>
+            <input
+              [(ngModel)]="concert.stadiumPrice"
+              name="stadiumPrice"
+              id="stadiumPrice"
+              type="number"
+              class="form-control"
+              placeholder="Enter stadium price"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="trackPrice" class="form-label">Track Price:</label>
+            <input
+              [(ngModel)]="concert.trackPrice"
+              name="trackPrice"
+              id="trackPrice"
+              type="number"
+              class="form-control"
+              placeholder="Enter track price"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="imageFile" class="form-label">Concert Poster (MAX 1MB):</label>
+            <input
+              #file
+              type="file"
+              class="form-control"
+              name="imageFile"
+              id="imageFile"
+              accept=".jpg,.jpeg,.png"
+            />
+          </div>
+
+          <div class="d-flex align-items-center justify-content-between">
+            <button type="button" class="btn btn-primary" (click)="cancel()">
+              <i class="bi bi-reply-all-fill"></i> Go back
+            </button>
+            <button type="submit" class="btn btn-success" [disabled]="concertForm.invalid">
+              <i class="bi bi-check-lg"></i> {{ newConcert ? 'Add Concert' : 'Save Changes' }}
+            </button>
+          </div>
+        </form>
+
       </div>
     </div>
-
-    <!-- Concert Details -->
-    <div class="mb-3">
-      <label for="concertDetails" class="form-label">Details</label>
-      <textarea
-        [(ngModel)]="concert.concertDetails"
-        #concertDetails="ngModel"
-        class="form-control"
-        id="concertDetails"
-        placeholder="Details"
-        rows="4"
-        name="concertDetails"
-        required
-      ></textarea>
-      <div *ngIf="concertDetails.invalid && concertDetails.touched" class="text-danger">
-        Details are required
-      </div>
-    </div>
-
-    <!-- Concert Date -->
-    <div class="mb-3">
-      <label for="concertDate" class="form-label">Date</label>
-      <input
-        [(ngModel)]="concert.concertDate"
-        #concertDate="ngModel"
-        type="date"
-        class="form-control"
-        id="concertDate"
-        name="concertDate"
-        required
-      />
-      <div *ngIf="concertDate.invalid && concertDate.touched" class="text-danger">
-        Date is required
-      </div>
-    </div>
-
-    <!-- Concert Time -->
-    <div class="mb-3">
-      <label for="concertTime" class="form-label">Time</label>
-      <input
-        [(ngModel)]="concert.concertTime"
-        #concertTime="ngModel"
-        type="time"
-        class="form-control"
-        id="concertTime"
-        name="concertTime"
-        required
-      />
-      <div *ngIf="concertTime.invalid && concertTime.touched" class="text-danger">
-        Time is required
-      </div>
-    </div>
-
-    <!-- Location -->
-    <div class="mb-3">
-      <label for="location" class="form-label">Location</label>
-      <input
-        [(ngModel)]="concert.location"
-        #location="ngModel"
-        type="text"
-        class="form-control"
-        id="location"
-        placeholder="Location"
-        name="location"
-        required
-      />
-      <div *ngIf="location.invalid && location.touched" class="text-danger">
-        Location is required
-      </div>
-    </div>
-
-    <!-- Stadium Price -->
-    <div class="mb-3">
-      <label for="stadiumPrice" class="form-label">Stadium Price</label>
-      <input
-        [(ngModel)]="concert.stadiumPrice"
-        #stadiumPrice="ngModel"
-        type="number"
-        class="form-control"
-        id="stadiumPrice"
-        placeholder="Stadium Price"
-        name="stadiumPrice"
-        required
-      />
-      <div *ngIf="stadiumPrice.invalid && stadiumPrice.touched" class="text-danger">
-        Stadium Price is required
-      </div>
-    </div>
-
-    <!-- Track Price -->
-    <div class="mb-3">
-      <label for="trackPrice" class="form-label">Track Price</label>
-      <input
-        [(ngModel)]="concert.trackPrice"
-        #trackPrice="ngModel"
-        type="number"
-        class="form-control"
-        id="trackPrice"
-        placeholder="Track Price"
-        name="trackPrice"
-        required
-      />
-      <div *ngIf="trackPrice.invalid && trackPrice.touched" class="text-danger">
-        Track Price is required
-      </div>
-    </div>
-
-    <!-- Artists -->
-    <div class="mb-3">
-      <label for="artists" class="form-label">Artists</label>
-      <select
-        [(ngModel)]="selectedArtists"
-        name="artists"
-        id="artists"
-        multiple
-        class="form-select"
-      >
-        <option *ngFor="let artist of artists" [value]="artist.id">{{ artist.artistName }}</option>
-      </select>
-    </div>
-
-    <!-- Image Upload -->
-    <p><b>Image:</b></p>
-    <img *ngIf="!newConcert" [src]="concertImage()" class="img-fluid mb-3" alt="Concert Image" />
-    <div *ngIf="concert.concertImage" class="form-check">
-      <input
-        [(ngModel)]="removeImage"
-        type="checkbox"
-        name="removeImage"
-        class="form-check-input"
-        id="removeImage"
-      />
-      <label class="form-check-label" for="removeImage">Remove Image</label>
-    </div>
-    <div *ngIf="!newConcert" class="mb-3">
-      <label *ngIf="!concert.concertImage" for="uploadImage" class="form-label">Upload Image</label>
-      <label *ngIf="concert.concertImage" for="uploadImage" class="form-label">Update Image</label>
-    </div>
-    <input #file type="file" name="imageField" accept=".jpg, .jpeg" class="form-control mb-3" />
-
-    <!-- Buttons -->
-    <div class="mb-3">
-      <button type="button" (click)="cancel()" class="btn btn-secondary me-2">Cancel</button>
-      <button type="submit" class="btn btn-primary" [disabled]="concertForm.invalid">
-        {{ newConcert ? 'Create Concert' : 'Save Changes' }}
-      </button>
-    </div>
-  </form>
+  </div>
 </div>
-
-<!-- Message Error Modal -->
-<ng-template #messageErrorModal let-modal>
-  <div class="modal-header bg-danger text-white">
-    <h4 class="modal-title">Message Error</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
-  </div>
-  <div class="modal-body">
-    <p>{{ messageError }}</p>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-secondary" (click)="modal.close()">Close</button>
-  </div>
-</ng-template>

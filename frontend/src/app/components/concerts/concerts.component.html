@@ -34,12 +34,10 @@
         </div>
     </div>
 
-    <!-- Cargar más -->
     <div *ngIf="!loading && hasMore" class="load-more-container text-center mt-4">
         <button class="load-more-btn" (click)="loadMore()">Load More</button>
     </div>
 
-    <!-- Si no hay más conciertos -->
     <div *ngIf="!hasMore && !loading" class="text-center mt-4">
         <p>No more concerts to load.</p>
     </div>

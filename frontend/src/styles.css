@@ -1,7 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    margin-top: 20%;
-    padding-top: 7%;
+    margin-top: 7%;
     background-color: rgb(47, 46, 46)!important;
     overflow-x: hidden; /* Prevent horizontal scrolling */
 }
@@ -198,6 +197,12 @@ table td {
     padding: 0;
     text-emphasis: none;
 }
+
+select,
+select option {
+  color: black !important;
+}
+
 
 .title {
     color: white;

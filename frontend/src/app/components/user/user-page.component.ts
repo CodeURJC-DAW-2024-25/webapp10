@@ -6,8 +6,7 @@ import { UserDTO } from '../../dtos/user.dto';
 
 @Component({
   selector: 'app-user-page',
-  templateUrl: './user-page.component.html',
-  styleUrls: ['./user-page.component.css']
+  templateUrl: './user-page.component.html'
 })
 export class UserPageComponent implements OnInit {
 
@@ -24,13 +23,27 @@ export class UserPageComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.authService.isAuthenticated()) {
-      this.router.navigate(['/login']);  
+      this.router.navigate(['/login']);
       return;
     }
 
     this.userId = this.activatedRoute.snapshot.paramMap.get('id');
+
     if (this.userId) {
-      this.getUserInfo(this.userId); 
+      this.userService.getCurrentUser().subscribe({
+        next: (loggedUser) => {
+          if (loggedUser.id !== Number(this.userId)) {
+            this.router.navigate(['/error/unauthorized']);
+            return;
+          }
+
+          this.getUserInfo(this.userId!);
+        },
+        error: (err) => {
+          console.error('Error fetching logged user', err);
+          this.router.navigate(['/login']);
+        }
+      });
     }
   }
 
@@ -47,10 +60,10 @@ export class UserPageComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/']); 
+    this.router.navigate(['/']);
   }
 
   editUser() {
-    this.router.navigate([`/edit-user/${this.user.id}`]);  
+    this.router.navigate([`/edit-user/${this.user.id}`]);
   }
 }

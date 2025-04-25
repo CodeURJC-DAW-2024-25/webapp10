@@ -116,7 +116,7 @@ export class ConcertFormComponent {
   }
 
   private afterUploadImage(concert: ConcertDTO): void {
-    this.router.navigate(['/concerts', concert.id]);
+    this.router.navigate(['/', concert.id]);
   }
 
   public concertImage(): string {

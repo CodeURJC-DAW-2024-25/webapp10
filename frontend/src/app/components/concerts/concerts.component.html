@@ -19,7 +19,7 @@
         <article class="concert-card" *ngFor="let concert of concerts">
             <h4>{{ concert.concertName }}</h4>
             <a [routerLink]="'/concert/' + concert.id" class="link">
-                <img *ngIf="concert.concertImage; else noImage" [src]="'/concerts/' + concert.id + '/image'" [alt]="concert.concertName" [title]="concert.concertName">
+                <img *ngIf="concert.concertImage; else noImage" [src]="'/api/v1/concerts/' + concert.id + '/image'" [alt]="concert.concertName" [title]="concert.concertName">
                 <ng-template #noImage>
                     <img src="assets/images/Concerts/noImage.jpg" alt="No image available" [title]="concert.concertName">
                 </ng-template>

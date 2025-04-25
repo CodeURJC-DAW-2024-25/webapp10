@@ -2,7 +2,7 @@
     <div class="content-userPage">
       <div class="row g-0 align-items-center h-100">
         <div *ngIf="user" class="col-md-4 d-flex flex-column align-items-center justify-content-center p-4">
-          <img *ngIf="user.image; else noImage" [src]="'/user/' + user.id + '/photo'" class="img-fluid rounded concertimage" alt="{{user.userName}}">
+          <img *ngIf="user.image; else noImage" [src]="'/api/v1/users/' + user.id + '/image'" class="img-fluid rounded concertimage" alt="{{user.userName}}">
           <ng-template #noImage>
             <img src="/assets/images/noprofilephoto.png" class="profilephoto" alt="No Image Available">
           </ng-template>

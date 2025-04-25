@@ -111,6 +111,7 @@ export class EditUserComponent{
   }
 
   private afterUploadImage(user: UserDTO) {
+    this.usersService.updateCurrentUser(user);
     this.router.navigate(["/"]);
   }
 

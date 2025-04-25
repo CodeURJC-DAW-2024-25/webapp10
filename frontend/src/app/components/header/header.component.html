@@ -21,7 +21,7 @@
                 <ng-container *ngIf="user.image; else noImage">
                     <div class="profile-container text-center">
                         <a [routerLink]="'/user-page/' + id">
-                            <img src="/user/{{ user.id }}/photo" class="profilephoto" alt="{{ user.userName }}">
+                            <img [src]="'/api/v1/users/' + id + '/image'" class="profilephoto" alt="{{ user.userName }}">
                         </a>
                         <div class="username">{{ userName }}</div>
                     </div>

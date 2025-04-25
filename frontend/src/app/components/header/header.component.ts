@@ -1,23 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy  } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';  
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy  {
   logged: boolean = false;
   admin: boolean = false;
   userName: string = '';
   id: number | null = null;
   user: any = {};
   token: string = '';
+  private userSubscription!: Subscription;
 
 
-  constructor(private router: Router, private http: HttpClient, private authService: AuthService) {}
+  constructor(private router: Router, private http: HttpClient, private authService: AuthService, private userService: UserService) {}
 
   ngOnInit(): void {
     this.authService.getLoginStatus().subscribe((loggedIn) => {
@@ -30,6 +33,25 @@ export class HeaderComponent implements OnInit {
         this.user = {};
       }
     });
+
+    // Suscribirse al observable currentUser$ para obtener actualizaciones del usuario
+    this.userService.currentUser$.subscribe((user) => {
+      if (user) {
+        this.user = user; // Actualizar la información del usuario cuando cambie
+        this.logged = true;
+        this.userName = user.userName;
+        this.admin = user.roles.includes('ADMIN');
+        this.token = user.csrfToken ?? '';
+        this.id = user.id || null;
+
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe(); // Cancelar suscripción cuando el componente se destruya
+    }
   }
 
   checkUserStatus(): void {

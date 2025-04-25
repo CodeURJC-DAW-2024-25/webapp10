@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, throwError, BehaviorSubject  } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { UserDTO } from '../dtos/user.dto';
 
 const BASE_URL = "/api/v1/users/";
 
 @Injectable({ providedIn: 'root'})
 export class UserService {
+
+  private currentUserSubject = new BehaviorSubject<UserDTO | null>(null);  // Crear BehaviorSubject
+  currentUser$ = this.currentUserSubject.asObservable();  // Hacerlo observable
 
   constructor(private httpClient: HttpClient) {}
 
@@ -43,13 +46,16 @@ export class UserService {
       return this.httpClient
         .put<UserDTO>(BASE_URL + user.id+"/image", formData)
         .pipe(
-          catchError((error) => this.handleError(error))
+          catchError((error) => this.handleError(error)),
+          // Actualizar el currentUserSubject después de la carga exitosa
+          tap(updatedUser => this.updateCurrentUser(updatedUser))
         );
     } else {
       return this.httpClient
         .post<UserDTO>(BASE_URL + user.id+ "/image", formData)
         .pipe(
-          catchError((error) => this.handleError(error))
+          catchError((error) => this.handleError(error)),
+          tap(updatedUser => this.updateCurrentUser(updatedUser)) // Actualizar aquí también
         );
     }
   }
@@ -60,6 +66,11 @@ export class UserService {
         catchError((error) => this.handleError(error))
       );
   }
+
+    // Método para actualizar el usuario en el BehaviorSubject
+    updateCurrentUser(user: UserDTO): void {
+      this.currentUserSubject.next(user);
+    }
 
   private handleError(error: any): Observable<never> {
     console.error('Error:', error);

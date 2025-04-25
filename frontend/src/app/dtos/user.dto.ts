@@ -12,5 +12,6 @@ export interface UserDTO {
     favoriteGenre: string,
     image: boolean,
     roles: string[],
-    tickets: TicketDTO[]
+    tickets: TicketDTO[],
+    csrfToken?: string
 }

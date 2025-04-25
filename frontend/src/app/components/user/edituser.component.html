@@ -3,7 +3,7 @@
     <div class="row g-0 align-items-center h-100 w-75">
 
       <div class="col-md-6 d-flex flex-column align-items-center justify-content-center p-4">
-        <img *ngIf="user.image; else noImage" [src]="userImage()" class="img-fluid rounded" alt="User Image">
+        <img *ngIf="user && user.image; else noImage" [src]="userImage()" class="img-fluid rounded" alt="User Image">
         <ng-template #noImage>
           <img src="assets/images/noprofilephoto.png" class="img-fluid rounded" alt="No Image">
         </ng-template>

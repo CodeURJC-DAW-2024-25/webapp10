@@ -57,7 +57,11 @@ public class GraphicRestController {
         Collection<ConcertDTO> concerts = concertService.getAllConcert();
 
         List<String> concertNames = concerts.stream().map(ConcertDTO::concertName).toList();
-        List<Integer> ticketsSold = concerts.stream().map(c -> c.tickets().size()).toList();
+        List<Integer> ticketsSold = concerts.stream()
+                .map(c -> c.tickets().stream()
+                        .mapToInt(ticket -> ticket.numTickets()) // Usa aquí el getter real si no se llama 'quantity'
+                        .sum())
+                .toList();
         List<String> colors = concertNames.stream().map(name -> getRandomColor()).toList();
 
         return Map.of(

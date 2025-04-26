@@ -8,7 +8,7 @@ TAG="latest"
 sed -i 's/\r//' "$0"
 
 echo "Building Docker image..."
-docker build -t ${APP_NAME}:${TAG} . || {
+docker build -t ${APP_NAME}:${TAG} -f docker/Dockerfile . || {
     echo "ERROR: Docker failed"
     exit 1
 }

@@ -4,7 +4,7 @@
         <div *ngIf="user" class="col-md-4 d-flex flex-column align-items-center justify-content-center p-4">
           <img *ngIf="user.image; else noImage" [src]="'/api/v1/users/' + user.id + '/image'" class="img-fluid rounded concertimage" alt="{{user.userName}}">
           <ng-template #noImage>
-            <img src="/assets/images/noprofilephoto.png" class="profilephoto" alt="No Image Available">
+            <img src="assets/images/noprofilephoto.png" class="profilephoto" alt="No Image Available">
           </ng-template>
   
           <h2 class="mt-3 text-center">Welcome to your TicketZone Fest</h2>

@@ -7,8 +7,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  templateUrl: './header.component.html'
 })
 export class HeaderComponent implements OnInit, OnDestroy  {
   logged: boolean = false;
@@ -44,7 +43,7 @@ export class HeaderComponent implements OnInit, OnDestroy  {
 
   ngOnDestroy(): void {
     if (this.userSubscription) {
-      this.userSubscription.unsubscribe(); // Cancelar suscripción cuando el componente se destruya
+      this.userSubscription.unsubscribe();
     }
   }
 

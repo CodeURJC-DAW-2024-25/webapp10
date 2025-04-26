@@ -83,7 +83,7 @@
             </div>
             <p *ngIf="user.tickets.length === 0" class="text-muted text-center mb-3">No tickets yet</p>
             <div class="text-center mt-3">
-              <a href="/download/tickets" class="btn btn-success">
+              <a (click)="downloadTicket()" class="btn btn-success">
                 <i class="bi bi-file-earmark-arrow-down"></i> Download Tickets PDF
               </a>
             </div>

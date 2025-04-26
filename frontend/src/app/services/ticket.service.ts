@@ -26,6 +26,12 @@ export class TicketService {
         console.error('Error:', error);
         return throwError(() => new Error('Server error (' + error.status + '): ' + error.message || error));
     }
+
+    public downloadTickets(): Observable<Blob> {
+        return this.httpClient.get(`${BASE_URL}download/tickets`, {
+          responseType: 'blob'
+        });
+      }
 }
 
 

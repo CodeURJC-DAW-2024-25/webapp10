@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service'; 
 import { UserDTO } from '../../dtos/user.dto';
+import { TicketService } from '../../services/ticket.service';
 
 @Component({
   selector: 'app-user-page',
@@ -18,7 +19,8 @@ export class UserPageComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private router: Router,
-    private authService: AuthService 
+    private authService: AuthService,
+    private ticketService: TicketService 
   ) { }
 
   ngOnInit(): void {
@@ -65,5 +67,22 @@ export class UserPageComponent implements OnInit {
 
   editUser() {
     this.router.navigate([`/edit-user/${this.user.id}`]);
+  }
+
+  downloadTicket(): void {
+    this.ticketService.downloadTickets().subscribe({
+      next: (pdfData: Blob) => {
+        const blob = new Blob([pdfData], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'tickets.pdf';
+        link.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error: (error) => {
+        console.error('Error downloading tickets', error);
+      }
+    });
   }
 }

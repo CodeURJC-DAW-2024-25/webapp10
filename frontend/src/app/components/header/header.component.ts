@@ -27,25 +27,19 @@ export class HeaderComponent implements OnInit, OnDestroy  {
       if (loggedIn) {
         this.checkUserStatus();
       } else {
-        this.logged = false;
-        this.userName = '';
-        this.id = null;
-        this.user = {};
+        this.resetUserState();
       }
     });
 
-    // Suscribirse al observable currentUser$ para obtener actualizaciones del usuario
-    this.userService.currentUser$.subscribe((user) => {
-      if (user) {
-        this.user = user; // Actualizar la información del usuario cuando cambie
-        this.logged = true;
-        this.userName = user.userName;
-        this.admin = user.roles.includes('ADMIN');
-        this.token = user.csrfToken ?? '';
-        this.id = user.id || null;
+    this.checkUserStatus();
+  }
 
-      }
-    });
+  private resetUserState(): void {
+    this.logged = false;
+    this.admin = false;
+    this.userName = '';
+    this.id = null;
+    this.user = {};
   }
 
   ngOnDestroy(): void {
@@ -65,11 +59,7 @@ export class HeaderComponent implements OnInit, OnDestroy  {
         this.token = data.csrfToken;
       },
       error: () => {
-        this.logged = false;
-        this.admin = false;
-        this.userName = '';
-        this.id = null;
-        this.user = {};
+        this.resetUserState();
       }
     });
   }

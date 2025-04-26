@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -14,11 +14,21 @@ export class AuthService {
   }
 
   login(credentials: { username: string; password: string }): Observable<any> {
-    return this.http.post(`${this.baseUrl}/login`, credentials, { withCredentials: true });
+    return this.http.post(`${this.baseUrl}/login`, credentials, { withCredentials: true }).pipe(
+      tap((response: any) => {
+        this.saveToken(response.token);
+        this.emitLoginStatus(true);
+      })
+    );
   }
 
   logout(): Observable<any> {
-    return this.http.post(`${this.baseUrl}/logout`, {}, { withCredentials: true });
+    return this.http.post(`${this.baseUrl}/logout`, {}, { withCredentials: true }).pipe(
+      tap(() => {
+        this.clearToken();
+        this.emitLoginStatus(false);
+      })
+    );
   }
 
   saveToken(token: string): void {

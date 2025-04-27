@@ -1,0 +1,115 @@
+<div id="container-concertInfoPage" class="container mt-5">
+    <div *ngIf="concert">
+      <h1 class="mb-4">{{ concert.concertName }}</h1>
+      <div class="row">
+        <!-- Left side with concert image -->
+        <div class="col-md-4">
+          <img
+            *ngIf="concert.concertImage; else noImage"
+            [src]="'/api/v1/concerts/' + concert.id + '/image'"
+            class="img-fluid rounded concertImage"
+            [alt]="concert.concertName"
+          />
+          <ng-template #noImage>
+            <img
+              src="/assets/images/Concerts/noImage.jpg"
+              class="img-fluid rounded concertImage"
+              alt="No Image Available"
+            />
+          </ng-template>
+        </div>
+  
+        <!-- Right side with concert details -->
+        <div class="col-md-8">
+          <h4>{{ concert.concertName }}</h4>
+          <p>{{ concert.concertDetails }}</p>
+  
+          <!-- Artists Section -->
+          <div *ngFor="let artist of artists" class="d-flex justify-content-between align-items-center">
+            <div class="flex-grow-1">
+              <h4>{{ artist.artistName }}</h4>
+              <p>{{ artist.artistInfo }}</p>
+  
+              <div *ngIf="admin">
+                <button
+                  (click)="artist.id && deleteArtist(artist.id)"
+                  class="btn btn-danger float-end me-2"
+                >
+                  <i class="bi bi-trash"></i> Delete Artist
+                </button>
+                <button
+                  (click)="navigateTo('/edit-artist/' + artist.id)"
+                  class="btn btn-warning float-end"
+                >
+                  <i class="bi bi-pencil-fill"></i> Edit Artist
+                </button>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Concert Date and Time -->
+          <div class="d-flex">
+            <h5 class="flex-grow-1">Date: <span>{{ concert.concertDate }}</span></h5>
+            <h5 class="flex-grow-1">Time: <span>{{ concert.concertTime }}</span></h5>
+          </div>
+  
+          <!-- Concert Location -->
+          <h5>Location: <span>{{ concert.location }}</span></h5>
+          <div class="d-flex justify-content-between">
+            <div [innerHTML]="concert.map"></div>
+          </div>
+  
+          <!-- Buttons Section -->
+          <div class="d-flex align-items-center justify-content-between mt-3 purchasebuttons">
+            <button
+              *ngIf="logged"
+              (click)="navigateTo('/concert/purchase/' + concert.id)"
+              class="btn btn-primary mt-3 flex-grow-1 me-2"
+            >
+              <i class="bi bi-cart-fill"></i> Purchase Tickets
+            </button>
+  
+            <button
+              *ngIf="!logged"
+              (click)="navigateTo('/login')"
+              class="btn btn-secondary"
+            >
+              <i class="bi bi-box-arrow-in-right"></i> Log in to Buy
+            </button>
+  
+            <div *ngIf="admin">
+              <button
+                (click)="navigateTo('/edit-concert/' + concert.id)"
+                class="btn btn-warning mt-3 flex-grow-1 me-2"
+              >
+                <i class="bi bi-pencil-square"></i> Edit concert
+              </button>
+              <button
+                (click)="concert.id && deleteConcert(concert.id)"
+                class="btn btn-danger mt-3 flex-grow-1 me-2"
+              >
+                <i class="bi bi-trash"></i> Delete Concert
+              </button>
+            </div>
+  
+            <button (click)="navigateTo('/')" class="btn btn-primary mt-3">
+              <i class="bi bi-reply-all-fill"></i> Go back
+            </button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Graphs Section -->
+      <h5 class="mt-4">Graphs</h5>
+      <div class="d-flex justify-content-between">
+        <div>
+          <h4>Pie graph:</h4>
+          <canvas id="graphicPie"></canvas>
+        </div>
+        <div>
+          <h4>Bar graph:</h4>
+          <canvas id="graphicBar" class="chartCanvas"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -19,6 +19,7 @@ import { UserPageComponent } from './components/user/user-page.component';
 import { RouterModule } from '@angular/router';
 import { ArtistFormComponent } from './components/artists/artist-form.component';
 import { PurchaseComponent } from './components/concerts/purchase.component';
+import { ConcertInfoComponent } from './components/concerts/concert-info.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { PurchaseComponent } from './components/concerts/purchase.component';
     UserPageComponent,
     ConcertFormComponent,
     ArtistFormComponent,
-    PurchaseComponent
+    PurchaseComponent,
+    ConcertInfoComponent
   ],
   imports: [
     BrowserModule,

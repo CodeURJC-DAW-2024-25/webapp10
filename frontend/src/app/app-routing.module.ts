@@ -10,9 +10,11 @@ import { UserPageComponent } from './components/user/user-page.component';
 import { ConcertFormComponent } from './components/concerts/concert-form.component';
 import { ArtistFormComponent } from './components/artists/artist-form.component';
 import { PurchaseComponent } from './components/concerts/purchase.component';
+import { ConcertInfoComponent } from './components/concerts/concert-info.component';
 
 const appRoutes: Routes = [
   { path: '', component: ConcertsComponent },
+  { path: 'concert/:id', component: ConcertInfoComponent},
   { path: 'new-concert', component: ConcertFormComponent },
   { path: 'edit-concert/:id', component: ConcertFormComponent },
   { path: 'edit-artist/:id', component: ArtistFormComponent },

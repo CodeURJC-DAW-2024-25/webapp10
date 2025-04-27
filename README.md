@@ -445,7 +445,7 @@ I didn't help much with the DTOs because the team agreed that three people would
 
 # webapp10- Practice 3
 ## Classes and templates diagram
-![template_classes_spa_diagram](https://github.com/user-attachments/assets/70786f86-2461-4a0f-b92c-c37f8d0ed71e)
+![classes_template_diagramSPA](https://github.com/user-attachments/assets/229be03a-6ebe-4938-bc65-50d45cd413e4)
 - Blue: @Service
 - Purple: @Component
 - Red: @Template

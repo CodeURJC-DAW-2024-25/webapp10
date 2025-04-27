@@ -472,7 +472,7 @@ I didn't help much with the DTOs because the team agreed that three people would
 
 - **César Valero Bueno**
   - *Task done descriptions*
-    - Implemented Artist, Concert, and Ticket DTOs, Concert and Artist Services and functionalities such as Create and Edit Concerts. Updated the execution context in create_image.sh. Made some fixes such as: improve Concerts component for looser coupling, configure Docker Compose to correctly pull images from DockerHub, modify the UserRestController to use user id instead of /me, ensure the user appears logged in in the header across all pages, resolve minor navigation issues, and fix some image related problems.
+    - Implemented Artist, Concert, and Ticket DTOs, Concert and Artist Services and functionalities such as Create and Edit Concerts. Updated the execution context in create_image.sh. Made some fixes such as: improve Concerts component for looser coupling, configure Docker Compose to correctly pull images from DockerHub, modify the UserRestController to use user id instead of /me, ensure the user appears logged in in the header across all pages, fix map in Concert Info page, resolve minor navigation issues, and fix some image related problems.
 
 | **Section**                               |                 | **Details**                                                               |
 | ----------------------------------------  | --------------- | ------------------------------------------------------------------------- |

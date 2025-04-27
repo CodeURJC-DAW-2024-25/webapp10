@@ -97,7 +97,7 @@ export class ConcertFormComponent implements OnInit {
     if (this.newConcert) {
       this.router.navigate(['/']);
     } else {
-      this.router.navigate(['/', this.concert.id]);
+      this.router.navigate(['/concert/', this.concert.id]);
     }
   }
 

@@ -120,7 +120,7 @@ export class EditUserComponent {
 
   private afterUploadImage(user: UserDTO) {
     this.usersService.updateCurrentUser(user);
-    window.location.href = "/";
+    window.location.href = "/spa";
   }
 
   userImage() {

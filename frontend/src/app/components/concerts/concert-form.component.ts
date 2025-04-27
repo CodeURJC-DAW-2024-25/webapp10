@@ -139,7 +139,7 @@ export class ConcertFormComponent implements OnInit {
   }
 
   private afterUploadImage(concert: ConcertDTO): void {
-    this.router.navigate(['/', concert.id]);
+    this.router.navigate(['/concert/', concert.id]);
   }
 
   public concertImage(): string {

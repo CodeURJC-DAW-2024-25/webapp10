@@ -102,6 +102,7 @@ export class ConcertFormComponent implements OnInit {
   }
 
   public save(): void {
+    this.concert.artists = this.artists.filter(artist => artist.id !== undefined && this.selectedArtists.includes(artist.id));
     this.concertService.createOrReplaceConcert(this.concert).subscribe(
       (concert: ConcertDTO) => this.uploadImage(concert),
       (error) => {

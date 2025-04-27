@@ -445,26 +445,29 @@ I didn't help much with the DTOs because the team agreed that three people would
 
 # webapp10- Practice 3
 ## Classes and templates diagram
-
+![template_classes_spa_diagram](https://github.com/user-attachments/assets/70786f86-2461-4a0f-b92c-c37f8d0ed71e)
+- Blue: @Service
+- Purple: @Component
+- Red: @Template
 ## Preparing the development environment
 
 ## Members participation
 - **Alberto Manjón López**
   - *Task done descriptions*
-    - 
+    - Add classes suchs as UserDTO, UserService, TicketService, general CSS, make some functionalities such as edit user functionality ,purchase tickets functionality, update download tickets functionality , update the algorithm of order the concerts by tickets bought by an user and make some modifications in the header.
 
 | **Section**                               |                 | **Details**                                                               |
 | ----------------------------------------  | --------------- | ------------------------------------------------------------------------- |
-| **Most significant commits**              | **Commit 1**    | []()|
-|                                           | **Commit 2**    | []()|
-|                                           | **Commit 3**    | []()|
-|                                           | **Commit 4**    | []()|
-|                                           | **Commit 5**    | []()|
-| **Files that have participated the most** | **File 1**      | []()|
-|                                           | **File 2**      | []()|
-|                                           | **File 3**      | []()|
-|                                           | **File 4**      | []()|
-|                                           | **File 5**      | []()|
+| **Most significant commits**              | **Commit 1**    | [Add userDTO and userService and add general css and initialize users](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/d66ad510c817007b8c2380833920e61c3d86b3c5)|
+|                                           | **Commit 2**    | [Add purchase tickets functionality](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/a392cc3c440d8da75a0c7e793bf27f8d70a81b69)|
+|                                           | **Commit 3**    | [Download ticket function and refactor backend download ticket functions](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/398e8bbcda5b2c2b0ace478603acf740c08c716c)|
+|                                           | **Commit 4**    | [Update edit user function](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/f024afa6f68dc2e70237100138805d3509b914ca)|
+|                                           | **Commit 5**    | [Working in edit user function](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/d7c65277d1adfd6491347e5d26d9000b9232b509)|
+| **Files that have participated the most** | **File 1**      | [user.service.ts](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/frontend/src/app/services/user.service.ts)|
+|                                           | **File 2**      | [edituser.component.html](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/frontend/src/app/components/user/edituser.component.html)|
+|                                           | **File 3**      | [edituser.component.ts](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/frontend/src/app/components/user/edituser.component.ts)|
+|                                           | **File 4**      | [purchase.component.html](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/frontend/src/app/components/concerts/purchase.component.html)|
+|                                           | **File 5**      | [purchase.component.ts](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/frontend/src/app/components/concerts/purchase.component.ts)|
 
 
 - **César Valero Bueno**

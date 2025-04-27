@@ -3,8 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ConcertService } from '../../services/concert.service';
-import { ArtistDTO } from '../../dtos/artist.dto';
+import { GraphicsService } from '../../services/graphics.service';
 import { ArtistService } from '../../services/artist.service';
+import { ArtistDTO } from '../../dtos/artist.dto';
 import { ConcertDTO } from '../../dtos/concert.dto';
 import { Chart } from 'chart.js';
 
@@ -25,6 +26,7 @@ export class ConcertInfoComponent implements OnInit {
   constructor(
     private concertService: ConcertService,
     private authService: AuthService,
+    private graphicsService: GraphicsService,
     private http: HttpClient,
     private router: Router,
     private artistService: ArtistService,
@@ -35,6 +37,8 @@ export class ConcertInfoComponent implements OnInit {
     const concertId = this.route.snapshot.paramMap.get('id');
     if (concertId) {
       this.loadConcertData(+concertId);
+      this.loadAgeDistribution(+concertId);
+      this.loadTicketsByConcert();
     }
     this.authService.getLoginStatus().subscribe((loggedIn) => {
       if (loggedIn) {
@@ -108,5 +112,88 @@ export class ConcertInfoComponent implements OnInit {
       }
     });
   }
+
+  private loadAgeDistribution(concertId: number): void {
+    this.graphicsService.getPieChartData(concertId).subscribe({
+      next: (data) => {
+        this.renderPieChart(data.labels, data.data, data.backgroundColor);
+      },
+      error: (err) => {
+        console.error('Error loading age distribution data:', err);
+      }
+    });
+  }
+
+  private loadTicketsByConcert(): void {
+    this.graphicsService.getBarChartData().subscribe({
+      next: (data) => {
+        this.renderBarChart(data.labels, data.data, data.backgroundColor);
+      },
+      error: (err) => {
+        console.error('Error loading tickets by concert data:', err);
+      }
+    });
+  }
+  
+  private renderPieChart(labels: string[], data: number[], backgroundColor: string[]): void {
+    const canvas = document.getElementById('graphicPie') as HTMLCanvasElement;
+    if (!canvas) {
+      console.error('Canvas element for Pie Chart not found!');
+      return;
+    }
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      console.error('Context for Pie Chart not found!');
+      return;
+    }
+  
+    new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            data: data,
+            backgroundColor: backgroundColor,
+          },
+        ],
+      },
+    });
+  }
+  
+  private renderBarChart(labels: string[], data: number[], backgroundColor: string[]): void {
+    const canvas = document.getElementById('graphicBar') as HTMLCanvasElement;
+    if (!canvas) {
+      console.error('Canvas element for Bar Chart not found!');
+      return;
+    }
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      console.error('Context for Bar Chart not found!');
+      return;
+    }
+  
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Tickets Sold',
+            data: data,
+            backgroundColor: backgroundColor,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+  }  
 
 }

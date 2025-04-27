@@ -93,6 +93,12 @@ table {
     aspect-ratio: 15 / 16;
 }
 
+#map{
+    width: 100%;
+    height: 400px;
+    margin-bottom: -20px;
+}
+
 table td {
     padding: 10px;
 }

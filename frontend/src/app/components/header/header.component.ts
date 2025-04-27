@@ -77,7 +77,7 @@ export class HeaderComponent implements OnInit, OnDestroy  {
         this.user = {};
         this.authService.clearToken();
         this.authService.emitLoginStatus(false);
-        this.router.navigate(['/']);
+        this.router.navigate(['/login']);
       },
       error: (error: any) => {
         console.error('Error during logout:', error);

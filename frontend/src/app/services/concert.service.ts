@@ -11,8 +11,12 @@ const BASE_URL = "/api/v1/concerts/";
 export class ConcertService {
     constructor(private httpClient: HttpClient) {}
 
-    public getConcerts(page = 0, size = 10): Observable<ConcertDTO[]> {
-        return this.httpClient.get<any>(`/api/v1/concerts/?page=${page}&size=${size}`).pipe(
+    public getConcerts(userId: number | null, page = 0, size = 10): Observable<ConcertDTO[]> {
+        let url = `/api/v1/concerts/?page=${page}&size=${size}`;
+        if (userId !== null) {
+          url += `&userId=${userId}`;
+        }   
+        return this.httpClient.get<any>(url).pipe(
           map(response => response.content)
         );
       }

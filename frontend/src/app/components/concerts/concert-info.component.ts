@@ -8,6 +8,8 @@ import { ArtistService } from '../../services/artist.service';
 import { ArtistDTO } from '../../dtos/artist.dto';
 import { ConcertDTO } from '../../dtos/concert.dto';
 import { Chart } from 'chart.js';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-concert-info',
@@ -22,6 +24,7 @@ export class ConcertInfoComponent implements OnInit {
   id: number | null = null;
   user: any = {};
   token: string = '';
+  safeMap!: SafeHtml;
 
   constructor(
     private concertService: ConcertService,
@@ -30,7 +33,8 @@ export class ConcertInfoComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private artistService: ArtistService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -77,6 +81,7 @@ export class ConcertInfoComponent implements OnInit {
     this.concertService.getConcert(id).subscribe({
       next: (concert) => {
         this.concert = concert;
+        this.safeMap = this.sanitizer.bypassSecurityTrustHtml(concert.map);
         this.artists = concert.artists || [];
       },
       error: (err) => {

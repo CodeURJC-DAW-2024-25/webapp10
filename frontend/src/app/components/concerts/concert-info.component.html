@@ -56,7 +56,7 @@
           <!-- Concert Location -->
           <h5>Location: <span>{{ concert.location }}</span></h5>
           <div class="d-flex justify-content-between">
-            <div [innerHTML]="concert.map"></div>
+            <div [innerHTML]="safeMap"></div>
           </div>
   
           <!-- Buttons Section -->

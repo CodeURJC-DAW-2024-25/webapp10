@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -7,7 +7,7 @@ import { GraphicsService } from '../../services/graphics.service';
 import { ArtistService } from '../../services/artist.service';
 import { ArtistDTO } from '../../dtos/artist.dto';
 import { ConcertDTO } from '../../dtos/concert.dto';
-import { Chart } from 'chart.js';
+import { Chart } from 'chart.js/auto';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 
@@ -26,6 +26,9 @@ export class ConcertInfoComponent implements OnInit {
   token: string = '';
   safeMap!: SafeHtml;
 
+  @ViewChild('graphicPie') graphicPie!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('graphicBar') graphicBar!: ElementRef<HTMLCanvasElement>;
+  
   constructor(
     private concertService: ConcertService,
     private authService: AuthService,
@@ -121,7 +124,7 @@ export class ConcertInfoComponent implements OnInit {
   private loadAgeDistribution(concertId: number): void {
     this.graphicsService.getPieChartData(concertId).subscribe({
       next: (data) => {
-        this.renderPieChart(data.labels, data.data, data.backgroundColor);
+        this.renderPieChart(data.data, data.backgroundColor, data.labels);
       },
       error: (err) => {
         console.error('Error loading age distribution data:', err);
@@ -132,7 +135,7 @@ export class ConcertInfoComponent implements OnInit {
   private loadTicketsByConcert(): void {
     this.graphicsService.getBarChartData().subscribe({
       next: (data) => {
-        this.renderBarChart(data.labels, data.data, data.backgroundColor);
+        this.renderBarChart(data.data, data.backgroundColor, data.labels);
       },
       error: (err) => {
         console.error('Error loading tickets by concert data:', err);
@@ -140,18 +143,13 @@ export class ConcertInfoComponent implements OnInit {
     });
   }
   
-  private renderPieChart(labels: string[], data: number[], backgroundColor: string[]): void {
-    const canvas = document.getElementById('graphicPie') as HTMLCanvasElement;
-    if (!canvas) {
-      console.error('Canvas element for Pie Chart not found!');
-      return;
-    }
-    const ctx = canvas.getContext('2d');
+  private renderPieChart(data: number[], backgroundColor: string[], labels: string[]): void {
+    const ctx = this.graphicPie.nativeElement.getContext('2d');
     if (!ctx) {
       console.error('Context for Pie Chart not found!');
       return;
     }
-  
+
     new Chart(ctx, {
       type: 'pie',
       data: {
@@ -166,18 +164,13 @@ export class ConcertInfoComponent implements OnInit {
     });
   }
   
-  private renderBarChart(labels: string[], data: number[], backgroundColor: string[]): void {
-    const canvas = document.getElementById('graphicBar') as HTMLCanvasElement;
-    if (!canvas) {
-      console.error('Canvas element for Bar Chart not found!');
-      return;
-    }
-    const ctx = canvas.getContext('2d');
+  private renderBarChart(data: number[], backgroundColor: string[], labels: string[]): void {
+    const ctx = this.graphicBar.nativeElement.getContext('2d');
     if (!ctx) {
       console.error('Context for Bar Chart not found!');
       return;
     }
-  
+
     new Chart(ctx, {
       type: 'bar',
       data: {
@@ -199,6 +192,5 @@ export class ConcertInfoComponent implements OnInit {
         },
       },
     });
-  }  
-
+  } 
 }

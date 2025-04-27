@@ -4,7 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ConcertService } from '../../services/concert.service';
 import { ArtistDTO } from '../../dtos/artist.dto';
+import { ArtistService } from '../../services/artist.service';
 import { ConcertDTO } from '../../dtos/concert.dto';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-concert-info',
@@ -15,6 +17,7 @@ export class ConcertInfoComponent implements OnInit {
   artists: ArtistDTO[] = [];
   logged: boolean = false;
   admin: boolean = false;
+  userName: string = '';
   id: number | null = null;
   user: any = {};
   token: string = '';
@@ -23,8 +26,9 @@ export class ConcertInfoComponent implements OnInit {
     private concertService: ConcertService,
     private authService: AuthService,
     private http: HttpClient,
-    private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private artistService: ArtistService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +43,8 @@ export class ConcertInfoComponent implements OnInit {
         this.resetUserState();
       }
     });
+
+    this.checkUserStatus();
   }
 
   checkUserStatus(): void {
@@ -80,12 +86,27 @@ export class ConcertInfoComponent implements OnInit {
   }
 
   deleteArtist(artistId: number): void {
-    console.log('Delete artist with ID:', artistId);
-    // Add logic to delete the artist
+    this.artistService.deleteArtist({ id: artistId } as ArtistDTO).subscribe({
+      next: () => {
+        console.log(`Artist with ID ${artistId} deleted successfully.`);
+        this.artists = this.artists.filter((artist) => artist.id !== artistId);
+      },
+      error: (err) => {
+        console.error('Error deleting artist:', err);
+      }
+    });
   }
 
   deleteConcert(concertId: number): void {
-    console.log('Delete concert with ID:', concertId);
-    // Add logic to delete the concert
+    this.concertService.deleteConcert({ id: concertId } as ConcertDTO).subscribe({
+      next: () => {
+        console.log(`Concert with ID ${concertId} deleted successfully.`);
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        console.error('Error deleting concert:', err);
+      }
+    });
   }
+
 }

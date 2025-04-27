@@ -63,7 +63,7 @@
           <div class="d-flex align-items-center justify-content-between mt-3 purchasebuttons">
             <button
               *ngIf="logged"
-              (click)="navigateTo('/concert/purchase/' + concert.id)"
+              (click)="navigateTo('/concert/' + concert.id +'/purchase/' )"
               class="btn btn-primary mt-3 flex-grow-1 me-2"
             >
               <i class="bi bi-cart-fill"></i> Purchase Tickets
@@ -108,7 +108,7 @@
         </div>
         <div>
           <h4>Bar graph:</h4>
-          <canvas id="graphicBar" class="chartCanvas"></canvas>
+          <canvas id="graphicBar"></canvas>
         </div>
       </div>
     </div>

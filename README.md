@@ -509,20 +509,27 @@ I didn't help much with the DTOs because the team agreed that three people would
 
 - **Andrea Garrobo Guzmán**
   - *Task done descriptions*
-    - 
+    - I've taken care of the functionality for loading more elements on the main page, as well as including the profile and homepage images. Then I created the conventional error page, so that when you get an unexpected error, it sends you to this page, and the error page upon login if you did it wrong.
+    - In addition to the previous practice, I corrected the graphics section because it returned the data in images and not as JSON, and if it was that way, we couldn't use it for this practice with Angular, so I made it return JSON.
+    - I also moved the Docker folder to the root of the project and started configuring the DockerFile for this practice.
 
 | **Section**                               |                 | **Details**                                                               |
 | ----------------------------------------  | --------------- | ------------------------------------------------------------------------- |
-| **Most significant commits**              | **Commit 1**    | []()|
-|                                           | **Commit 2**    | []()|
-|                                           | **Commit 3**    | []()|
-|                                           | **Commit 4**    | []()|
-|                                           | **Commit 5**    | []()|
-| **Files that have participated the most** | **File 1**      | []()|
-|                                           | **File 2**      | []()|
-|                                           | **File 3**      | []()|
-|                                           | **File 4**      | []()|
-|                                           | **File 5**      | []()|
+| **Most significant commits**              | **Commit 1**    | [Setting up DockerFile to create Angular image and creating the client error page (Angular)
+](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/51be4f5b145161b7cc5b4a187289feed9fb56788)|
+|                                           | **Commit 2**    | [Modify the aesthetics of the error pages and add a login error
+](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/be85e2e92e3d678ed58cc2f5f38d26d3676e504a)|
+|                                           | **Commit 3**    | [Images visible
+](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/b5520e5e1577e9ab7fd970a0d1ce16e7034e03f9)|
+|                                           | **Commit 4**    | [Load more functionality
+](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/8a785b62bb02a6893c7e9bd98c69c96152ee9a2d)|
+|                                           | **Commit 5**    | [Charts return JSON not images
+](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/5521fee70b9e662b18751f3e9763cc37afae8741)|
+| **Files that have participated the most** | **File 1**      | [error.component.ts](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/frontend/src/app/components/error/error.component.ts)|
+|                                           | **File 2**      | [header.component.ts](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/frontend/src/app/components/header/header.component.ts)|
+|                                           | **File 3**      | [concerts.component.ts](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/frontend/src/app/components/concerts/concerts.component.ts)|
+|                                           | **File 4**      | [GraphicRestController.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/controller/GraphicRestController.java)|
+|                                           | **File 5**      | [Dockerfile](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/docker/Dockerfile)|
 
 
 

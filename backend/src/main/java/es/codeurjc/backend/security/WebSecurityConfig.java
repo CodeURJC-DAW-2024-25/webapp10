@@ -85,7 +85,7 @@ public class WebSecurityConfig {
 
 				.requestMatchers("/v3/api-docs.yaml", "/v3/api-docs.html", "/swagger-ui/*", "/swagger-ui.html").permitAll()
 
-				.requestMatchers("/spa/**").permitAll()
+				.requestMatchers("/new/**").permitAll()
 
 				// PUBLIC ENDPOINTS
 				.anyRequest().permitAll()
@@ -146,7 +146,7 @@ public class WebSecurityConfig {
 				.requestMatchers("/newartist").hasAnyRole("ADMIN")
 				.requestMatchers("/newconcert").hasAnyRole("ADMIN")
 
-				.requestMatchers("/spa/**").permitAll()
+				.requestMatchers("/new/**").permitAll()
 
 		)
 

@@ -490,20 +490,21 @@ I didn't help much with the DTOs because the team agreed that three people would
 
 - **Irene García López**
   - *Task done descriptions*
-    - 
+    - I have implemented the user authentication functionality, including the login, registration, and user page components, form validation, and error handling for invalid credentials. I also developed the unauthorized access component and configured route guards to protect both user pages and admin-only sections based on user roles, ensuring secure and restricted navigation. Furthermore, I configured the publication of the Angular frontend as SPA served by the Spring Boot backend and I created startup batch and shell scripts to automate the project launch with Docker.
 
 | **Section**                               |                 | **Details**                                                               |
 | ----------------------------------------  | --------------- | ------------------------------------------------------------------------- |
-| **Most significant commits**              | **Commit 1**    | []()|
-|                                           | **Commit 2**    | []()|
-|                                           | **Commit 3**    | []()|
-|                                           | **Commit 4**    | []()|
-|                                           | **Commit 5**    | []()|
-| **Files that have participated the most** | **File 1**      | []()|
-|                                           | **File 2**      | []()|
-|                                           | **File 3**      | []()|
-|                                           | **File 4**      | []()|
-|                                           | **File 5**      | []()|
+| **Most significant commits**              | **Commit 1**    | [Implement unauthorized access component and route guard handling, update concert and artist forms, fix artist list visibility, and remove redundant code](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/e6c406f3a98d63a6233082735ffb6e2fcfa51ce8)|
+|                                           | **Commit 2**    | [Implement user registration component with form and validation](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/7a4c080fdc8e2d8435e9fcd9cd95981022194386)|
+|                                           | **Commit 3**    | [Implemented login component and fix registration functionality](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/6667c17d6a2c31577c0b6b7036c64e639f3c4381)|
+|                                           | **Commit 4**    | [Implemented user page component, update user service methods and update styles](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/a4720dc541a52fef63c7192622e8f2d4c2071dfe)|
+|                                           | **Commit 5**    | [Deployed Angular application integrated with Spring Boot backend](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/442a25f17b7175aa664b46883fdca5943b755965)|
+| **Files that have participated the most** | **File 1**      | [user-page.component.ts](https://github.com/CodeURJC-DAW-2024-25/webapp10/blame/main/frontend/src/app/components/user/user-page.component.ts)|
+|                                           | **File 2**      | [register.component.ts](https://github.com/CodeURJC-DAW-2024-25/webapp10/blame/main/frontend/src/app/components/register/register.component.ts)|
+|                                           | **File 3**      | [user-page.component.html](https://github.com/CodeURJC-DAW-2024-25/webapp10/blame/main/frontend/src/app/components/user/user-page.component.html)|
+|                                           | **File 4**      | [register.component.html](https://github.com/CodeURJC-DAW-2024-25/webapp10/blame/main/frontend/src/app/components/register/register.component.html)|
+|                                           | **File 5**      | [auth.service.ts](https://github.com/CodeURJC-DAW-2024-25/webapp10/blame/main/frontend/src/app/services/auth.service.ts)|
+
 
 
 - **Andrea Garrobo Guzmán**

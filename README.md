@@ -472,20 +472,20 @@ I didn't help much with the DTOs because the team agreed that three people would
 
 - **César Valero Bueno**
   - *Task done descriptions*
-    - 
+    - Implemented Artist, Concert, and Ticket DTOs, Concert and Artist Services and functionalities such as Create and Edit Concerts. Updated the execution context in create_image.sh. Made some fixes such as: improve Concerts component for looser coupling, configure Docker Compose to correctly pull images from DockerHub, modify the UserRestController to use user id instead of /me, ensure the user appears logged in in the header across all pages, resolve minor navigation issues, and fix some image related problems.
 
 | **Section**                               |                 | **Details**                                                               |
 | ----------------------------------------  | --------------- | ------------------------------------------------------------------------- |
-| **Most significant commits**              | **Commit 1**    | []()|
-|                                           | **Commit 2**    | []()|
-|                                           | **Commit 3**    | []()|
-|                                           | **Commit 4**    | []()|
-|                                           | **Commit 5**    | []()|
-| **Files that have participated the most** | **File 1**      | []()|
-|                                           | **File 2**      | []()|
-|                                           | **File 3**      | []()|
-|                                           | **File 4**      | []()|
-|                                           | **File 5**      | []()|
+| **Most significant commits**              | **Commit 1**    | [Add DTOs for Artist, Concert, and Ticket entities](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/28618a680b06a650001d1998ba8806d44eeb19ba)|
+|                                           | **Commit 2**    | [Add ConcertService for managing concert data and images](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/21de261a4b357c867ba5b2f63e42820d7f214f99)|
+|                                           | **Commit 3**    | [Use concert service in concerts component](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/869528a3c309cf5c38678bb35aed9ae942f6eb4d)|
+|                                           | **Commit 4**    | [Add ArtistService for managing artist data with CRUD operations](http://github.com/CodeURJC-DAW-2024-25/webapp10/commit/0bfd06f9cc4e9362afc6b42b8784c86ed8d38329)|
+|                                           | **Commit 5**    | [Add ConcertFormComponent for creating and editing concerts with form validation](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/a3392cce7691a51f90aeadd9e0f9fb16e94f4f61)|
+| **Files that have participated the most** | **File 1**      | [concert-form.component.html](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/frontend/src/app/components/concerts/concert-form.component.html)|
+|                                           | **File 2**      | [concert-form.component.ts](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/frontend/src/app/components/concerts/concert-form.component.ts)|
+|                                           | **File 3**      | [concert.service.ts](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/frontend/src/app/services/concert.service.ts)|
+|                                           | **File 4**      | [artist.service.ts](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/frontend/src/app/services/artist.service.ts)|
+|                                           | **File 5**      | [concerts.component.ts](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/frontend/src/app/components/concerts/concerts.component.ts)|
 
 
 - **Irene García López**

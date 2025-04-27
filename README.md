@@ -442,3 +442,101 @@ I didn't help much with the DTOs because the team agreed that three people would
 |                                           | **File 3**      | [NewArtistRequestDTO.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/dto/artist/NewArtistRequestDTO.java)|
 |                                           | **File 4**      | [ArtistService.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/service/ArtistService.java)|
 |                                           | **File 5**      | [ConcertService.java](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/backend/src/main/java/es/codeurjc/backend/service/ConcertService.java)|
+
+# webapp10- Practice 3
+## Classes and templates diagram
+
+## Preparing the development environment
+
+## Members participation
+- **Alberto Manjón López**
+  - *Task done descriptions*
+    - 
+
+| **Section**                               |                 | **Details**                                                               |
+| ----------------------------------------  | --------------- | ------------------------------------------------------------------------- |
+| **Most significant commits**              | **Commit 1**    | []()|
+|                                           | **Commit 2**    | []()|
+|                                           | **Commit 3**    | []()|
+|                                           | **Commit 4**    | []()|
+|                                           | **Commit 5**    | []()|
+| **Files that have participated the most** | **File 1**      | []()|
+|                                           | **File 2**      | []()|
+|                                           | **File 3**      | []()|
+|                                           | **File 4**      | []()|
+|                                           | **File 5**      | []()|
+
+
+- **César Valero Bueno**
+  - *Task done descriptions*
+    - 
+
+| **Section**                               |                 | **Details**                                                               |
+| ----------------------------------------  | --------------- | ------------------------------------------------------------------------- |
+| **Most significant commits**              | **Commit 1**    | []()|
+|                                           | **Commit 2**    | []()|
+|                                           | **Commit 3**    | []()|
+|                                           | **Commit 4**    | []()|
+|                                           | **Commit 5**    | []()|
+| **Files that have participated the most** | **File 1**      | []()|
+|                                           | **File 2**      | []()|
+|                                           | **File 3**      | []()|
+|                                           | **File 4**      | []()|
+|                                           | **File 5**      | []()|
+
+
+- **Irene García López**
+  - *Task done descriptions*
+    - 
+
+| **Section**                               |                 | **Details**                                                               |
+| ----------------------------------------  | --------------- | ------------------------------------------------------------------------- |
+| **Most significant commits**              | **Commit 1**    | []()|
+|                                           | **Commit 2**    | []()|
+|                                           | **Commit 3**    | []()|
+|                                           | **Commit 4**    | []()|
+|                                           | **Commit 5**    | []()|
+| **Files that have participated the most** | **File 1**      | []()|
+|                                           | **File 2**      | []()|
+|                                           | **File 3**      | []()|
+|                                           | **File 4**      | []()|
+|                                           | **File 5**      | []()|
+
+
+- **Andrea Garrobo Guzmán**
+  - *Task done descriptions*
+    - 
+
+| **Section**                               |                 | **Details**                                                               |
+| ----------------------------------------  | --------------- | ------------------------------------------------------------------------- |
+| **Most significant commits**              | **Commit 1**    | []()|
+|                                           | **Commit 2**    | []()|
+|                                           | **Commit 3**    | []()|
+|                                           | **Commit 4**    | []()|
+|                                           | **Commit 5**    | []()|
+| **Files that have participated the most** | **File 1**      | []()|
+|                                           | **File 2**      | []()|
+|                                           | **File 3**      | []()|
+|                                           | **File 4**      | []()|
+|                                           | **File 5**      | []()|
+
+
+
+- **Natalia Méndez Barrios**
+  - *Task done descriptions*
+    - 
+
+| **Section**                               |                 | **Details**                                                               |
+| ----------------------------------------  | --------------- | ------------------------------------------------------------------------- |
+| **Most significant commits**              | **Commit 1**    | []()|
+|                                           | **Commit 2**    | []()|
+|                                           | **Commit 3**    | []()|
+|                                           | **Commit 4**    | []()|
+|                                           | **Commit 5**    | []()|
+| **Files that have participated the most** | **File 1**      | []()|
+|                                           | **File 2**      | []()|
+|                                           | **File 3**      | []()|
+|                                           | **File 4**      | []()|
+|                                           | **File 5**      | []()|
+
+## Youtube Video

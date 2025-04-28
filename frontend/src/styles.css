@@ -152,6 +152,13 @@ table td {
     border-radius: 5px;
 }
 
+.graphicBar{
+    width: 900px !important;
+    height: auto !important;
+    margin-left: auto;
+
+}
+
 .navButtons button:hover {
     opacity: 0.8;
 }

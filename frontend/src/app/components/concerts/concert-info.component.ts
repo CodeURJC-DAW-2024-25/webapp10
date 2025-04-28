@@ -13,8 +13,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-concert-info',
-  templateUrl: './concert-info.component.html',
-  styleUrls: ['./concert-info.component.css']
+  templateUrl: './concert-info.component.html'
+  
 })
 export class ConcertInfoComponent implements OnInit {
   concert!: ConcertDTO;

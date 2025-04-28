@@ -535,19 +535,23 @@ I didn't help much with the DTOs because the team agreed that three people would
 
 - **Natalia Méndez Barrios**
   - *Task done descriptions*
-    - 
+    - Developed the main page responsible for handling the Single Page Application (SPA) logic.
+    - Created and integrated the Header and Footer components, which are displayed across all pages.
+    - Implemented the Index component that lists all available concerts on the website.
+    - Built the Artist Form component, used for both adding and editing artists. It dynamically loads existing artist data into the form when editing.
+    - Developed the Concert Info component, which displays detailed information about a concert, including features such as statistics graphs (pie chart and bar chart), and buttons for deleting or editing artists and concerts.
 
 | **Section**                               |                 | **Details**                                                               |
 | ----------------------------------------  | --------------- | ------------------------------------------------------------------------- |
-| **Most significant commits**              | **Commit 1**    | []()|
-|                                           | **Commit 2**    | []()|
-|                                           | **Commit 3**    | []()|
-|                                           | **Commit 4**    | []()|
-|                                           | **Commit 5**    | []()|
-| **Files that have participated the most** | **File 1**      | []()|
-|                                           | **File 2**      | []()|
-|                                           | **File 3**      | []()|
-|                                           | **File 4**      | []()|
-|                                           | **File 5**      | []()|
+| **Most significant commits**              | **Commit 1**    | [add concert listing feature with header and footer components](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/ecffe0d0a839cf897e7a7ba8d604c44266e95a20)|
+|                                           | **Commit 2**    | [Add new artist and edit artist functionality](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/ecffe0d0a839cf897e7a7ba8d604c44266e95a20)|
+|                                           | **Commit 3**    | [add concert info component](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/ecffe0d0a839cf897e7a7ba8d604c44266e95a20)|
+|                                           | **Commit 4**    | [delete artist, delete concert and check user status on concert info](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/d77b0d91a88085cd83ac71146cd5914166b4382d)|
+|                                           | **Commit 5**    | [add graphics service and graphics managment in concert info](https://github.com/CodeURJC-DAW-2024-25/webapp10/commit/d77b0d91a88085cd83ac71146cd5914166b4382d)|
+| **Files that have participated the most** | **File 1**      | [concerts.component.ts](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/frontend/src/app/components/concerts/concerts.component.ts)|
+|                                           | **File 2**      | [concert-info.component.ts](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/frontend/src/app/components/concerts/concert-info.component.ts)|
+|                                           | **File 3**      | [artist-form.component.ts](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/frontend/src/app/components/artists/artist-form.component.ts)|
+|                                           | **File 4**      | [header-form.component.html](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/frontend/src/app/components/header/header.component.html)|
+|                                           | **File 5**      | [concerts.component.html](https://github.com/CodeURJC-DAW-2024-25/webapp10/blob/main/frontend/src/app/components/concerts/concerts.component.html)|
 
 ## Youtube Video

@@ -450,7 +450,35 @@ I didn't help much with the DTOs because the team agreed that three people would
 - Purple: @Component
 - Red: @Template
 ## Preparing the development environment
+-In order to execute the app, do the following steps
+### 1️⃣ **Install angular** 
+- Use the following commands to install Angular CLI globally:  
+```sh
+npm install -g @angular/cli
 
+```
+### 2️⃣ **Build the Docker Image**
+- Run the following script to create the Docker image:
+```sh
+./docker/create_image.sh
+```
+### 3️⃣ **Publish the Docker Image**
+```sh
+./docker/publish_image.sh
+```
+### 4️⃣ **Navigate to the Docker directory**
+```sh
+cd docker
+```
+### 5️⃣ **Deploy the Application with Docker Compose**
+```sh
+docker-compose up
+```
+### 6️⃣ **URL**
+- URL to access in local: (https://localhost/new)
+- URL to access the deployed application: (https://appweb10.dawgis.etsii.urjc.es/new/)
+
+---
 ## Members participation
 - **Alberto Manjón López**
   - *Task done descriptions*

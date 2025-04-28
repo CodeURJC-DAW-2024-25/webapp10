@@ -1,7 +1,7 @@
 version: "3.9"
 services: 
   web:
-    image: albertoml199904/webapp_10:latest
+    image: ccsar1/webapp_10:latest
     restart: always
     ports:
       - 443:8443

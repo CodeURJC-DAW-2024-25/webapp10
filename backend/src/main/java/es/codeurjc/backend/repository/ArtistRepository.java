@@ -8,4 +8,5 @@ import es.codeurjc.backend.model.Artist;
 
 public interface ArtistRepository extends JpaRepository<Artist, Long> {
     Optional<Artist> findByArtistName(String name);
+    Optional<Artist> findById(Long id);
 }

@@ -34,11 +34,16 @@ export class ArtistService {
         }
     }
   
-    public deleteArtist(artist: ArtistDTO): Observable<ArtistDTO> {
+    public deleteArtist(id: number): Observable<void> {
+        if (!id) {
+          console.error('Artist ID is undefined or null.');
+          return throwError('Artist ID is required.');
+        }
         return this.httpClient
-        .delete<ArtistDTO>(BASE_URL + artist.id)
-        .pipe(catchError((error) => this.handleError(error))) as Observable<ArtistDTO>;
-    }
+          .delete<void>(`${BASE_URL}${id}`)
+          .pipe(catchError((error) => this.handleError(error)));
+      }
+    
     
     private handleError(error: any) {
         console.log("ERROR:");

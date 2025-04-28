@@ -99,10 +99,16 @@ export class ConcertInfoComponent implements OnInit {
   }
 
   deleteArtist(artistId: number): void {
-    this.artistService.deleteArtist({ id: artistId } as ArtistDTO).subscribe({
+    console.log('Delete Artist button clicked. Artist ID:', artistId);
+
+    if (!artistId) {
+      console.error('Artist ID is undefined or null.');
+      return;
+    }
+    this.artistService.deleteArtist(artistId).subscribe({
       next: () => {
         console.log(`Artist with ID ${artistId} deleted successfully.`);
-        this.artists = this.artists.filter((artist) => artist.id !== artistId);
+        this.artists = this.artists.filter((artist) => artist.id !== artistId); // Remove artist from the list
       },
       error: (err) => {
         console.error('Error deleting artist:', err);

@@ -32,7 +32,8 @@
   
               <div *ngIf="admin">
                 <button
-                  (click)="artist.id && deleteArtist(artist.id)"
+                  *ngIf="artist.id"
+                  (click)="deleteArtist(artist.id)"
                   class="btn btn-danger float-end me-2"
                 >
                   <i class="bi bi-trash"></i> Delete Artist

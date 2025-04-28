@@ -65,9 +65,19 @@ public class ArtistService {
 		return artist;
 	}
 
-	public ArtistDTO deleteArtist(Long id) {
+	public ArtistDTO deleteArtist(long id) {
 		Artist artist = repository.findById(id).orElseThrow();
 
+		boolean isAloneinSomeConcert = artist.getConcerts().stream()
+        .anyMatch(concert -> concert.getArtists().size() == 1);
+
+    	if (isAloneinSomeConcert) {
+        throw new IllegalStateException("Cannot delete artist: they are the only artist in one or more concerts.");
+    }
+		artist.getConcerts().forEach(concert -> {
+		
+			concert.getArtists().remove(artist);
+		});
 		ArtistDTO artistDTO = toDTO(artist);
 		repository.deleteById(id);
 		return artistDTO;

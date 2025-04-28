@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOCKER_USER="albertoml199904"
+DOCKER_USER="ccsar1"
 IMAGE_NAME="webapp_10"
 TAG="latest" 
 
